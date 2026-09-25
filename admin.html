@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ระบบหลังบ้าน | E-Portfolio Admin</title>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+/* ===================== CONFIG (แก้ค่าตรงนี้) ===================== */
+/* ดูคำอธิบายตำแหน่งที่ต้องแก้ใน docs/07_deployment_manual.md */
+</style>
+<style>
+:root{
+  --primary:#1B5E20; --secondary:#0F4C81; --accent:#D4A017; --bg:#F8FCF8;
+  --card:#fff; --text:#1a2e1a; --muted:#5a6a5a; --border:#dfe7df; --radius:12px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Prompt',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+a{color:inherit}
+
+/* LOGIN SCREEN */
+#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(145deg,#1B5E20,#0F4C81)}
+.login-box{background:#fff;border-radius:var(--radius);padding:48px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3);max-width:380px}
+.login-box h1{font-size:18px;color:var(--primary);margin-bottom:6px}
+.login-box p{font-size:13px;color:var(--muted);margin-bottom:24px}
+#googleBtnContainer{display:flex;justify-content:center}
+.login-error{color:#c62828;font-size:13px;margin-top:14px;display:none}
+
+/* LAYOUT */
+#appScreen{display:none}
+.shell{display:flex;min-height:100vh}
+.sidebar{width:240px;background:#0f2e14;color:#c8e6c9;flex-shrink:0;padding:20px 0}
+.sidebar .brand{padding:0 20px 20px;border-bottom:1px solid rgba(255,255,255,0.1);margin-bottom:12px}
+.sidebar .brand strong{display:block;color:#fff;font-size:14px}
+.sidebar .brand span{font-size:11px;color:#81c784}
+.sidebar nav a{display:flex;align-items:center;gap:10px;padding:11px 20px;font-size:13.5px;cursor:pointer;color:#c8e6c9;border-left:3px solid transparent}
+.sidebar nav a:hover{background:rgba(255,255,255,0.06)}
+.sidebar nav a.active{background:rgba(255,255,255,0.1);border-left-color:var(--accent);color:#fff}
+.sidebar nav a i{width:18px;text-align:center}
+.main{flex:1;padding:24px 28px;overflow-x:auto}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.topbar h2{font-size:20px;color:var(--primary)}
+.topbar .user{font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:10px}
+.btn{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px}
+.btn.secondary{background:var(--secondary)}
+.btn.danger{background:#c62828}
+.btn.ghost{background:transparent;color:var(--primary);border:1.5px solid var(--primary)}
+.toolbar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+.toolbar input[type=text]{padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:inherit;font-size:13px;min-width:220px}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:0 2px 10px rgba(0,0,0,0.04)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--border);white-space:nowrap;max-width:280px;overflow:hidden;text-overflow:ellipsis}
+th{color:var(--muted);font-weight:600;font-size:12px}
+tr:hover td{background:#f4faf4}
+.row-actions{display:flex;gap:6px}
+.row-actions button{border:none;background:#eef3ee;border-radius:6px;padding:6px 9px;cursor:pointer;font-size:12px}
+.row-actions button.del{color:#c62828}
+.row-actions button.edit{color:var(--secondary)}
+.pagination{display:flex;gap:8px;align-items:center;margin-top:14px;font-size:13px}
+.pagination button{border:1px solid var(--border);background:#fff;border-radius:6px;padding:6px 10px;cursor:pointer}
+.empty{padding:40px;text-align:center;color:var(--muted);font-size:13px}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;z-index:1000;padding:20px}
+.modal-overlay.show{display:flex}
+.modal{background:#fff;border-radius:var(--radius);max-width:560px;width:100%;max-height:88vh;overflow-y:auto;padding:24px}
+.modal h3{color:var(--primary);margin-bottom:16px;font-size:17px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:5px;font-weight:500}
+.field input,.field textarea,.field select{width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:8px;font-family:inherit;font-size:13.5px}
+.field textarea{min-height:90px;resize:vertical}
+.field .img-preview{margin-top:8px;max-width:140px;border-radius:8px;display:none}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
+.import-source{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:10px}.import-status{font-size:12px;color:var(--muted);margin:8px 0 14px}
+.import-preview{border:1px solid var(--border);border-radius:8px;background:#f8fbf8;padding:14px;display:none}.import-preview.show{display:block}
+.import-preview img{width:100%;max-height:180px;object-fit:cover;border-radius:6px;margin-bottom:10px}.import-preview h4{font-size:15px;color:var(--primary);margin-bottom:6px}
+.import-preview p{font-size:12.5px;color:var(--muted);line-height:1.65}.import-mapping{margin-top:12px;display:grid;gap:6px}
+.import-mapping div{display:grid;grid-template-columns:120px 1fr;gap:8px;font-size:12px;border-top:1px solid var(--border);padding-top:6px}.import-mapping strong{color:var(--secondary)}
+.check-row{display:flex;gap:8px;align-items:flex-start;margin-top:12px;font-size:12px;color:var(--muted)}.check-row input{margin-top:3px}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--primary);color:#fff;padding:12px 20px;border-radius:8px;font-size:13px;box-shadow:0 4px 16px rgba(0,0,0,0.2);display:none;z-index:2000}
+@media(max-width:880px){.sidebar{position:fixed;left:-240px;top:0;height:100%;z-index:900;transition:left .25s}.sidebar.open{left:0}.main{padding:16px}.import-source{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ===================== LOGIN SCREEN ===================== -->
+<div id="loginScreen">
+  <div class="login-box">
+    <h1><i class="fa-solid fa-leaf" style="color:#1B5E20"></i> ระบบหลังบ้าน E-Portfolio</h1>
+    <p>สำนักงานเกษตรจังหวัดกำแพงเพชร — เข้าสู่ระบบด้วย Google Account ที่ได้รับสิทธิ์แอดมิน</p>
+    <div id="googleBtnContainer"></div>
+    <div class="login-error" id="loginError"></div>
+  </div>
+</div>
+
+<!-- ===================== APP SCREEN ===================== -->
+<div id="appScreen">
+  <div class="shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <strong>E-Portfolio CMS</strong>
+        <span>สนง.เกษตรจังหวัดกำแพงเพชร</span>
+      </div>
+      <nav id="navMenu"></nav>
+    </aside>
+    <main class="main">
+      <div class="topbar">
+        <h2 id="pageTitle">Profile</h2>
+        <div class="user">
+          <span id="userEmail"></span>
+          <button class="btn ghost" onclick="Admin.logout()">ออกจากระบบ</button>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <input type="text" id="searchBox" placeholder="ค้นหา...">
+        <button class="btn" onclick="Admin.openForm()"><i class="fa-solid fa-plus"></i> เพิ่มข้อมูล</button>
+        <button class="btn secondary" onclick="Admin.exportCSV()"><i class="fa-solid fa-download"></i> Export CSV</button>
+        <button class="btn secondary" onclick="Admin.downloadTemplate()"><i class="fa-solid fa-file-csv"></i> Template</button>
+        <label class="btn ghost" style="cursor:pointer">
+          <i class="fa-solid fa-upload"></i> Import CSV
+          <input type="file" accept=".csv" style="display:none" onchange="Admin.importCSV(event)">
+        </label>
+        <button class="btn ghost" onclick="Admin.openUrlImport()"><i class="fa-brands fa-facebook"></i> นำเข้า Facebook / URL</button>
+      </div>
+
+      <div class="card">
+        <div style="overflow-x:auto">
+          <table id="dataTable"><thead></thead><tbody></tbody></table>
+        </div>
+        <div class="empty" id="emptyState" style="display:none">ไม่มีข้อมูล</div>
+      </div>
+
+      <div class="pagination" id="pagination"></div>
+    </main>
+  </div>
+</div>
+
+<!-- ===================== FORM MODAL ===================== -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3 id="modalTitle">เพิ่มข้อมูล</h3>
+    <div id="modalFields"></div>
+    <div class="modal-actions">
+      <button class="btn ghost" onclick="Admin.closeForm()">ยกเลิก</button>
+      <button class="btn" onclick="Admin.saveForm()">บันทึก</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== URL IMPORT MODAL ===================== -->
+<div class="modal-overlay" id="urlImportOverlay">
+  <div class="modal">
+    <h3><i class="fa-brands fa-facebook"></i> นำเข้าโพสต์ Facebook หรือ URL</h3>
+    <div class="import-source">
+      <div class="field"><label>URL ต้นฉบับ</label><input id="urlImportInput" type="url" placeholder="https://..."></div>
+      <div class="field"><label>นำไปแสดงในหัวข้อ</label><select id="urlImportTarget" onchange="Admin.refreshUrlMapping()"></select></div>
+    </div>
+    <div class="import-status" id="urlImportStatus">รองรับโพสต์ Facebook แบบสาธารณะและเว็บทั่วไป ระบบจะจัดชื่อเรื่อง คำอธิบาย รูปภาพ วันที่ และข้อความอ้างอิงให้ตรวจทานก่อนบันทึก</div>
+    <div class="import-preview" id="urlImportPreview"></div>
+    <label class="check-row"><input type="checkbox" id="urlCreateReference" checked> สร้างหลักฐานอ้างอิงและเชื่อมกับรายการที่นำเข้าโดยอัตโนมัติ</label>
+    <div class="modal-actions">
+      <button class="btn ghost" onclick="Admin.closeUrlImport()">ยกเลิก</button>
+      <button class="btn secondary" onclick="Admin.previewUrl()"><i class="fa-solid fa-magnifying-glass"></i> ตรวจสอบข้อมูล</button>
+      <button class="btn" id="urlImportSave" onclick="Admin.importUrl()" disabled><i class="fa-solid fa-floppy-disk"></i> นำเข้า</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+ * CONFIG — แก้ 2 ค่านี้ให้ตรงกับของจริงก่อนใช้งาน (ดู PART 7)
+ * ============================================================ */
+const CONFIG = {
+  API_URL: 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec', // <-- แก้ตรงนี้
+  GOOGLE_CLIENT_ID: 'YOUR_GOOGLE_OAUTH_CLIENT_ID.apps.googleusercontent.com' // <-- แก้ตรงนี้
+};
+
+/* ============================================================
+ * SCHEMA — นิยามฟิลด์ของแต่ละ Sheet สำหรับ generate ฟอร์ม/ตารางอัตโนมัติ
+ * field.type: text | longtext | number | date | url | select | image
+ * ============================================================ */
+const SCHEMAS = {
+  Profile: { label:'ข้อมูลส่วนตัว', icon:'fa-id-card', folderKey:'Profile', fields:[
+    {key:'NameEN',label:'ชื่อ (EN)',type:'text'},{key:'NameTH',label:'ชื่อ (TH)',type:'text'},
+    {key:'Position',label:'ตำแหน่ง',type:'text'},{key:'OrgLine1',label:'หน่วยงาน 1',type:'text'},
+    {key:'OrgLine2',label:'หน่วยงาน 2',type:'text'},{key:'OrgLine3',label:'หน่วยงาน 3',type:'text'},
+    {key:'ProfessionalIdentity',label:'Professional Identity (คั่นด้วย ,)',type:'text'},
+    {key:'ProfileImageFileID',label:'รูปโปรไฟล์',type:'image'},{key:'LogoFileID',label:'โลโก้',type:'image'},
+    {key:'Phone',label:'โทรศัพท์',type:'text'},{key:'Email',label:'อีเมล',type:'text'},{key:'Line',label:'Line',type:'text'},
+    {key:'GoogleScholarURL',label:'Google Scholar URL',type:'url'},{key:'ResearchGateURL',label:'ResearchGate URL',type:'url'},
+    {key:'OrcidURL',label:'ORCID URL',type:'url'},{key:'MapEmbedURL',label:'Google Map Embed URL',type:'url'}
+  ]},
+  Hero: { label:'Hero Section', icon:'fa-house', fields:[
+    {key:'TitleEN',label:'หัวข้อ (EN)',type:'text'},{key:'TitleTH',label:'หัวข้อ (TH)',type:'text'},
+    {key:'Subtitle',label:'ตำแหน่ง/Subtitle',type:'text'},{key:'TypingPhrases',label:'ข้อความ Typing (คั่นด้วย |)',type:'text'},
+    {key:'ReflectionText',label:'ข้อความสะท้อนตัวตน',type:'longtext'}
+  ]},
+  DashboardStatistics: { label:'สถิติหน้าแรก', icon:'fa-chart-simple', fields:[
+    {key:'Label',label:'หัวข้อ',type:'text'},{key:'Value',label:'จำนวน',type:'number'},
+    {key:'Suffix',label:'หน่วย',type:'text'},{key:'Icon',label:'FontAwesome class',type:'text'},
+    {key:'LinkTarget',label:'หน้าปลายทาง',type:'select',options:['about','dashboards','innovation','research','publications','projects','training','blog','gallery','contact']},
+    {key:'SortOrder',label:'ลำดับ',type:'number'}
+  ]},
+  Education: { label:'การศึกษา', icon:'fa-graduation-cap', folderKey:'University', fields:[
+    {key:'UniversityName',label:'มหาวิทยาลัย',type:'text'},{key:'UniversityLogoFileID',label:'โลโก้มหาวิทยาลัย',type:'image'},
+    {key:'Degree',label:'วุฒิการศึกษา',type:'text'},{key:'FieldOfStudy',label:'สาขา',type:'text'},
+    {key:'YearStart',label:'ปีเริ่ม',type:'number'},{key:'YearEnd',label:'ปีจบ',type:'number'},
+    {key:'SortOrder',label:'ลำดับ',type:'number'}
+  ]},
+  Mindmap: { label:'Mindmap', icon:'fa-diagram-project', fields:[
+    {key:'NodeLabel',label:'ชื่อ Node',type:'text'},{key:'LinkTarget',label:'ลิงก์ไปหน้า (page id)',type:'text'},
+    {key:'Icon',label:'Icon',type:'text'},{key:'Color',label:'สี (hex)',type:'text'},{key:'SortOrder',label:'ลำดับ',type:'number'}
+  ]},
+  Expertise: { label:'ทะเบียนความเชี่ยวชาญ', icon:'fa-circle-nodes', fields:[
+    {key:'Name',label:'ชื่อความเชี่ยวชาญ',type:'text'},
+    {key:'ParentID',label:'อยู่ภายใต้ความเชี่ยวชาญ',type:'lookupExpertise'},
+    {key:'Level',label:'ระดับ',type:'select',options:['2','3']},
+    {key:'Category',label:'กลุ่มหลัก',type:'text'},{key:'Description',label:'คำอธิบาย',type:'longtext'},
+    {key:'Icon',label:'FontAwesome icon',type:'text'},{key:'Color',label:'สี (hex)',type:'text'},
+    {key:'LinkTarget',label:'หน้าปลายทาง',type:'select',options:['about','dashboards','innovation','research','publications','projects','training','blog','gallery','contact']},
+    {key:'SortOrder',label:'ลำดับ',type:'number'},{key:'Status',label:'สถานะ',type:'select',options:['published','draft']}
+  ]},
+  ExpertiseRelations: { label:'ความสัมพันธ์ผลงาน', icon:'fa-link', fields:[
+    {key:'ExpertiseID',label:'ความเชี่ยวชาญ',type:'lookupExpertise'},
+    {key:'WorkType',label:'ประเภทผลงาน',type:'select',options:['Dashboards','Research','Publications','Projects','Training','Blog','References']},
+    {key:'WorkID',label:'ผลงานที่เชื่อมโยง',type:'lookupWork'},
+    {key:'Weight',label:'น้ำหนักความสัมพันธ์ (1-5)',type:'number'},
+    {key:'Note',label:'เหตุผล/รายละเอียดความสัมพันธ์',type:'longtext'},
+    {key:'Status',label:'สถานะ',type:'select',options:['published','draft']}
+  ]},
+  ExpertiseLinks: { label:'เครือข่ายโหนดความรู้', icon:'fa-share-nodes', fields:[
+    {key:'SourceExpertiseID',label:'โหนดต้นทาง',type:'lookupExpertise'},
+    {key:'TargetExpertiseID',label:'โหนดปลายทาง',type:'lookupExpertise'},
+    {key:'RelationType',label:'ประเภทความสัมพันธ์',type:'select',options:['supports','applies','extends','evidence','related']},
+    {key:'Weight',label:'น้ำหนักความสัมพันธ์ (1-5)',type:'number'},
+    {key:'Note',label:'คำอธิบายความเชื่อมโยง',type:'longtext'},
+    {key:'Status',label:'สถานะ',type:'select',options:['published','draft']}
+  ]},
+  Dashboards: { label:'ผลงานดิจิทัล', icon:'fa-chart-line', folderKey:'Dashboards', fields:[
+    {key:'Title',label:'ชื่อ Dashboard',type:'text'},{key:'Description',label:'คำอธิบาย',type:'longtext'},
+    {key:'CoverImageFileID',label:'รูปปก',type:'image'},{key:'EmbedURL',label:'Embed URL',type:'url'},
+    {key:'Category',label:'หมวดหมู่',type:'text'},{key:'Tags',label:'Tags (คั่นด้วย ,)',type:'text'},
+    {key:'Featured',label:'แสดงเป็นผลงานเด่น',type:'select',options:['true','false']},
+    {key:'AccessNote',label:'หมายเหตุการเข้าใช้งาน',type:'text'},
+    {key:'SortOrder',label:'ลำดับ',type:'number'},
+    {key:'Status',label:'สถานะ',type:'select',options:['published','draft']}
+  ]},
+  Research: { label:'งานวิจัย', icon:'fa-flask', fields:[
+    {key:'Title',label:'ชื่องานวิจัย',type:'text'},{key:'Abstract',label:'บทคัดย่อ',type:'longtext'},
+    {key:'Year',label:'ปี',type:'number'},{key:'Field',label:'สาขา',type:'text'},{key:'Authors',label:'ผู้แต่ง',type:'text'},
+    {key:'FileURL',label:'ไฟล์ (URL)',type:'url'},{key:'Tags',label:'Tags',type:'text'},
+    {key:'Status',label:'สถานะ',type:'select',options:['published','draft']}
+  ]},
+  Publications: { label:'ผลงานตีพิมพ์', icon:'fa-book', fields:[
+    {key:'Title',label:'ชื่อผลงาน',type:'text'},
+    {key:'Type',label:'ประเภท',type:'select',options:['Journal','Conference','Patent','Petty Patent','Other']},
+    {key:'Authors',label:'ผู้แต่ง',type:'text'},{key:'Source',label:'แหล่งตีพิมพ์',type:'text'},
+    {key:'Year',label:'ปี',type:'number'},{key:'DOI_URL',label:'DOI/URL',type:'url'},{key:'Tags',label:'Tags',type:'text'}
+  ]},
+  Projects: { label:'โครงการ', icon:'fa-diagram-successor', folderKey:'Dashboards', fields:[
+    {key:'Title',label:'ชื่อโครงการ',type:'text'},{key:'Description',label:'รายละเอียด',type:'longtext'},
+    {key:'Category',label:'ประเภท',type:'select',options:['Smart Farming','Precision Agriculture','Agricultural Extension','R2R']},
+    {key:'YearStart',label:'ปีเริ่ม',type:'number'},{key:'YearEnd',label:'ปีสิ้นสุด',type:'number'},
+    {key:'CoverImageFileID',label:'รูปปก',type:'image'},
+    {key:'Status',label:'สถานะ',type:'select',options:['published','draft']}
+  ]},
+  Training: { label:'การพัฒนาบุคลากร', icon:'fa-chalkboard-user', fields:[
+    {key:'Title',label:'ชื่อกิจกรรม',type:'text'},
+    {key:'Type',label:'ประเภท',type:'select',options:['Training','Workshop','Mentoring','Coaching']},
+    {key:'Role',label:'บทบาท',type:'text'},{key:'Date',label:'วันที่',type:'date'},
+    {key:'Organizer',label:'ผู้จัด',type:'text'},{key:'CertificateFileID',label:'ใบประกาศ',type:'image'},
+    {key:'SourceURL',label:'URL ต้นฉบับ',type:'url'}
+  ]},
+  Blog: { label:'เรื่องเล่า / องค์ความรู้', icon:'fa-book-open-reader', folderKey:'Gallery', fields:[
+    {key:'Title',label:'หัวข้อ',type:'text'},{key:'Slug',label:'Slug (URL)',type:'text'},
+    {key:'Excerpt',label:'สรุปย่อ',type:'longtext'},{key:'Content',label:'เนื้อหา',type:'longtext'},
+    {key:'ContentType',label:'ประเภทเนื้อหา',type:'select',options:['เรื่องเล่าจากพื้นที่','องค์ความรู้','ข่าวและกิจกรรม','บทความวิชาการ','นวัตกรรมดิจิทัล']},
+    {key:'SourceType',label:'แหล่งที่มา',type:'select',options:['เขียนเอง','เว็บไซต์','ข่าว','Facebook']},
+    {key:'SourceURL',label:'URL แหล่งต้นฉบับ',type:'url'},{key:'Author',label:'ผู้เขียน / แหล่งเผยแพร่',type:'text'},
+    {key:'CoverImageFileID',label:'อัปโหลดรูปปก',type:'image'},{key:'CoverImageURL',label:'URL รูปปก',type:'url'},{key:'Category',label:'หมวดหมู่',type:'text'},
+    {key:'Tags',label:'Tags',type:'text'},{key:'PublishDate',label:'วันที่เผยแพร่',type:'date'},{key:'ReadTime',label:'เวลาอ่าน (นาที)',type:'number'},
+    {key:'Featured',label:'บทความเด่น',type:'select',options:['false','true']},
+    {key:'Status',label:'สถานะ',type:'select',options:['published','draft']}
+  ]},
+  Gallery: { label:'คลังภาพ', icon:'fa-images', folderKey:'Gallery', fields:[
+    {key:'ImageFileID',label:'รูปภาพ',type:'image'},{key:'ImageURL',label:'URL รูปภาพ',type:'url'},{key:'Caption',label:'คำอธิบาย',type:'text'},
+    {key:'Album',label:'อัลบั้ม',type:'text'},{key:'EventDate',label:'วันที่จัดกิจกรรม',type:'date'},
+    {key:'SortOrder',label:'ลำดับ',type:'number'}
+  ]},
+  Contact: { label:'ติดต่อ', icon:'fa-address-book', fields:[
+    {key:'Label',label:'หัวข้อ',type:'text'},{key:'Value',label:'ค่า',type:'text'},
+    {key:'Icon',label:'Icon',type:'text'},{key:'LinkURL',label:'ลิงก์',type:'url'},{key:'SortOrder',label:'ลำดับ',type:'number'}
+  ]},
+  References: { label:'นำเข้า Facebook / หลักฐาน', icon:'fa-facebook', iconSet:'fa-brands', fields:[
+    {key:'WorkType',label:'ประเภทผลงานที่อ้างอิง',type:'select',options:['Dashboards','Research','Publications','Projects','Training','Blog','']},
+    {key:'WorkID',label:'ผลงานที่อ้างอิง',type:'lookupWork'},
+    {key:'Title',label:'ชื่อกิจกรรม/หลักฐาน',type:'text'},{key:'EventDate',label:'วันที่',type:'date'},
+    {key:'Category',label:'หมวดหมู่',type:'text'},{key:'Role',label:'บทบาท',type:'text'},
+    {key:'Summary',label:'สรุปสาระสำคัญ',type:'longtext'},{key:'SourceName',label:'ชื่อแหล่งข้อมูล',type:'text'},
+    {key:'SourceURL',label:'URL ต้นฉบับ',type:'url'},{key:'Citation',label:'ข้อความอ้างอิง',type:'longtext'},
+    {key:'ImageURL',label:'URL รูปภาพ',type:'url'},{key:'Status',label:'สถานะ',type:'select',options:['published','draft']},
+    {key:'SortOrder',label:'ลำดับ',type:'number'}
+  ]},
+  Settings: { label:'ตั้งค่าระบบ', icon:'fa-gear', fields:[
+    {key:'Key',label:'Key',type:'text'},{key:'Value',label:'Value',type:'text'}
+  ]}
+};
+
+const Admin = (function () {
+  let state = { sheet:'Profile', rows:[], page:1, limit:20, total:0, q:'', token:'', email:'', editingId:null, urlPreview:null };
+  const lookupCache = { expertise:null, works:null };
+  const URL_IMPORT_TARGETS = ['Dashboards','Research','Publications','Projects','Training','Blog','Gallery','References'];
+
+  function init() {
+    google.accounts.id.initialize({ client_id: CONFIG.GOOGLE_CLIENT_ID, callback: onGoogleSignIn });
+    google.accounts.id.renderButton(document.getElementById('googleBtnContainer'), { theme:'outline', size:'large', text:'signin_with' });
+
+    const saved = sessionStorage.getItem('admin_session');
+    if (saved) {
+      const s = JSON.parse(saved);
+      state.token = s.token; state.email = s.email;
+      showApp();
+    }
+    buildMenu();
+  }
+
+  function onGoogleSignIn(response) {
+    fetch(CONFIG.API_URL + '?action=verifyAdmin&idToken=' + encodeURIComponent(response.credential))
+      .then(r => r.json())
+      .then(res => {
+        if (res.status === 'ok') {
+          state.token = res.token; state.email = res.email;
+          sessionStorage.setItem('admin_session', JSON.stringify({ token: res.token, email: res.email }));
+          showApp();
+        } else {
+          showLoginError(res.message || 'เข้าสู่ระบบไม่สำเร็จ');
+        }
+      })
+      .catch(() => showLoginError('เชื่อมต่อ API ไม่ได้ ตรวจสอบ CONFIG.API_URL'));
+  }
+
+  function showLoginError(msg) {
+    const el = document.getElementById('loginError');
+    el.textContent = msg; el.style.display = 'block';
+  }
+
+  function showApp() {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('appScreen').style.display = 'block';
+    document.getElementById('userEmail').textContent = state.email;
+    selectSheet('Profile');
+  }
+
+  function logout() {
+    sessionStorage.removeItem('admin_session');
+    location.reload();
+  }
+
+  function buildMenu() {
+    const nav = document.getElementById('navMenu');
+    nav.innerHTML = Object.keys(SCHEMAS).map(key => {
+      const s = SCHEMAS[key];
+      return `<a data-sheet="${key}" onclick="Admin.selectSheet('${key}')"><i class="${s.iconSet||'fa-solid'} ${s.icon}"></i> ${s.label}</a>`;
+    }).join('');
+  }
+
+  function selectSheet(sheetName) {
+    state.sheet = sheetName; state.page = 1; state.q = '';
+    document.getElementById('searchBox').value = '';
+    document.getElementById('pageTitle').textContent = SCHEMAS[sheetName].label;
+    document.querySelectorAll('#navMenu a').forEach(a => a.classList.toggle('active', a.dataset.sheet === sheetName));
+    loadData();
+  }
+
+  function loadData() {
+    const url = `${CONFIG.API_URL}?sheet=${state.sheet}&action=list&page=${state.page}&limit=${state.limit}&q=${encodeURIComponent(state.q)}`;
+    const request = state.sheet === 'Settings'
+      ? fetch(CONFIG.API_URL,{method:'POST',body:JSON.stringify({action:'adminList',sheet:state.sheet,token:state.token,page:state.page,limit:state.limit,q:state.q})})
+      : fetch(url);
+    request.then(r => r.json()).then(res => {
+      if (res.status !== 'ok') return showToast(res.message || 'โหลดข้อมูลไม่สำเร็จ');
+      state.rows = res.data; state.total = res.total;
+      renderTable();
+    }).catch(() => showToast('เชื่อมต่อ API ไม่ได้'));
+  }
+
+  function renderTable() {
+    const schema = SCHEMAS[state.sheet];
+    const cols = schema.fields.slice(0, 5);
+    const thead = document.querySelector('#dataTable thead');
+    const tbody = document.querySelector('#dataTable tbody');
+    thead.innerHTML = '<tr>' + cols.map(c => `<th>${c.label}</th>`).join('') + '<th>จัดการ</th></tr>';
+
+    if (!state.rows.length) {
+      tbody.innerHTML = '';
+      document.getElementById('emptyState').style.display = 'block';
+    } else {
+      document.getElementById('emptyState').style.display = 'none';
+      tbody.innerHTML = state.rows.map(row => {
+        const cells = cols.map(c => `<td>${escapeHTML(String(row[c.key] ?? ''))}</td>`).join('');
+        return `<tr>${cells}<td><div class="row-actions">
+          <button class="edit" onclick='Admin.openForm(${JSON.stringify(row.ID)})'><i class="fa-solid fa-pen"></i></button>
+          <button class="del" onclick='Admin.deleteRow(${JSON.stringify(row.ID)})'><i class="fa-solid fa-trash"></i></button>
+        </div></td></tr>`;
+      }).join('');
+    }
+    renderPagination();
+  }
+
+  function renderPagination() {
+    const totalPages = Math.max(1, Math.ceil(state.total / state.limit));
+    document.getElementById('pagination').innerHTML = `
+      <button ${state.page<=1?'disabled':''} onclick="Admin.gotoPage(${state.page-1})">ก่อนหน้า</button>
+      <span>หน้า ${state.page} / ${totalPages} (รวม ${state.total} รายการ)</span>
+      <button ${state.page>=totalPages?'disabled':''} onclick="Admin.gotoPage(${state.page+1})">ถัดไป</button>`;
+  }
+
+  function gotoPage(p) { state.page = p; loadData(); }
+
+  let searchTimer;
+  document.addEventListener('input', e => {
+    if (e.target.id === 'searchBox') {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => { state.q = e.target.value; state.page = 1; loadData(); }, 350);
+    }
+  });
+
+  async function openForm(id) {
+    state.editingId = id || null;
+    const schema = SCHEMAS[state.sheet];
+    const row = id ? state.rows.find(r => r.ID === id) : {};
+    if (schema.fields.some(f => f.type === 'lookupExpertise' || f.type === 'lookupWork')) await loadLookups();
+    document.getElementById('modalTitle').textContent = id ? 'แก้ไขข้อมูล' : 'เพิ่มข้อมูล';
+    document.getElementById('modalFields').innerHTML = schema.fields.map(f => renderField(f, row[f.key])).join('');
+    document.getElementById('modalOverlay').classList.add('show');
+  }
+
+  function renderField(f, value) {
+    value = value ?? '';
+    if (f.type === 'longtext') return `<div class="field"><label>${f.label}</label><textarea data-key="${f.key}">${escapeHTML(String(value))}</textarea></div>`;
+    if (f.type === 'select') return `<div class="field"><label>${f.label}</label><select data-key="${f.key}">${f.options.map(o=>`<option value="${o}" ${o===value?'selected':''}>${o}</option>`).join('')}</select></div>`;
+    if (f.type === 'lookupExpertise') {
+      const options = (lookupCache.expertise || []).map(item => `<option value="${escapeHTML(String(item.ID))}" ${String(item.ID)===String(value)?'selected':''}>${escapeHTML(`${item.Level==='3'?'— ':''}${item.Name}`)}</option>`).join('');
+      return `<div class="field"><label>${f.label}</label><select data-key="${f.key}"><option value="">ไม่ระบุ</option>${options}</select></div>`;
+    }
+    if (f.type === 'lookupWork') {
+      const options = (lookupCache.works || []).map(item => `<option data-type="${item.WorkType}" value="${escapeHTML(String(item.ID))}" ${String(item.ID)===String(value)?'selected':''}>[${item.WorkType}] ${escapeHTML(item.Title)}</option>`).join('');
+      return `<div class="field"><label>${f.label}</label><select data-key="${f.key}" onchange="Admin.syncWorkType(this)"><option value="">ไม่ระบุ</option>${options}</select></div>`;
+    }
+    if (f.type === 'image') return `<div class="field"><label>${f.label}</label>
+      <input type="file" accept="image/*" data-key="${f.key}" data-image="1" onchange="Admin.handleImageChange(event)">
+      <input type="hidden" data-key="${f.key}" value="${escapeHTML(String(value))}">
+      <img class="img-preview" src="${value?('https://drive.google.com/uc?export=view&id='+value):''}" style="${value?'display:block':''}">
+      </div>`;
+    const type = f.type === 'number' ? 'number' : (f.type === 'date' ? 'date' : (f.type === 'url' ? 'url' : 'text'));
+    return `<div class="field"><label>${f.label}</label><input type="${type}" data-key="${f.key}" value="${escapeHTML(String(value))}"></div>`;
+  }
+
+  async function loadLookups() {
+    if (!lookupCache.expertise) {
+      const res = await fetch(`${CONFIG.API_URL}?sheet=Expertise&action=list&limit=500`).then(r=>r.json()).catch(()=>({data:[]}));
+      lookupCache.expertise = res.data || [];
+    }
+    if (!lookupCache.works) {
+      const types = ['Dashboards','Research','Publications','Projects','Training','Blog','References'];
+      const results = await Promise.all(types.map(type => fetch(`${CONFIG.API_URL}?sheet=${type}&action=list&limit=500`).then(r=>r.json()).catch(()=>({data:[]}))));
+      lookupCache.works = results.flatMap((res,index) => (res.data||[]).map(item => ({ ID:item.ID, Title:item.Title||item.Label||item.ID, WorkType:types[index] })));
+    }
+  }
+
+  function syncWorkType(select) {
+    const option = select.options[select.selectedIndex];
+    const type = option && option.dataset.type;
+    const typeSelect = document.querySelector('#modalFields [data-key="WorkType"]');
+    if (type && typeSelect) typeSelect.value = type;
+  }
+
+  function handleImageChange(e) {
+    const input = e.target;
+    const key = input.dataset.key;
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function () {
+      const base64 = reader.result.split(',')[1];
+      const folderKey = SCHEMAS[state.sheet].folderKey || 'Gallery';
+      showToast('กำลังอัปโหลดรูป...');
+      fetch(CONFIG.API_URL, {
+        method: 'POST',
+        body: JSON.stringify({ action:'uploadFile', token: state.token, folderKey, filename: file.name, mimeType: file.type, base64 })
+      }).then(r => r.json()).then(res => {
+        if (res.status !== 'ok') return showToast(res.message || 'อัปโหลดไม่สำเร็จ');
+        const hidden = input.parentElement.querySelector(`input[type=hidden][data-key="${key}"]`);
+        hidden.value = res.fileId;
+        const img = input.parentElement.querySelector('.img-preview');
+        img.src = res.url; img.style.display = 'block';
+        showToast('อัปโหลดรูปสำเร็จ');
+      }).catch(() => showToast('เชื่อมต่อ API ไม่ได้'));
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function closeForm() { document.getElementById('modalOverlay').classList.remove('show'); }
+
+  function saveForm() {
+    const data = {};
+    document.querySelectorAll('#modalFields [data-key]').forEach(el => {
+      if (el.dataset.image) return; // skip file input itself
+      data[el.dataset.key] = el.value;
+    });
+    const action = state.editingId ? 'update' : 'create';
+    const body = { action, sheet: state.sheet, token: state.token, data };
+    if (state.editingId) body.id = state.editingId;
+    fetch(CONFIG.API_URL, { method:'POST', body: JSON.stringify(body) })
+      .then(r => r.json()).then(res => {
+        if (res.status !== 'ok') return showToast(res.message || 'บันทึกไม่สำเร็จ');
+        showToast('บันทึกสำเร็จ');
+        invalidateLookups(state.sheet);
+        closeForm(); loadData();
+      }).catch(() => showToast('เชื่อมต่อ API ไม่ได้'));
+  }
+
+  function deleteRow(id) {
+    if (!confirm('ยืนยันลบข้อมูลนี้?')) return;
+    fetch(CONFIG.API_URL, { method:'POST', body: JSON.stringify({ action:'delete', sheet: state.sheet, token: state.token, id }) })
+      .then(r => r.json()).then(res => {
+        if (res.status !== 'ok') return showToast(res.message || 'ลบไม่สำเร็จ');
+        invalidateLookups(state.sheet); showToast('ลบสำเร็จ'); loadData();
+      });
+  }
+
+  function invalidateLookups(sheetName) {
+    if (sheetName === 'Expertise') lookupCache.expertise = null;
+    if (['Dashboards','Research','Publications','Projects','Training','Blog','References'].includes(sheetName)) lookupCache.works = null;
+  }
+
+  function exportCSV() {
+    const schema = SCHEMAS[state.sheet];
+    const headers = schema.fields.map(f => f.key);
+    const csv = [headers.join(',')].concat(state.rows.map(r => headers.map(h => csvEscape(r[h])).join(','))).join('\n');
+    const blob = new Blob([csv], { type:'text/csv;charset=utf-8;' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = `${state.sheet}.csv`; a.click();
+  }
+
+  function downloadTemplate() {
+    const headers = SCHEMAS[state.sheet].fields.map(f => f.key);
+    downloadText(`\ufeff${headers.join(',')}\n`, `${state.sheet}-template.csv`, 'text/csv;charset=utf-8');
+  }
+
+  function importCSV(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function () {
+      const matrix = parseCSV(reader.result);
+      if (matrix.length < 2) return showToast('ไฟล์ CSV ไม่มีแถวข้อมูล');
+      const allowed = new Set(SCHEMAS[state.sheet].fields.map(f=>f.key));
+      const headers = matrix[0].map(h=>h.replace(/^\ufeff/,'').trim());
+      const rows = matrix.slice(1).filter(row=>row.some(Boolean)).map(cells => {
+        const obj = {};
+        headers.forEach((h, i) => { if (allowed.has(h)) obj[h] = cells[i] || ''; });
+        return obj;
+      });
+      showToast(`นำเข้า ${rows.length} แถว...`);
+      Promise.all(rows.map(data => fetch(CONFIG.API_URL, { method:'POST', body: JSON.stringify({ action:'create', sheet: state.sheet, token: state.token, data }) })))
+        .then(responses => Promise.all(responses.map(r=>r.json())))
+        .then(results => {
+          const failed = results.filter(result=>result.status!=='ok');
+          showToast(failed.length ? `นำเข้าสำเร็จ ${results.length-failed.length} รายการ, ไม่สำเร็จ ${failed.length}` : `นำเข้าสำเร็จ ${results.length} รายการ`);
+          invalidateLookups(state.sheet); loadData();
+        }).catch(() => showToast('นำเข้าไม่สำเร็จ กรุณาตรวจสอบการเชื่อมต่อ'));
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  }
+
+  function parseCSV(text) {
+    const rows = []; let row = [], cell = '', quoted = false;
+    for (let i=0;i<text.length;i++) {
+      const char = text[i], next = text[i+1];
+      if (char === '"' && quoted && next === '"') { cell += '"'; i++; }
+      else if (char === '"') quoted = !quoted;
+      else if (char === ',' && !quoted) { row.push(cell); cell=''; }
+      else if ((char === '\n' || char === '\r') && !quoted) {
+        if (char === '\r' && next === '\n') i++;
+        row.push(cell); rows.push(row); row=[]; cell='';
+      } else cell += char;
+    }
+    if (cell || row.length) { row.push(cell); rows.push(row); }
+    return rows;
+  }
+
+  function downloadText(content, filename, type) {
+    const blob = new Blob([content], {type});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = filename; a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href),500);
+  }
+
+  function openUrlImport() {
+    const select = document.getElementById('urlImportTarget');
+    select.innerHTML = URL_IMPORT_TARGETS.map(key=>`<option value="${key}">${SCHEMAS[key].label}</option>`).join('');
+    select.value = URL_IMPORT_TARGETS.includes(state.sheet) ? state.sheet : 'References';
+    document.getElementById('urlImportInput').value = '';
+    document.getElementById('urlImportPreview').className = 'import-preview';
+    document.getElementById('urlImportPreview').innerHTML = '';
+    document.getElementById('urlImportSave').disabled = true;
+    document.getElementById('urlImportStatus').textContent = 'รองรับโพสต์ Facebook แบบสาธารณะและเว็บทั่วไป ระบบจะจัดข้อมูลและสร้างการอ้างอิงให้ตรวจทานก่อนบันทึก';
+    state.urlPreview = null;
+    document.getElementById('urlImportOverlay').classList.add('show');
+  }
+
+  function closeUrlImport() { document.getElementById('urlImportOverlay').classList.remove('show'); }
+
+  async function previewUrl() {
+    const url = document.getElementById('urlImportInput').value.trim();
+    if (!/^https?:\/\//i.test(url)) return showToast('กรุณาระบุ URL แบบ https:// หรือ http://');
+    const status = document.getElementById('urlImportStatus');
+    status.textContent = 'กำลังอ่าน Metadata จากแหล่งข้อมูล...';
+    document.getElementById('urlImportSave').disabled = true;
+    try {
+      const res = await fetch(CONFIG.API_URL,{method:'POST',body:JSON.stringify({action:'previewUrl',token:state.token,url})}).then(r=>r.json());
+      if (res.status !== 'ok') throw new Error(res.message || 'อ่าน URL ไม่สำเร็จ');
+      state.urlPreview = res.data;
+      status.textContent = res.data.requiresReview
+        ? 'Facebook จำกัด Metadata บางส่วน กรุณาตรวจทานและแก้ไขรายละเอียดหลังนำเข้า'
+        : 'ตรวจพบข้อมูลแล้ว กรุณาตรวจทานก่อนนำเข้า';
+      refreshUrlMapping();
+      document.getElementById('urlImportSave').disabled = false;
+    } catch (error) {
+      state.urlPreview = null;
+      status.textContent = error.message || 'ไม่สามารถอ่าน URL ได้';
+      showToast(status.textContent);
+    }
+  }
+
+  function refreshUrlMapping() {
+    if (!state.urlPreview) return;
+    const target = document.getElementById('urlImportTarget').value;
+    const data = mapUrlData(target,state.urlPreview);
+    const preview = document.getElementById('urlImportPreview');
+    const fields = Object.entries(data).filter(([,value])=>value!==''&&value!==undefined).slice(0,8);
+    preview.innerHTML = `${state.urlPreview.image?`<img src="${escapeHTML(state.urlPreview.image)}" alt="ภาพตัวอย่างจาก URL">`:''}<h4>${escapeHTML(state.urlPreview.title||state.urlPreview.url)}</h4><p>${escapeHTML(state.urlPreview.description||'ไม่พบคำอธิบายจากหน้าเว็บ')}</p><div class="import-mapping">${fields.map(([key,value])=>`<div><strong>${escapeHTML(key)}</strong><span>${escapeHTML(String(value))}</span></div>`).join('')}</div>`;
+    preview.classList.add('show');
+    document.getElementById('urlCreateReference').disabled = target === 'References';
+  }
+
+  function mapUrlData(target,meta) {
+    const date = String(meta.publishedAt||'').slice(0,10);
+    const tags = [meta.siteName,meta.contentType].filter(Boolean).join(',');
+    const maps = {
+      Dashboards:{Title:meta.title,Description:meta.description,CoverImageFileID:'',EmbedURL:meta.url,Category:'แพลตฟอร์มจาก URL',Tags:tags,Featured:'false',AccessNote:meta.siteName,SortOrder:99,Status:'published'},
+      Research:{Title:meta.title,Abstract:meta.description,Year:date?date.slice(0,4):'',Field:'ข้อมูลนำเข้าจาก URL',Authors:'',FileURL:meta.url,Tags:tags,Status:'published'},
+      Publications:{Title:meta.title,Type:'Other',Authors:'',Source:meta.siteName,Year:date?date.slice(0,4):'',DOI_URL:meta.url,Tags:tags},
+      Projects:{Title:meta.title,Description:meta.description,Category:'Agricultural Extension',YearStart:date?date.slice(0,4):'',YearEnd:date?date.slice(0,4):'',CoverImageFileID:'',Status:'published'},
+      Training:{Title:meta.title,Type:'Training',Role:'ข้อมูลนำเข้าจาก URL',Date:date,Organizer:meta.siteName,CertificateFileID:'',SourceURL:meta.url},
+      Blog:{Title:meta.title,Slug:slugify(meta.title),Excerpt:meta.description,Content:meta.description||'',ContentType:meta.contentType==='โพสต์ Facebook'?'ข่าวและกิจกรรม':'องค์ความรู้',SourceType:meta.contentType==='โพสต์ Facebook'?'Facebook':(/ข่าว/i.test(meta.siteName||'')?'ข่าว':'เว็บไซต์'),SourceURL:meta.url,Author:meta.siteName,CoverImageFileID:'',CoverImageURL:meta.image,Category:'นำเข้าจาก URL',Tags:tags,PublishDate:date,ReadTime:2,Featured:'false',Status:'published'},
+      Gallery:{ImageFileID:'',ImageURL:meta.image,Caption:meta.title,Album:meta.siteName,EventDate:date,SortOrder:99},
+      References:{WorkType:'',WorkID:'',Title:meta.title,EventDate:date,Category:meta.contentType==='โพสต์ Facebook'?'กิจกรรมและผลงานจาก Facebook':meta.contentType,Role:'หลักฐานการดำเนินงาน',Summary:meta.description,SourceName:meta.siteName,SourceURL:meta.url,Citation:meta.citation,ImageURL:meta.image,Status:'published',SortOrder:99}
+    };
+    return maps[target] || {};
+  }
+
+  function slugify(value) {
+    return String(value||'').toLowerCase().trim().replace(/[^a-z0-9ก-๙]+/g,'-').replace(/^-|-$/g,'').slice(0,80) || `import-${Date.now()}`;
+  }
+
+  async function importUrl() {
+    if (!state.urlPreview) return showToast('กรุณาตรวจสอบ URL ก่อนนำเข้า');
+    const target = document.getElementById('urlImportTarget').value;
+    const data = mapUrlData(target,state.urlPreview);
+    const save = document.getElementById('urlImportSave');
+    save.disabled = true;
+    try {
+      const created = await fetch(CONFIG.API_URL,{method:'POST',body:JSON.stringify({action:'create',sheet:target,token:state.token,data})}).then(r=>r.json());
+      if (created.status !== 'ok') throw new Error(created.message || 'บันทึกรายการไม่สำเร็จ');
+      if (target !== 'References' && document.getElementById('urlCreateReference').checked) {
+        const ref = mapUrlData('References',state.urlPreview);
+        ref.WorkType = target; ref.WorkID = created.id;
+        const linked = await fetch(CONFIG.API_URL,{method:'POST',body:JSON.stringify({action:'create',sheet:'References',token:state.token,data:ref})}).then(r=>r.json());
+        if (linked.status !== 'ok') throw new Error(`บันทึกรายการแล้ว แต่สร้างหลักฐานอ้างอิงไม่สำเร็จ: ${linked.message||''}`);
+      }
+      invalidateLookups(target); invalidateLookups('References');
+      showToast(`นำเข้าไปยัง ${SCHEMAS[target].label} สำเร็จ`);
+      closeUrlImport();
+      if (state.sheet === target) loadData();
+    } catch (error) {
+      showToast(error.message || 'นำเข้า URL ไม่สำเร็จ');
+      save.disabled = false;
+    }
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.style.display = 'block';
+    clearTimeout(t._timer);
+    t._timer = setTimeout(() => t.style.display = 'none', 2800);
+  }
+
+  function csvEscape(v) {
+    v = String(v ?? '');
+    return /[,"\n]/.test(v) ? '"' + v.replace(/"/g,'""') + '"' : v;
+  }
+  function escapeHTML(s) {
+    return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  return { init, selectSheet, gotoPage, openForm, closeForm, saveForm, deleteRow, exportCSV, downloadTemplate, importCSV, openUrlImport, closeUrlImport, previewUrl, refreshUrlMapping, importUrl, handleImageChange, syncWorkType, logout };
+})();
+
+window.onload = Admin.init;
+</script>
+</body>
+</html>

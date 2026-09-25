@@ -1,0 +1,2252 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ดร.กิตติ โพธิ์จวง | Executive Agri-Tech Research Portfolio</title>
+<meta name="description" content="แฟ้มสะสมผลงานด้านข้อมูลการเกษตร งานวิจัย เทคโนโลยี และนวัตกรรมดิจิทัลของ ดร.กิตติ โพธิ์จวง สำนักงานเกษตรจังหวัดกำแพงเพชร">
+<meta name="theme-color" content="#0f2e14">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231B5E20'/%3E%3Cpath d='M32 50V28M32 35C22 35 16 29 15 19c10 0 16 5 17 14M32 30c1-10 7-15 17-15-1 10-7 16-17 16' fill='none' stroke='%23FFE082' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+/* ===================== THEME TOKENS (สเปกกำหนด) ===================== */
+:root{
+  --primary:#1B5E20;
+  --secondary:#0F4C81;
+  --accent:#D4A017;
+  --bg:#F8FCF8;
+  --card-bg:#ffffff;
+  --text:#1a2e1a;
+  --text-muted:#516151;
+  --border:rgba(15,76,129,0.18);
+  --shadow:0 4px 24px rgba(27,94,32,0.10);
+  --nav-bg:#0f2e14;
+  --hero-grad:linear-gradient(145deg,#1B5E20 0%,#0F4C81 100%);
+  --radius:16px;
+  --transition:0.3s cubic-bezier(.4,0,.2,1);
+}
+[data-theme="dark"]{
+  --bg:#0c1a14; --card-bg:#102019; --text:#e8f5e9; --text-muted:#9db8a6;
+  --border:rgba(212,160,23,0.2); --shadow:0 4px 24px rgba(0,0,0,0.5);
+  --nav-bg:#081310; --hero-grad:linear-gradient(145deg,#0d3d12 0%,#0a3258 100%);
+}
+body.mourning{filter:grayscale(100%) contrast(0.96)}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Prompt','Poppins',sans-serif;background:var(--bg);color:var(--text);transition:background var(--transition),color var(--transition);min-height:100vh;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* HEADER */
+header.site-header{position:sticky;top:0;z-index:900;background:var(--nav-bg);box-shadow:0 2px 10px rgba(0,0,0,0.2)}
+.header-top{display:flex;align-items:center;gap:14px;padding:10px 20px;color:#dcecdd}
+.header-top img.logo{width:42px;height:42px;border-radius:8px;object-fit:cover;background:#fff}
+.header-top .org-text{flex:1;text-align:center;font-size:12.5px;line-height:1.5}
+.header-top .org-text strong{display:block;font-size:14px;color:#fff}
+.theme-switch{display:flex;gap:6px}
+.theme-switch button{background:transparent;border:1.5px solid rgba(255,255,255,0.3);color:#dcecdd;border-radius:8px;padding:6px 9px;cursor:pointer;font-size:13px;transition:all var(--transition)}
+.theme-switch button:hover,.theme-switch button.active{background:var(--accent);border-color:var(--accent);color:#1a1a1a}
+.theme-switch button#themeMourning.active{background:#555;border-color:#555;color:#fff}
+.theme-switch button#loginBtn{border-color:rgba(255,255,255,0.3)}
+.theme-switch button#loginBtn.logged-in{background:var(--accent);border-color:var(--accent);color:#1a1a1a}
+@media(max-width:580px){
+  .header-top{display:grid;grid-template-columns:44px minmax(0,1fr);gap:10px;padding:10px 14px}
+  .header-top .org-text{text-align:left;font-size:11.5px;line-height:1.45}
+  .header-top .org-text strong{font-size:13px}
+  .theme-switch{grid-column:1/-1;justify-content:center;flex-wrap:wrap}
+  .theme-switch button{font-size:12px;padding:6px 8px}
+}
+
+/* LOGIN / EDIT MODALS */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);display:none;align-items:center;justify-content:center;z-index:2000;padding:20px}
+.modal-overlay.show{display:flex}
+.modal{background:var(--card-bg);color:var(--text);border-radius:var(--radius);max-width:480px;width:100%;max-height:88vh;overflow-y:auto;padding:26px;box-shadow:0 24px 60px rgba(0,0,0,0.35)}
+.modal h3{color:var(--primary);margin-bottom:16px;font-size:17px}
+.modal .field{margin-bottom:14px}
+.modal .field label{display:block;font-size:12.5px;color:var(--text-muted);margin-bottom:5px;font-weight:500}
+.modal .field input,.modal .field textarea{width:100%;padding:9px 11px;border:1.5px solid var(--border);border-radius:8px;font-family:inherit;font-size:13.5px;background:var(--bg);color:var(--text)}
+.modal .field textarea{min-height:80px;resize:vertical}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
+.modal .hint{font-size:12px;color:var(--text-muted);margin-bottom:16px}
+
+/* EDIT MODE AFFORDANCES */
+.edit-fab{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;border:none;cursor:pointer;font-size:13px;display:none;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.25);z-index:5}
+body.edit-mode .edit-fab{display:flex}
+.edit-host{position:relative}
+.edit-add-btn{display:none;margin:0 auto 18px;background:var(--accent);color:#fff;border:none;border-radius:30px;padding:9px 20px;cursor:pointer;font-family:inherit;font-size:13px}
+body.edit-mode .edit-add-btn{display:inline-flex;align-items:center;gap:6px}
+
+nav.main-nav{display:flex;overflow-x:auto;background:var(--secondary);padding:0 16px}
+nav.main-nav a{color:#e3edf7;font-size:12.8px;font-weight:500;padding:13px 14px;white-space:nowrap;border-bottom:3px solid transparent;cursor:pointer;transition:all var(--transition)}
+nav.main-nav a:hover,nav.main-nav a.active{color:#fff;border-bottom-color:var(--accent)}
+
+/* PAGES */
+.page{display:none;animation:fadeIn .4s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.container{max-width:1180px;margin:0 auto;padding:40px 20px}
+.section-title{font-size:24px;color:var(--primary);margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.section-sub{color:var(--text-muted);font-size:13.5px;margin-bottom:28px}
+
+/* HERO */
+.hero{background:var(--hero-grad);color:#fff;padding:60px 20px}
+.hero-inner{max-width:1180px;margin:0 auto;display:flex;gap:40px;align-items:center}
+.hero-left{flex:0 0 60%}
+.hero-right{flex:0 0 40%;display:flex;justify-content:center}
+.hero-right img{width:300px;max-width:85%;height:auto;max-height:400px;object-fit:contain;border:none;border-radius:0;background:transparent;filter:drop-shadow(0 22px 36px rgba(0,0,0,0.35))}
+.hero-left .title-en{font-family:'Poppins',sans-serif;font-size:40px;font-weight:800;letter-spacing:-0.5px;background:linear-gradient(95deg,#ffffff 35%,#a5d6ff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 2px 18px rgba(0,0,0,0.15)}
+.hero-left .title-th{font-size:26px;font-weight:600;margin-top:6px;color:#ffe082}
+.hero-left .subtitle{font-size:16px;margin-top:14px;opacity:.92;font-weight:500}
+.hero-left .typing{font-size:16px;margin-top:18px;min-height:24px;color:#a5d6ff;font-weight:500}
+.hero-left .typing::after{content:'|';animation:blink 1s infinite}
+@keyframes blink{50%{opacity:0}}
+.hero-left .reflection{margin-top:20px;font-size:13.5px;line-height:1.8;opacity:.85;max-width:560px}
+@media(max-width:880px){.hero-inner{flex-direction:column}.hero-left,.hero-right{flex:1}.hero-right img{width:220px;max-height:280px}}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:-30px;position:relative;z-index:2}
+.stat-card{background:var(--card-bg);border-radius:var(--radius);padding:22px 16px;text-align:center;box-shadow:var(--shadow);border:1px solid var(--border)}
+.stat-card i{font-size:26px;color:var(--accent);margin-bottom:10px}
+.stat-card .val{font-size:26px;font-weight:700;color:var(--primary)}
+.stat-card .label{font-size:12px;color:var(--text-muted);margin-top:4px}
+@media(max-width:880px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* FEATURED DIGITAL WORKS */
+.featured-works{padding-top:8px}
+.section-heading-row{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:24px}
+.section-heading-row .section-sub{margin-bottom:0;max-width:680px}
+.text-link{border:0;background:transparent;color:var(--secondary);font-family:inherit;font-weight:600;font-size:13px;cursor:pointer;white-space:nowrap;padding:7px 0}
+.text-link:hover{color:var(--primary)}
+.featured-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.work-card{display:grid;grid-template-columns:180px minmax(0,1fr);min-height:270px;background:var(--card-bg);border:2px solid var(--border);border-top:4px solid var(--work-accent,var(--secondary));border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:transform var(--transition),box-shadow var(--transition),border-color var(--transition)}
+.work-card:hover{transform:translateY(-6px);border-color:var(--work-accent,var(--secondary));box-shadow:0 18px 44px rgba(15,76,129,.16)}
+.work-visual{position:relative;isolation:isolate;display:flex;align-items:center;justify-content:center;min-height:100%;overflow:hidden;background:linear-gradient(145deg,var(--work-accent,var(--secondary)),#092f4f);color:#fff}
+.work-visual::before{content:'';position:absolute;inset:14px;border:1px solid rgba(255,255,255,.28);border-radius:12px;z-index:-1}
+.work-visual::after{content:'';position:absolute;width:150px;height:150px;border:1px dashed rgba(255,255,255,.28);border-radius:50%;z-index:-1}
+.work-visual i{font-size:54px;filter:drop-shadow(0 8px 18px rgba(0,0,0,.28))}
+.work-visual .signal{position:absolute;width:8px;height:8px;border-radius:50%;background:#ffe082;box-shadow:0 0 0 7px rgba(255,224,130,.16)}
+.work-visual .signal.s1{left:26px;top:36px}.work-visual .signal.s2{right:30px;bottom:42px}.work-visual .signal.s3{right:36px;top:58px}
+.work-body{padding:22px;display:flex;flex-direction:column}
+.work-kicker{display:flex;align-items:center;gap:8px;color:var(--work-accent,var(--secondary));font-size:11.5px;font-weight:700;text-transform:uppercase;margin-bottom:8px}
+.work-kicker::before{content:'';width:18px;height:3px;border-radius:3px;background:currentColor}
+.work-body h3{font-size:18px;line-height:1.45;color:var(--primary);margin-bottom:8px}
+.work-body p{font-size:13px;line-height:1.75;color:var(--text-muted);margin-bottom:14px}
+.tech-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;margin-bottom:16px}
+.tech-tags span{font-size:10.5px;font-weight:600;color:var(--secondary);background:rgba(15,76,129,.08);border:1px solid rgba(15,76,129,.16);padding:4px 8px;border-radius:5px}
+.work-actions{display:flex;align-items:center;gap:12px}
+.visit-work{display:inline-flex;align-items:center;gap:8px;background:var(--primary);color:#fff;border-radius:8px;padding:9px 14px;font-size:12.5px;font-weight:600;transition:background var(--transition),transform var(--transition)}
+.visit-work:hover{background:var(--secondary);transform:translateX(2px)}
+.work-note{font-size:10.5px;color:var(--text-muted)}
+@media(max-width:960px){.featured-grid{grid-template-columns:1fr}.work-card{grid-template-columns:160px minmax(0,1fr)}}
+@media(max-width:580px){.section-heading-row{align-items:flex-start;flex-direction:column}.work-card{grid-template-columns:1fr}.work-visual{min-height:150px}.work-body{padding:18px}}
+
+/* TIMELINE (เก่า - ใช้กับ Innovation Lab) */
+.timeline-scroll{display:flex;gap:20px;overflow-x:auto;padding:30px 4px}
+.timeline-card{flex:0 0 220px;background:var(--card-bg);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);border:1px solid var(--border);text-align:center;backdrop-filter:blur(6px);transition:transform var(--transition)}
+.timeline-card:hover{transform:translateY(-8px) scale(1.02)}
+.timeline-card img{width:56px;height:56px;margin:0 auto 10px;border-radius:50%;object-fit:cover}
+.timeline-card .degree{font-weight:600;color:var(--primary);font-size:14px}
+.timeline-card .field{font-size:12.5px;color:var(--text-muted);margin-top:4px}
+.timeline-card .year{font-size:12px;color:var(--accent);margin-top:8px;font-weight:600}
+
+/* EDUCATION + MINDMAP — 2 คอลัมน์ */
+.edu-mindmap-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
+.edu-mindmap-grid>div{min-width:0}
+@media(max-width:920px){.edu-mindmap-grid{grid-template-columns:1fr}}
+
+/* VERTICAL EDUCATION TIMELINE (ปีใหม่อยู่บนสุด) */
+.vertical-timeline{position:relative;padding-left:30px;margin-top:10px}
+.vertical-timeline::before{content:'';position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:var(--border)}
+.vt-item{position:relative;margin-bottom:18px;background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:14px 18px;box-shadow:var(--shadow);transition:transform var(--transition)}
+.vt-item:hover{transform:translateX(4px)}
+.vt-item::before{content:'';position:absolute;left:-25px;top:20px;width:13px;height:13px;border-radius:50%;background:var(--accent);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--border)}
+.vt-item .year{color:var(--accent);font-weight:700;font-size:13px;letter-spacing:.3px}
+.vt-item .degree{color:var(--primary);font-weight:600;font-size:14.5px;margin-top:4px}
+.vt-item .field,.vt-item .uni{font-size:12.5px;color:var(--text-muted);margin-top:2px}
+
+/* 2.5D EXPERTISE FOCUS GRAPH */
+.expertise-toolbar{display:grid;grid-template-columns:minmax(180px,1fr) 180px auto;gap:9px;margin:14px 0}
+.expertise-toolbar input,.expertise-toolbar select{width:100%;border:1px solid var(--border);background:var(--card-bg);color:var(--text);border-radius:7px;padding:10px 12px;font-family:inherit;font-size:11.5px}
+.expertise-toolbar button{width:40px;border:1px solid var(--border);border-radius:7px;background:var(--card-bg);color:var(--secondary);cursor:pointer;transition:transform .2s ease,background .2s ease}
+.expertise-toolbar button:hover{transform:rotate(-18deg);background:var(--secondary);color:#fff}
+.knowledge-graph-shell{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(250px,.75fr);border:1px solid var(--border);border-radius:8px;background:var(--card-bg);box-shadow:var(--shadow);overflow:hidden;min-height:560px}
+.mindmap-wrap{position:relative;overflow:hidden;display:flex;justify-content:center;min-width:0;background:radial-gradient(circle at 50% 48%,rgba(102,187,106,.16),transparent 26%),linear-gradient(rgba(27,94,32,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(27,94,32,.035) 1px,transparent 1px);background-size:auto,28px 28px,28px 28px;perspective:900px}
+.mindmap-wrap::after{content:'';position:absolute;inset:8%;border:1px solid rgba(102,187,106,.13);border-radius:50%;pointer-events:none;transform:rotateX(67deg)}
+.mindmap{position:relative;width:680px;height:560px;flex-shrink:0;transform-style:preserve-3d}
+.mindmap svg.connections{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.mindmap-center{position:absolute;width:132px;height:132px;border-radius:50%;background:linear-gradient(145deg,#0B3D2E,#1B5E20 62%,#2E7D32);color:#fff;display:grid;place-items:center;text-align:center;font-size:11px;font-weight:600;box-shadow:0 22px 50px rgba(11,61,46,.34),0 0 0 10px rgba(102,187,106,.1);z-index:5;transform:translate(-50%,-50%);isolation:isolate}
+.mindmap-center::before,.mindmap-center::after{content:'';position:absolute;inset:-15px;border:1px solid rgba(102,187,106,.35);border-radius:50%;animation:orbitPulse 3.6s ease-in-out infinite;z-index:-1}.mindmap-center::after{inset:-28px;animation-delay:1.2s}
+.mindmap-center img{width:74px;height:74px;object-fit:contain;object-position:top;border-radius:50%;background:rgba(255,255,255,.1)}.mindmap-center span{display:block;margin-top:-8px}
+@keyframes orbitPulse{0%,100%{transform:scale(.94);opacity:.35}50%{transform:scale(1.05);opacity:.8}}
+.mindmap-node{position:absolute;z-index:3;font-family:inherit;letter-spacing:0;transform:translate(-50%,-50%);transition:transform .42s cubic-bezier(.2,.8,.2,1),opacity .32s ease,filter .32s ease,background .25s ease}
+.mindmap-node.level2{display:grid;grid-template-columns:34px minmax(0,1fr) auto;align-items:center;gap:8px;width:158px;min-height:58px;padding:8px 10px;border:1px solid color-mix(in srgb,var(--node-color) 62%,white);border-radius:8px;background:color-mix(in srgb,var(--card-bg) 91%,var(--node-color));color:var(--text);box-shadow:0 12px 28px rgba(11,61,46,.12);cursor:pointer;text-align:left}
+.mindmap-node.level2>i{width:34px;height:34px;display:grid;place-items:center;border-radius:50%;background:color-mix(in srgb,var(--node-color) 14%,transparent);color:var(--node-color);font-size:14px}
+.mindmap-node.level2 .node-label{font-size:10.5px;font-weight:650;line-height:1.3}.mindmap-node.level2:hover{transform:translate(-50%,-50%) translateZ(24px) scale(1.045);box-shadow:0 18px 38px rgba(11,61,46,.2)}
+.mindmap-node.level2.active{background:var(--node-color);border-color:var(--node-color);color:#fff;transform:translate(-50%,-50%) translateZ(34px) scale(1.08);box-shadow:0 20px 46px color-mix(in srgb,var(--node-color) 32%,transparent),0 0 0 5px color-mix(in srgb,var(--node-color) 14%,transparent)}
+.mindmap-node.level2.active>i{background:rgba(255,255,255,.16);color:#fff}.mindmap-node.level2 .relation-count{display:grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:var(--node-color);color:#fff;font-size:9px}.mindmap-node.level2.active .relation-count{background:#fff;color:var(--node-color)}
+.mindmap-node.level3{border:1px solid color-mix(in srgb,var(--node-color,#D4A017) 55%,white);border-radius:16px;padding:5px 9px;background:var(--card-bg);color:var(--node-color,#8a6500);font-size:9.5px;font-weight:600;white-space:nowrap;cursor:pointer;opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.72)}
+.mindmap-node.level3.visible{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}.mindmap-node.level3:hover,.mindmap-node.level3.active{background:var(--node-color,#D4A017);color:#fff;transform:translate(-50%,-50%) scale(1.08)}
+.mindmap.has-focus .mindmap-node.level2:not(.active):not(.related){opacity:.32;filter:saturate(.35)}.mindmap.is-filtered .mindmap-node.filter-muted{opacity:.15;pointer-events:none}.mindmap-node.search-muted{opacity:.14!important}.mindmap-node.search-match{box-shadow:0 0 0 4px rgba(212,160,23,.22),0 16px 32px rgba(11,61,46,.18)}
+.mindmap svg .expertise-line{fill:none;stroke:var(--line-color,var(--border));stroke-width:1.6;opacity:.4;transition:opacity .35s ease,stroke-width .35s ease}.mindmap svg .expertise-line.flow{stroke-dasharray:2 12;stroke-linecap:round;animation:networkFlow 3.6s linear infinite;opacity:.62}.mindmap svg .expertise-line.child-line{opacity:0}.mindmap svg .expertise-line.child-line.visible{opacity:.7}.mindmap svg .expertise-line.active{opacity:1;stroke-width:3}
+.mindmap svg .knowledge-link{fill:none;stroke:#0F4C81;stroke-width:1.2;stroke-dasharray:5 7;opacity:.2;transition:opacity .35s ease,stroke-width .35s ease}.mindmap svg .knowledge-link.active{opacity:.95;stroke-width:3;stroke-dasharray:4 5}.mindmap-node.level2.graph-neighbor{opacity:.92!important;filter:none!important;box-shadow:0 0 0 4px rgba(15,76,129,.12),0 14px 30px rgba(11,61,46,.14)}
+@keyframes networkFlow{to{stroke-dashoffset:-56}}
+.expertise-detail{padding:24px 20px;border-left:1px solid var(--border);background:linear-gradient(180deg,color-mix(in srgb,var(--detail-color,var(--secondary)) 6%,var(--card-bg)),var(--card-bg));min-width:0}.expertise-detail .detail-eyebrow{font-size:9px;font-weight:700;text-transform:uppercase;color:var(--detail-color,var(--secondary));margin-bottom:7px}.expertise-detail h4{font-size:18px;line-height:1.35;color:var(--primary);margin-bottom:7px}.expertise-detail>p{font-size:12px;color:var(--text-muted);line-height:1.7}
+.expertise-metrics{display:flex;gap:8px;margin:15px 0}.expertise-metric{flex:1;padding:9px;border:1px solid var(--border);border-radius:7px;background:var(--card-bg)}.expertise-metric strong{display:block;color:var(--detail-color,var(--secondary));font-size:17px}.expertise-metric span{font-size:9px;color:var(--text-muted)}
+.skill-chips{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}.skill-chips button{border:1px solid var(--border);background:var(--card-bg);color:var(--text-muted);border-radius:14px;padding:5px 8px;font:500 9.5px inherit;cursor:pointer}.skill-chips button:hover{border-color:var(--detail-color);color:var(--detail-color)}
+.expertise-related-list{display:grid;gap:8px;margin-top:14px}.expertise-work{display:grid;grid-template-columns:1fr auto;gap:7px 10px;align-items:center;padding:10px;border:1px solid var(--border);border-radius:7px;background:var(--card-bg);transition:transform .2s ease,border-color .2s ease}.expertise-work:hover{transform:translateX(3px);border-color:var(--detail-color)}.expertise-work .work-type{font-size:8.5px;font-weight:700;color:var(--detail-color);text-transform:uppercase}.expertise-work strong{display:block;font-size:10.5px;color:var(--text);line-height:1.4}.expertise-work p{font-size:9.5px;color:var(--text-muted);margin-top:2px}.expertise-work button{grid-column:2;grid-row:1/3;border:0;background:none;color:var(--detail-color);cursor:pointer;padding:7px}.expertise-empty{font-size:11px;color:var(--text-muted);padding:10px 0}
+.knowledge-relations{margin-top:16px;padding-top:14px;border-top:1px solid var(--border)}.knowledge-relations h5{font-size:10px;color:var(--text-muted);margin-bottom:8px;text-transform:uppercase}.knowledge-relation{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:9px 0;border-bottom:1px dashed var(--border)}.knowledge-relation button{border:0;background:transparent;color:var(--detail-color);font-family:inherit;font-size:11px;font-weight:600;text-align:left;cursor:pointer}.knowledge-relation span{font-size:9px;color:var(--text-muted)}.knowledge-relation p{grid-column:1/-1;font-size:9px;color:var(--text-muted);line-height:1.5}
+@media(max-width:1080px){.knowledge-graph-shell{grid-template-columns:1fr}.expertise-detail{border-left:0;border-top:1px solid var(--border)}.mindmap-wrap{overflow-x:auto;justify-content:flex-start}.mindmap{margin:auto}}
+@media(max-width:680px){.expertise-toolbar{grid-template-columns:1fr 42px}.expertise-toolbar select{grid-column:1/-1;grid-row:2}.knowledge-graph-shell{min-height:0}.mindmap-wrap{display:block;overflow-x:auto;padding:14px}.mindmap-wrap::after{display:none}.mindmap{width:max-content;height:auto;display:flex;gap:10px;transform:none;margin:0}.mindmap svg,.mindmap-center,.mindmap-node.level3{display:none}.mindmap-node.level2{position:relative;left:auto!important;top:auto!important;transform:none!important;flex:0 0 158px;opacity:1}.mindmap-node.level2.active{transform:none!important}.expertise-detail{padding:18px}.mindmap-center::before,.mindmap-center::after{animation:none}}
+@media(prefers-reduced-motion:reduce){.mindmap-center::before,.mindmap-center::after,.mindmap svg .expertise-line.flow{animation:none}.mindmap-node{transition:none}}
+
+/* QUICK ACCESS */
+.quick-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+.quick-card{background:var(--card-bg);border-radius:var(--radius);padding:24px 16px;text-align:center;border:1px solid var(--border);box-shadow:var(--shadow);cursor:pointer;transition:transform var(--transition),box-shadow var(--transition)}
+.quick-card:hover{transform:translateY(-6px) rotateX(4deg);box-shadow:0 14px 34px rgba(15,76,129,0.18)}
+.quick-card i{font-size:24px;color:var(--primary);margin-bottom:10px}
+.quick-card span{font-size:13px;font-weight:500}
+
+/* GENERIC GRID / CARD */
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+.toolbar input,.toolbar select{padding:9px 13px;border:1.5px solid var(--border);border-radius:8px;font-family:inherit;font-size:13px;background:var(--card-bg);color:var(--text)}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.item-card{background:var(--card-bg);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow);transition:transform var(--transition)}
+.item-card:hover{transform:translateY(-5px)}
+.item-card img.cover{width:100%;height:160px;object-fit:cover}
+.item-card .body{padding:16px}
+.item-card .tag{display:inline-block;background:rgba(15,76,129,0.1);color:var(--secondary);font-size:11px;padding:3px 9px;border-radius:20px;margin-bottom:8px}
+.item-card h4{font-size:15px;color:var(--primary);margin-bottom:6px}
+.item-card p{font-size:12.5px;color:var(--text-muted);line-height:1.6}
+.item-card .meta{font-size:11.5px;color:var(--accent);margin-top:8px;font-weight:600}
+.empty-state{text-align:center;padding:60px 20px;color:var(--text-muted)}
+.load-more{display:block;margin:30px auto 0;background:var(--secondary);color:#fff;border:none;padding:10px 24px;border-radius:30px;cursor:pointer;font-family:inherit}
+
+/* GALLERY MASONRY */
+.masonry{column-count:4;column-gap:14px}
+.masonry .g-item{margin-bottom:14px;border-radius:12px;overflow:hidden;cursor:pointer;break-inside:avoid}
+.masonry .g-item img{width:100%;transition:transform .4s}
+.masonry .g-item:hover img{transform:scale(1.06)}
+@media(max-width:1000px){.masonry{column-count:3}}
+@media(max-width:680px){.masonry{column-count:2}}
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.9);display:none;align-items:center;justify-content:center;z-index:1500;padding:20px}
+.lightbox.show{display:flex}
+.lightbox img{max-width:90vw;max-height:85vh;border-radius:8px}
+.lightbox .close{position:absolute;top:20px;right:30px;color:#fff;font-size:28px;cursor:pointer}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+.contact-list .c-item{display:flex;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--border)}
+.contact-list .c-item i{width:36px;height:36px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center}
+.contact-grid iframe{width:100%;height:320px;border:0;border-radius:var(--radius)}
+@media(max-width:880px){.contact-grid{grid-template-columns:1fr}}
+
+footer{background:var(--nav-bg);color:#9db8a6;text-align:center;padding:24px;font-size:12.5px;margin-top:40px}
+
+/* ===================== EXECUTIVE AGRI-TECH REDESIGN ===================== */
+.site-header{border-bottom:1px solid rgba(255,255,255,.08)}
+.header-top{max-width:1240px;margin:0 auto;padding-top:8px;padding-bottom:8px}
+.header-top .org-text{text-align:left}
+nav.main-nav{justify-content:center;background:rgba(15,76,129,.96);scrollbar-width:thin}
+nav.main-nav a{font-size:12.5px;padding:12px 13px;letter-spacing:0}
+
+.hero{position:relative;isolation:isolate;height:clamp(520px,72vh,650px);padding:0 24px;overflow:hidden;background:
+  radial-gradient(circle at 72% 30%,rgba(63,174,120,.24),transparent 28%),
+  linear-gradient(122deg,#0a2f20 0%,#124f36 42%,#0d466d 100%)}
+.hero::before{content:'';position:absolute;inset:0;z-index:-2;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(to right,#000,transparent 72%)}
+.hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:28%;z-index:-1;background:linear-gradient(to top,rgba(5,28,19,.56),transparent)}
+.hero-inner{position:relative;height:100%;max-width:1240px;gap:22px;align-items:stretch}
+.hero-left{flex:0 0 58%;align-self:center;padding:42px 0 64px;z-index:3}
+.hero-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:18px;color:#b8e7c2;font:600 12px/1.5 'Poppins','Prompt',sans-serif;text-transform:uppercase;letter-spacing:0}
+.hero-eyebrow::before{content:'';width:38px;height:3px;border-radius:3px;background:var(--accent)}
+.hero-left .title-th{font-size:clamp(38px,5vw,68px);font-weight:700;line-height:1.12;margin:0;color:#fff;letter-spacing:0;max-width:700px}
+.hero-left .title-en{font-size:20px;font-weight:500;line-height:1.4;margin-top:10px;background:none;-webkit-text-fill-color:#ffe082;color:#ffe082;letter-spacing:0;text-shadow:none}
+.hero-left .subtitle{display:inline-flex;align-items:center;margin-top:20px;padding:7px 12px;border-left:3px solid var(--accent);background:rgba(255,255,255,.08);font-size:15px;color:#fff}
+.hero-left .typing{font-size:18px;margin-top:16px;color:#a9d9ff;font-weight:600}
+.hero-left .reflection{margin-top:18px;font-size:14px;line-height:1.85;max-width:620px;color:#d9ece0;opacity:1}
+.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.hero-btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:10px 16px;border:1.5px solid rgba(255,255,255,.5);border-radius:7px;background:transparent;color:#fff;font:600 13px 'Prompt',sans-serif;cursor:pointer;transition:all var(--transition)}
+.hero-btn.primary{background:var(--accent);border-color:var(--accent);color:#18220f}
+.hero-btn:hover{transform:translateY(-2px);background:#fff;border-color:#fff;color:var(--primary)}
+.hero-right{position:relative;flex:1;align-items:flex-end;justify-content:center;z-index:2}
+.hero-right::before{content:'';position:absolute;width:410px;height:410px;bottom:58px;border:1px solid rgba(255,255,255,.2);border-radius:50%;box-shadow:0 0 0 34px rgba(255,255,255,.025),0 0 0 68px rgba(255,255,255,.018)}
+.hero-right img{position:relative;width:min(440px,94%);max-width:none;max-height:94%;height:auto;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 28px 38px rgba(0,0,0,.42));z-index:3}
+.hero-data-network{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.62}
+.hero-data-network svg{width:100%;height:100%}
+.network-line{stroke:rgba(184,231,194,.32);stroke-width:1;stroke-dasharray:5 8;animation:networkDash 14s linear infinite}
+.network-node{fill:#ffe082;filter:drop-shadow(0 0 7px rgba(255,224,130,.7));animation:nodePulse 3s ease-in-out infinite}
+.network-node:nth-of-type(2n){animation-delay:1.2s}
+@keyframes networkDash{to{stroke-dashoffset:-120}}
+@keyframes nodePulse{50%{opacity:.35;transform:scale(.75);transform-origin:center}}
+
+.impact-shell{position:relative;z-index:5;margin-top:-48px}
+.impact-label{display:inline-flex;align-items:center;gap:12px;margin:0 0 14px 4px;padding:7px 12px;border-radius:6px;background:var(--nav-bg);color:#fff;font-size:12px;font-weight:600;text-transform:uppercase;box-shadow:0 5px 18px rgba(0,0,0,.16)}
+.impact-label span{color:#ffe082;font-family:'Poppins',sans-serif;font-size:13px}
+.stats-grid{margin-top:0;gap:12px}
+.stat-card{position:relative;overflow:hidden;border:1.5px solid var(--border);border-radius:10px;padding:20px 14px;text-align:left}
+.stat-card::after{content:'';position:absolute;left:0;bottom:0;width:100%;height:3px;background:linear-gradient(90deg,var(--primary),var(--secondary),var(--accent))}
+.stat-card i{font-size:20px;margin-bottom:12px}
+.stat-card .val{font-size:25px;line-height:1.15}
+.stat-card .label{font-size:11.5px;line-height:1.45}
+
+.home-band{padding:36px 0}
+.home-band.alt{background:linear-gradient(180deg,rgba(15,76,129,.035),rgba(27,94,32,.035));border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.editorial-heading{display:grid;grid-template-columns:78px minmax(0,1fr) auto;gap:22px;align-items:end;margin-bottom:28px}
+.section-index{font:700 38px/1 'Poppins',sans-serif;color:var(--accent);letter-spacing:0}
+.section-index::after{content:'.';color:var(--primary)}
+.editorial-heading .section-title{font-size:27px;margin-bottom:5px}
+.editorial-heading .section-sub{margin-bottom:0;max-width:700px}
+.editorial-heading .text-link{align-self:center}
+
+.featured-works{padding-top:34px;padding-bottom:54px}
+.work-card{border-radius:10px;border-width:1.5px;box-shadow:0 10px 32px rgba(15,76,129,.09)}
+.work-body h3{font-size:17px}
+
+.expertise-band .edu-mindmap-grid{grid-template-columns:1fr;gap:42px}
+.expertise-band .panel-heading{display:flex;align-items:center;gap:10px;margin-bottom:6px;color:var(--primary);font-size:19px}
+.expertise-band .panel-heading i{color:var(--accent)}
+.expertise-band .mindmap{transform:none;margin-bottom:0}
+.expertise-band .vertical-timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding-left:0;margin-top:18px}
+.expertise-band .vertical-timeline::before{display:none}.expertise-band .vt-item{margin:0;padding:16px}.expertise-band .vt-item::before{display:none}
+.vt-item{border-width:1.5px;border-radius:9px;box-shadow:0 7px 24px rgba(27,94,32,.07)}
+@media(max-width:900px){.expertise-band .vertical-timeline{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.expertise-band .vertical-timeline{grid-template-columns:1fr}}
+
+.research-story-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.research-story{position:relative;min-height:245px;padding:26px;background:var(--card-bg);border:1.5px solid var(--border);border-top:4px solid var(--story-accent,var(--primary));border-radius:10px;box-shadow:var(--shadow);cursor:pointer;transition:transform var(--transition),border-color var(--transition)}
+.research-story:hover{transform:translateY(-6px);border-color:var(--story-accent,var(--primary))}
+.research-story .story-icon{width:46px;height:46px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:color-mix(in srgb,var(--story-accent,var(--primary)) 12%,transparent);color:var(--story-accent,var(--primary));font-size:20px;margin-bottom:28px}
+.research-story .story-type{font-size:11px;font-weight:700;color:var(--story-accent,var(--primary));margin-bottom:7px;text-transform:uppercase}
+.research-story h3{font-size:18px;line-height:1.45;color:var(--text);margin-bottom:9px}
+.research-story p{font-size:13px;line-height:1.75;color:var(--text-muted)}
+.research-story .story-arrow{position:absolute;right:22px;top:25px;color:var(--story-accent,var(--primary))}
+
+.explore-section .quick-grid{grid-template-columns:repeat(5,1fr);gap:12px}
+.explore-section .quick-card{min-height:118px;border-radius:9px;border:1.5px solid var(--border);padding:20px 12px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;text-align:left;box-shadow:none}
+.explore-section .quick-card:hover{transform:translateY(-4px);background:var(--primary);border-color:var(--primary);color:#fff;box-shadow:0 14px 30px rgba(27,94,32,.18)}
+.explore-section .quick-card:hover i{color:#ffe082}
+.explore-section .quick-card i{font-size:21px;margin:0;color:var(--secondary)}
+.explore-section .quick-card span{font-size:12.5px;line-height:1.45}
+
+.contact-cta{margin:20px auto 58px;max-width:1140px;position:relative;overflow:hidden;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;padding:34px 40px;border-radius:10px;background:linear-gradient(125deg,#123f28,#0f4c51 58%,#0f4c81);color:#fff;box-shadow:0 18px 45px rgba(15,76,129,.2)}
+.contact-cta::after{content:'05';position:absolute;right:155px;top:-28px;font:700 130px/1 'Poppins',sans-serif;color:rgba(255,255,255,.055)}
+.contact-cta .cta-label{color:#ffe082;font-size:11px;font-weight:700;margin-bottom:8px}
+.contact-cta h2{font-size:25px;line-height:1.4;margin-bottom:6px}
+.contact-cta p{color:#cfe3d5;font-size:13px}
+.contact-cta button{position:relative;z-index:2;border:0;border-radius:7px;background:var(--accent);color:#18220f;padding:12px 18px;font:600 13px 'Prompt',sans-serif;cursor:pointer}
+
+/* EVIDENCE & REFERENCE TIMELINE */
+.evidence-intro{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(300px,.6fr);gap:28px;align-items:start;margin-bottom:30px}
+.evidence-lead{font-size:15px;line-height:1.85;color:var(--text-muted);max-width:760px}
+.evidence-summary{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.evidence-summary .summary-box{padding:16px;background:var(--card-bg);border:1.5px solid var(--border);border-radius:8px}
+.summary-box strong{display:block;font:700 24px/1.2 'Poppins','Prompt',sans-serif;color:var(--primary)}
+.summary-box span{font-size:11.5px;color:var(--text-muted)}
+.evidence-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 28px}
+.evidence-toolbar input,.evidence-toolbar select{min-height:42px;padding:9px 12px;border:1.5px solid var(--border);border-radius:7px;background:var(--card-bg);color:var(--text);font:13px 'Prompt',sans-serif}
+.evidence-toolbar input{flex:1;min-width:230px}
+.evidence-timeline{position:relative;max-width:1060px;margin:0 auto;padding:4px 0 4px 190px}
+.evidence-timeline::before{content:'';position:absolute;left:157px;top:0;bottom:0;width:2px;background:linear-gradient(var(--secondary),var(--primary),var(--accent))}
+.evidence-item{position:relative;margin-bottom:22px;padding:23px 26px;background:var(--card-bg);border:1.5px solid var(--border);border-left:4px solid var(--evidence-color,var(--primary));border-radius:9px;box-shadow:0 8px 28px rgba(15,76,129,.08);transition:transform var(--transition),border-color var(--transition)}
+.evidence-item:hover{transform:translateX(5px);border-color:var(--evidence-color,var(--primary))}
+.evidence-date{position:absolute;left:-190px;top:18px;width:142px;text-align:right}
+.evidence-date strong{display:block;font:700 17px/1.35 'Prompt',sans-serif;color:var(--primary)}
+.evidence-date span{font-size:11px;color:var(--text-muted)}
+.evidence-dot{position:absolute;left:-43px;top:26px;width:15px;height:15px;border-radius:50%;background:var(--evidence-color,var(--primary));border:4px solid var(--bg);box-shadow:0 0 0 2px var(--evidence-color,var(--primary))}
+.evidence-category{display:inline-flex;align-items:center;gap:6px;margin-bottom:9px;padding:4px 8px;border-radius:5px;background:color-mix(in srgb,var(--evidence-color,var(--primary)) 10%,transparent);color:var(--evidence-color,var(--primary));font-size:10.5px;font-weight:700}
+.evidence-item h3{font-size:17px;line-height:1.5;color:var(--text);margin-bottom:7px}
+.evidence-role{font-size:12px;font-weight:600;color:var(--secondary);margin-bottom:8px}.evidence-role i{margin-right:6px;color:var(--accent)}
+.evidence-item .summary{font-size:13px;line-height:1.75;color:var(--text-muted)}
+.citation-box{margin-top:15px;padding:11px 13px;border-left:3px solid var(--accent);background:rgba(212,160,23,.055);font-size:11px;line-height:1.65;color:var(--text-muted);word-break:break-word}
+.citation-box strong{color:var(--text);font-weight:600}
+.evidence-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px}
+.source-name{font-size:10.5px;color:var(--text-muted)}
+.source-link{display:inline-flex;align-items:center;gap:7px;color:var(--secondary);font-size:12px;font-weight:600}
+.source-link:hover{color:var(--primary)}
+.empty-evidence{text-align:center;padding:54px 20px;color:var(--text-muted)}
+
+/* KNOWLEDGE & STORY HUB */
+.blog-intro{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.65fr);gap:32px;align-items:end;padding-bottom:26px;border-bottom:1px solid var(--border);margin-bottom:22px}
+.blog-intro .kicker{font:700 11px/1.4 'Poppins','Prompt',sans-serif;color:var(--secondary);text-transform:uppercase;margin-bottom:8px}
+.blog-intro .section-title{font-size:30px;line-height:1.35;margin-bottom:10px}
+.blog-intro p{font-size:14px;line-height:1.8;color:var(--text-muted);max-width:760px}
+.blog-intro-note{padding:16px 18px;border-left:4px solid var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--card-bg));font-size:12.5px;line-height:1.7;color:var(--text-muted)}
+.blog-toolbar{display:grid;grid-template-columns:minmax(260px,1fr) 220px 190px;gap:10px;margin-bottom:28px}
+.blog-toolbar input,.blog-toolbar select{min-height:44px;padding:9px 12px;border:1.5px solid var(--border);border-radius:7px;background:var(--card-bg);color:var(--text);font:13px 'Prompt',sans-serif}
+.blog-featured{margin-bottom:26px}
+.blog-featured-card{display:grid;grid-template-columns:minmax(280px,.9fr) minmax(0,1.1fr);overflow:hidden;border:2px solid var(--primary);border-radius:8px;background:var(--card-bg);box-shadow:0 16px 40px rgba(15,76,129,.12);cursor:pointer}
+.blog-featured-media,.blog-card-media{position:relative;overflow:hidden;background:linear-gradient(135deg,#dff3e2,#dcecf8)}
+.blog-featured-media{min-height:330px}.blog-featured-media img,.blog-card-media img{width:100%;height:100%;object-fit:cover;transition:transform .45s ease}
+.blog-featured-card:hover img,.blog-card:hover img{transform:scale(1.035)}
+.blog-media-placeholder{position:absolute;inset:0;display:grid;place-items:center;color:var(--primary);font-size:50px;background:linear-gradient(145deg,rgba(102,187,106,.2),rgba(15,76,129,.14))}
+.blog-featured-copy{padding:34px;display:flex;flex-direction:column;justify-content:center}
+.blog-badges{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}.blog-badge{padding:4px 8px;border-radius:5px;background:rgba(46,125,50,.1);color:var(--secondary);font-size:10.5px;font-weight:700}.blog-badge.source{background:rgba(15,76,129,.1);color:#0f4c81}
+.blog-featured-copy h3{font-size:25px;line-height:1.45;margin-bottom:12px;color:var(--text)}
+.blog-featured-copy p,.blog-card-copy p{font-size:13px;line-height:1.75;color:var(--text-muted)}
+.blog-meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px;font-size:11px;color:var(--text-muted)}
+.blog-meta i{color:var(--secondary);margin-right:4px}.blog-read-action{margin-left:auto;color:var(--secondary);font-weight:700}
+.blog-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.blog-card{display:flex;flex-direction:column;min-height:370px;overflow:hidden;border:1.5px solid var(--border);border-top:4px solid var(--blog-accent,var(--secondary));border-radius:8px;background:var(--card-bg);box-shadow:0 8px 24px rgba(15,76,129,.07);cursor:pointer;transition:transform var(--transition),box-shadow var(--transition),border-color var(--transition)}
+.blog-card:hover{transform:translateY(-5px);border-color:var(--blog-accent,var(--secondary));box-shadow:0 15px 34px rgba(15,76,129,.14)}
+.blog-card-media{height:180px;flex:none}.blog-card-copy{padding:20px;display:flex;flex:1;flex-direction:column}.blog-card-copy h3{font-size:17px;line-height:1.5;margin-bottom:8px;color:var(--text)}.blog-card-copy .blog-meta{margin-top:auto;padding-top:14px}
+.blog-empty{grid-column:1/-1;text-align:center;padding:54px 20px;border:1.5px dashed var(--border);border-radius:8px;color:var(--text-muted)}
+.blog-reader{position:relative;width:min(860px,100%);max-height:90vh;overflow-y:auto;background:var(--card-bg);border-radius:8px;box-shadow:0 24px 70px rgba(0,0,0,.36)}
+.blog-reader-close{position:sticky;float:right;top:12px;right:12px;z-index:2;width:38px;height:38px;border:0;border-radius:50%;background:rgba(12,26,20,.82);color:#fff;font-size:18px;cursor:pointer}
+.blog-reader-cover{width:100%;max-height:410px;object-fit:cover;background:var(--bg)}
+.blog-reader-cover[hidden]{display:none}
+.blog-reader-content{padding:34px 42px 42px}.blog-reader-content h2{font-size:27px;line-height:1.45;margin:9px 0 12px;color:var(--text)}
+.blog-reader-body{margin-top:24px;font-size:14px;line-height:1.9;color:var(--text)}.blog-reader-body p{margin-bottom:14px}
+.blog-source-link{display:inline-flex;align-items:center;gap:8px;margin-top:20px;padding:10px 14px;border:1.5px solid var(--secondary);border-radius:7px;color:var(--secondary);font-size:12.5px;font-weight:700}.blog-source-link:hover{background:var(--secondary);color:#fff}
+
+.reveal-block{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal-block.is-visible{opacity:1;transform:none}
+
+@media(max-width:1000px){
+  .hero-left{flex-basis:56%}.hero-right img{width:min(390px,100%)}
+  .expertise-band .edu-mindmap-grid{grid-template-columns:1fr}
+  .expertise-band .mindmap{transform:scale(1);margin-bottom:0}
+  .explore-section .quick-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:760px){
+  .hero{height:620px;min-height:620px;padding:0 20px}
+  .hero-inner{display:block}
+  .hero-left{width:100%;padding:34px 0 0}.hero-left .title-th{font-size:38px}.hero-left .title-en{font-size:16px}
+  .hero-eyebrow{font-size:10px;margin-bottom:12px}.hero-left .subtitle{font-size:13px;margin-top:14px}.hero-left .typing{font-size:15px;margin-top:12px}
+  .hero-left .reflection{max-width:100%;font-size:12.5px;line-height:1.7;margin-top:12px}
+  .hero-actions{width:172px;display:flex;flex-direction:column;margin-top:17px}.hero-btn{min-height:39px;padding:8px 10px;font-size:11.5px}
+  .hero-right{position:absolute;right:-24px;bottom:0;width:225px;height:252px}.hero-right::before{width:224px;height:224px;bottom:4px}.hero-right img{width:195px;max-height:252px}
+  .impact-shell{margin-top:-22px}.impact-label{color:#fff}
+  .editorial-heading{grid-template-columns:60px 1fr}.editorial-heading>*:last-child{grid-column:2}.section-index{font-size:31px}
+  .research-story-grid{grid-template-columns:1fr}
+  .explore-section .quick-grid{grid-template-columns:repeat(2,1fr)}
+  .contact-cta{margin:12px 20px 40px;grid-template-columns:1fr;padding:28px}.contact-cta::after{right:-6px}
+  .evidence-intro{grid-template-columns:1fr}.evidence-timeline{padding-left:28px}.evidence-timeline::before{left:7px}
+  .evidence-dot{left:-27px}.evidence-date{position:static;width:auto;text-align:left;margin-bottom:9px}.evidence-date strong{font-size:14px}.evidence-date span{margin-left:5px}
+  .evidence-item{padding:20px}
+  .blog-intro{grid-template-columns:1fr}.blog-toolbar{grid-template-columns:1fr 1fr}.blog-toolbar input{grid-column:1/-1}.blog-featured-card{grid-template-columns:1fr}.blog-featured-media{min-height:260px}.blog-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:480px){
+  .hero-left .title-th{font-size:34px}.hero-left .reflection{font-size:12px}
+  .stats-grid{grid-template-columns:1fr 1fr}.stat-card{padding:17px 12px}
+  .blog-intro .section-title{font-size:24px}.blog-toolbar,.blog-grid{grid-template-columns:1fr}.blog-toolbar input{grid-column:auto}.blog-featured-media{min-height:210px}.blog-featured-copy,.blog-reader-content{padding:24px}.blog-featured-copy h3,.blog-reader-content h2{font-size:21px}
+  .editorial-heading{grid-template-columns:44px 1fr;gap:12px}.editorial-heading .section-title{font-size:22px}
+  .explore-section .quick-grid{grid-template-columns:1fr 1fr}
+}
+@media(prefers-reduced-motion:reduce){.network-line,.network-node{animation:none}.reveal-block{opacity:1;transform:none;transition:none}}
+
+/* ===================== EDITORIAL PORTFOLIO DIRECTION =====================
+   Inspired by the pacing of modern independent portfolios: large identity,
+   generous whitespace and project-led storytelling. Agriculture remains the
+   visual and information system, rather than copying another site's styling. */
+body{background:var(--bg)}
+.site-header{position:sticky;top:0;z-index:80;background:rgba(8,43,24,.94);backdrop-filter:blur(16px)}
+.header-top{min-height:64px;padding:8px 32px}.header-top .logo{width:42px;height:42px}.header-top .org-text strong{font-size:14px}.header-top .org-text{font-size:11px}
+nav.main-nav{min-height:45px;background:rgba(255,255,255,.96);border-top:1px solid rgba(255,255,255,.1);border-bottom:1px solid var(--border)}
+nav.main-nav a{position:relative;color:#143c27;padding:13px 14px;font-size:12px}
+nav.main-nav a::after{content:'';position:absolute;left:14px;right:14px;bottom:7px;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+nav.main-nav a:hover::after,nav.main-nav a.active::after{transform:scaleX(1)}
+nav.main-nav a:hover,nav.main-nav a.active{color:#0b3d2e;background:rgba(102,187,106,.12)}
+
+.hero{height:clamp(640px,calc(100vh - 109px),860px);min-height:640px;padding:0;background:#9ea7a0;color:#fff}
+.hero::before{background:linear-gradient(90deg,rgba(7,45,24,.28),transparent 45%,rgba(11,61,46,.12)),linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:auto,80px 80px,80px 80px;mask-image:none}
+.hero::after{height:48%;background:linear-gradient(to top,rgba(7,35,23,.5),transparent)}
+.hero-inner{max-width:1440px;margin:0 auto;padding:0 48px;display:grid;grid-template-columns:1fr minmax(500px,.95fr) 1fr;gap:0}
+.hero-left{grid-column:1;align-self:center;flex:none;padding:0 0 90px;z-index:5}
+.hero-eyebrow{margin-bottom:18px;color:#fff;font-size:11px}.hero-eyebrow::before{background:#f2ca52}
+.hero-left .title-th{font-family:'Prompt',sans-serif;font-size:clamp(30px,2.55vw,42px);font-weight:600;line-height:1.2;max-width:none;white-space:nowrap}.hero-left .title-en{font-family:'Poppins',sans-serif;font-size:15px;font-weight:400;color:#f7d66c;-webkit-text-fill-color:#f7d66c}
+.hero-left .subtitle{max-width:340px;padding:0;border:0;background:none;font-size:16px;line-height:1.7}
+.hero-left .typing{font-size:14px;color:#fff;min-height:22px}.hero-left .reflection{display:none}
+.hero-actions{margin-top:24px}.hero-btn{border-radius:999px;padding:11px 18px}.hero-btn.primary{background:#f0c84b;border-color:#f0c84b}
+.hero-right{grid-column:2;grid-row:1;min-width:0;z-index:4}.hero-right::before{width:480px;height:480px;bottom:82px;border-color:rgba(255,255,255,.22);box-shadow:0 0 0 54px rgba(255,255,255,.035),0 0 0 108px rgba(255,255,255,.018)}
+.hero-right img{width:min(560px,45vw);max-width:none;max-height:96%;filter:drop-shadow(0 25px 34px rgba(7,31,20,.34))}
+.hero-role{grid-column:3;align-self:center;justify-self:end;z-index:5;width:260px;margin-bottom:86px;font:500 clamp(20px,2vw,30px)/1.35 'Poppins','Prompt',sans-serif}
+.hero-role::before{content:'\2198';display:block;margin-bottom:34px;font-size:32px;font-weight:300}
+.hero-marquee{position:absolute;left:0;right:0;bottom:22px;z-index:5;overflow:hidden;white-space:nowrap;pointer-events:none;border-top:1px solid rgba(255,255,255,.24);border-bottom:1px solid rgba(255,255,255,.18);background:rgba(8,43,24,.14);backdrop-filter:blur(5px)}
+.hero-marquee-track{display:flex;width:max-content;align-items:center;padding:10px 0;font-family:'Prompt','Poppins',sans-serif;font-size:clamp(15px,1.45vw,22px);font-weight:400;line-height:1.2;color:rgba(255,255,255,.92);animation:heroMarquee 28s linear infinite;will-change:transform}
+.hero-marquee-set{display:flex;align-items:center;flex-shrink:0;gap:28px;padding-right:28px}
+.hero-marquee-set .name-th{font-weight:600;color:#fff}.hero-marquee-set .name-en{font-family:'Poppins',sans-serif;font-weight:400;color:#f7d66c}.hero-marquee-set .identity{font-size:.72em;color:rgba(255,255,255,.72)}
+.hero-marquee-set .separator{width:5px;height:5px;border-radius:50%;background:#f0c84b;color:transparent}
+@keyframes heroMarquee{to{transform:translateX(-50%)}}
+
+.hero-data-network{z-index:2;opacity:.58;mix-blend-mode:screen;mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.22) 28%,#000 55%,rgba(0,0,0,.75) 88%,transparent 100%)}
+.hero-data-network .network-orbit{fill:none;stroke:rgba(228,245,231,.25);stroke-width:1;stroke-dasharray:4 10;animation:networkDash 20s linear infinite}
+.hero-data-network .network-line{fill:none;stroke:rgba(219,244,224,.4);stroke-width:1.15;stroke-dasharray:2 9;stroke-linecap:round;animation:networkDash 16s linear infinite}
+.hero-data-network .network-node{fill:#f5d66f;filter:drop-shadow(0 0 8px rgba(245,214,111,.85));animation:nodePulse 3.8s ease-in-out infinite}
+.hero-data-network .network-particle{fill:#fff;filter:drop-shadow(0 0 7px rgba(255,255,255,.85))}
+
+.impact-shell{margin-top:0;padding-top:54px;padding-bottom:48px}.impact-label{display:flex;background:transparent;color:var(--text);box-shadow:none;padding:0;margin:0 0 26px;border-radius:0;font-size:clamp(23px,2.6vw,36px);font-weight:500;line-height:1.3;text-transform:none}.impact-label span{color:var(--accent);font-size:13px;padding-top:8px}
+.stat-card{position:relative;width:100%;text-align:left;font-family:inherit;color:inherit;border:1px solid #b9d8c0;border-top:4px solid var(--primary);border-radius:6px;background:var(--card-bg);box-shadow:0 10px 26px rgba(20,75,38,.08);padding:24px 18px 20px;cursor:pointer;transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease}.stat-card::after{display:block;content:'\2197';position:absolute;right:16px;top:15px;color:var(--primary);font-size:17px}.stat-card:hover{transform:translateY(-5px);border-color:var(--accent);box-shadow:0 16px 34px rgba(20,75,38,.14)}
+.stat-card .val{font-size:clamp(26px,3vw,38px)}.stat-card .label{font-size:13px;line-height:1.55}
+
+.home-intro{padding:110px 0 120px;background:var(--card-bg)}
+.home-intro-grid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(260px,.55fr);gap:9vw;align-items:start}
+.home-intro-lead{font-size:clamp(30px,4vw,56px);line-height:1.35;font-weight:500;color:var(--text);max-width:900px}
+.home-intro-side{padding-top:16px;font-size:15px;line-height:1.9;color:var(--text-muted)}
+.round-link{display:inline-flex;align-items:center;justify-content:center;width:142px;height:142px;margin-top:34px;border:0;border-radius:50%;background:#15211b;color:#fff;font:600 13px 'Prompt',sans-serif;cursor:pointer;transition:transform .35s ease,background .35s ease}.round-link:hover{transform:scale(1.06);background:var(--primary)}
+
+.home-band,.featured-works{padding-top:90px;padding-bottom:100px}.home-band.alt{background:#f1f5f1;border-color:#dce5de}
+.editorial-heading{grid-template-columns:90px minmax(0,1fr) auto;padding-bottom:30px;margin-bottom:0;border-bottom:1px solid var(--border)}
+.section-index{font-size:13px;color:var(--text-muted);font-weight:500}.section-index::after{color:var(--text-muted)}
+.editorial-heading .section-title{font-size:clamp(28px,3.5vw,50px);line-height:1.25;font-weight:500}.editorial-heading .section-title i{font-size:.55em;margin-right:12px;color:var(--accent)}
+.editorial-heading .section-sub{font-size:14px;line-height:1.75;max-width:720px}
+
+.featured-grid{display:block}.work-card{display:grid;grid-template-columns:70px minmax(0,1.55fr) minmax(240px,.65fr) 68px;align-items:center;gap:24px;min-height:174px;margin:0;border:0;border-bottom:1px solid var(--border);border-radius:0;background:transparent;box-shadow:none;overflow:visible;transition:background .35s ease,padding .35s ease}
+.work-card:hover{padding-left:18px;padding-right:18px;background:#edf4ee;transform:none;border-color:var(--border)}
+.work-number{font:500 12px 'Poppins',sans-serif;color:var(--text-muted)}
+.work-body{display:contents;padding:0}.work-main{min-width:0}.work-kicker{font-size:10px;margin-bottom:10px}.work-body h3{font-size:clamp(21px,2.3vw,34px);font-weight:500;line-height:1.35;margin:0}.work-body p{font-size:13px;line-height:1.7;margin-top:9px;max-width:760px}
+.work-meta{align-self:center}.tech-tags{margin:0 0 15px}.tech-tags span{border-radius:999px;background:transparent;border:1px solid var(--border)}
+.work-actions{margin:0}.work-note{font-size:10px}.work-visual{position:relative;grid-column:4;grid-row:1;width:58px;height:58px;min-height:0;border-radius:50%;background:var(--work-accent);transition:width .35s ease,height .35s ease,transform .35s ease}.work-visual i{font-size:19px}.work-visual .signal{display:none}.work-card:hover .work-visual{transform:rotate(-8deg) scale(1.08)}
+.visit-work{border-radius:999px}
+
+.expertise-band .vertical-timeline{gap:0;border-top:1px solid var(--border)}.expertise-band .vt-item{border:0;border-bottom:1px solid var(--border);border-radius:0;background:transparent;box-shadow:none;padding:20px 12px}
+.research-story-grid{gap:0;border-top:1px solid var(--border)}.research-story{min-height:210px;border:0;border-right:1px solid var(--border);border-radius:0;box-shadow:none;background:transparent;padding:30px}.research-story:last-child{border-right:0}.research-story:hover{transform:none;background:#edf4ee}
+.explore-section .quick-grid{display:block}.explore-section .quick-card{min-height:92px;border:0;border-bottom:1px solid var(--border);border-radius:0;padding:20px 8px;display:grid;grid-template-columns:60px 1fr auto;align-items:center}.explore-section .quick-card::after{content:'\2197';font-size:20px}.explore-section .quick-card:hover{transform:none;box-shadow:none;padding-left:20px;background:#173d28}
+.explore-section .quick-card i{margin:0}.explore-section .quick-card span{font-size:clamp(18px,2vw,28px)}
+.contact-cta{max-width:none;margin:0;padding:100px max(7vw,40px);border-radius:0;box-shadow:none;background:#14201a}.contact-cta h2{font-size:clamp(36px,5vw,72px);font-weight:500;max-width:900px}.contact-cta button{width:150px;height:150px;border-radius:50%;background:#f0c84b}.contact-cta::after{display:none}
+
+.page:not(#page-home)>.container{padding-top:72px;padding-bottom:90px}.page:not(#page-home)>.container>.section-title{font-size:clamp(36px,5vw,68px);font-weight:500;padding-bottom:30px;margin-bottom:30px;border-bottom:1px solid var(--border)}
+.page:not(#page-home) .item-card{border-radius:0;border-width:0 0 1px;background:transparent;box-shadow:none}
+[data-theme="dark"] nav.main-nav{background:rgba(12,26,20,.97)}[data-theme="dark"] nav.main-nav a{color:#e8f5e9}
+[data-theme="dark"] nav.main-nav a:hover,[data-theme="dark"] nav.main-nav a.active{color:#fff;background:rgba(102,187,106,.2)}
+[data-theme="dark"] .home-band.alt{background:#102019}[data-theme="dark"] .work-card:hover,[data-theme="dark"] .research-story:hover{background:#173226}
+
+/* Accessibility controls and field-video story */
+.font-size-control{display:inline-flex;align-items:center;gap:2px;padding:3px;border:1px solid rgba(255,255,255,.28);border-radius:7px}
+.font-size-control button{min-width:30px;padding:5px 6px!important;border:0!important;background:transparent!important;color:#dce8df!important;font-family:'Prompt',sans-serif!important}
+.font-size-control button.active{background:#fff!important;color:#173d28!important}
+html{--reader-scale:1.08}html[data-font-size="large"]{--reader-scale:1.08}html[data-font-size="xlarge"]{--reader-scale:1.16}html[data-font-size="xxlarge"]{--reader-scale:1.24}
+.page :where(p,li,input,select,textarea,.label,.meta,.section-sub,.evidence-lead,.home-intro-side,.work-note){font-size:calc(1em * var(--reader-scale))}
+nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
+.field-video{padding:92px 0 102px;background:#12251a;color:#fff}
+.field-video-grid{display:grid;grid-template-columns:minmax(260px,.55fr) minmax(0,1.45fr);gap:6vw;align-items:center}
+.field-video-copy .section-index{color:#9fc6a8}.field-video-copy h2{font-size:clamp(28px,3.5vw,48px);font-weight:500;line-height:1.28;margin:12px 0 18px}.field-video-copy p{color:#c8d9cd;line-height:1.85}.field-video-frame{position:relative;border:1px solid rgba(255,255,255,.24);background:#08130d;box-shadow:0 22px 54px rgba(0,0,0,.3);overflow:hidden}.field-video-frame video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}.field-video-caption{display:flex;justify-content:space-between;gap:16px;padding:13px 16px;color:#b9cbbf;font-size:11px;border-top:1px solid rgba(255,255,255,.14)}
+.subpage-video{display:grid;grid-template-columns:minmax(210px,.42fr) minmax(0,1fr);gap:34px;align-items:center;margin:8px 0 42px;padding:24px;border:1px solid #b9d8c0;border-left:5px solid var(--primary);background:var(--card-bg);box-shadow:0 12px 30px rgba(20,75,38,.07)}
+.subpage-video-copy .kicker{font:600 11px 'Poppins','Prompt',sans-serif;color:var(--accent);text-transform:uppercase}.subpage-video-copy h3{margin:9px 0 10px;font-size:clamp(21px,2.2vw,30px);font-weight:500;line-height:1.35;color:var(--text)}.subpage-video-copy p{color:var(--text-muted);line-height:1.75}.subpage-video video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#08130d}
+[data-theme="dark"] .subpage-video{border-color:#315642;border-left-color:var(--accent)}
+
+@media(max-width:980px){
+  .hero-inner{grid-template-columns:1fr 1fr;padding:0 28px}.hero-left{grid-column:1}.hero-right{grid-column:2}.hero-right img{width:min(440px,100%)}.hero-role{position:absolute;right:28px;top:26%;width:200px;font-size:20px}
+  .home-intro-grid{grid-template-columns:1fr;gap:30px}.home-intro-side{max-width:620px}.round-link{width:116px;height:116px}
+  .field-video-grid,.subpage-video{grid-template-columns:1fr;gap:34px}
+  .work-card{grid-template-columns:48px minmax(0,1fr) 58px}.work-meta{grid-column:2}.work-visual{grid-column:3;grid-row:1/3}.research-story-grid{grid-template-columns:1fr}.research-story{border-right:0;border-bottom:1px solid var(--border)}
+}
+@media(max-width:760px){
+  .header-top{padding:8px 14px}.header-top .org-text{max-width:210px}.theme-switch button{padding:6px 8px;font-size:10px}
+  .hero{height:690px;min-height:690px}.hero-inner{display:block;padding:0 20px}.hero-left{width:100%;padding:38px 0 0}.hero-left .title-th{font-size:32px;white-space:normal}.hero-left .subtitle{max-width:250px}.hero-left .typing{max-width:230px}.hero-actions{width:auto;max-width:190px}.hero-role{display:none}
+  .hero-right{right:-18px;bottom:0;width:260px;height:390px}.hero-right::before{width:270px;height:270px;bottom:45px}.hero-right img{width:255px;max-height:390px}
+  .hero-marquee{bottom:14px}.hero-marquee-track{font-size:15px;animation-duration:24s}.hero-marquee-set{gap:20px;padding-right:20px}
+  .impact-shell{padding-top:26px}.home-intro{padding:72px 0 80px}.home-intro-lead{font-size:30px}.home-band,.featured-works{padding-top:65px;padding-bottom:72px}
+  .editorial-heading{grid-template-columns:44px 1fr;gap:10px}.editorial-heading>*:last-child{grid-column:2}.editorial-heading .section-title{font-size:27px}
+  .work-card{grid-template-columns:36px 1fr 48px;gap:10px;padding:22px 0}.work-card:hover{padding-left:8px;padding-right:8px}.work-body h3{font-size:20px}.work-body p{font-size:12px}.work-visual{width:46px;height:46px}.work-note{display:none}
+  .contact-cta{margin:0;padding:72px 22px;grid-template-columns:1fr}.contact-cta button{width:120px;height:120px}
+}
+@media(max-width:480px){.hero-left .title-th{font-size:28px}.hero-left .title-en{font-size:13px}.hero-left .subtitle{font-size:13px}.hero-marquee-track{font-size:13px}.home-intro-lead{font-size:26px}.work-card{grid-template-columns:30px 1fr}.work-visual{display:none}.work-meta{grid-column:2}.editorial-heading .section-title{font-size:24px}.impact-label{font-size:22px}.field-video{padding:66px 0 72px}}
+@media(prefers-reduced-motion:reduce){.hero-marquee-track,.hero-data-network *{animation:none!important}.hero-marquee-track{transform:translateX(-35%)}.hero-data-network .network-particle{display:none}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <img class="logo" id="orgLogo" src="LOGO-DOAE.png" alt="โลโก้กรมส่งเสริมการเกษตร">
+    <div class="org-text" id="orgText">
+      <strong>สำนักงานเกษตรจังหวัดกำแพงเพชร</strong>
+      กรมส่งเสริมการเกษตร · กระทรวงเกษตรและสหกรณ์
+    </div>
+    <div class="theme-switch">
+      <div class="font-size-control" role="group" aria-label="ปรับขนาดตัวอักษร">
+        <button type="button" data-font-level="large" onclick="App.setFontSize('large')" title="ขนาดเริ่มต้น">ก+</button>
+        <button type="button" data-font-level="xlarge" onclick="App.setFontSize('xlarge')" title="ตัวอักษรใหญ่">ก++</button>
+        <button type="button" data-font-level="xxlarge" onclick="App.setFontSize('xxlarge')" title="ตัวอักษรใหญ่พิเศษ">ก+++</button>
+      </div>
+      <button id="themeToggle" onclick="App.toggleDayNight()">☀ กลางวัน</button>
+      <button id="themeMourning" onclick="App.toggleMourning()">🕊 ไว้ทุกข์</button>
+      <button id="loginBtn" onclick="App.openLogin()"><i class="fa-solid fa-lock"></i> เข้าสู่ระบบ</button>
+    </div>
+  </div>
+  <nav class="main-nav" id="mainNav">
+    <a data-page="home" onclick="App.goPage('home')">หน้าแรก</a>
+    <a data-page="about" onclick="App.goPage('about')">ประวัติ</a>
+    <a data-page="dashboards" onclick="App.goPage('dashboards')">ผลงานดิจิทัล</a>
+    <a data-page="innovation" onclick="App.goPage('innovation')">ห้องปฏิบัติการนวัตกรรม</a>
+    <a data-page="research" onclick="App.goPage('research')">งานวิจัย</a>
+    <a data-page="publications" onclick="App.goPage('publications')">ผลงานตีพิมพ์</a>
+    <a data-page="projects" onclick="App.goPage('projects')">โครงการ</a>
+    <a data-page="training" onclick="App.goPage('training')">วิทยากร / R2R</a>
+    <a data-page="blog" onclick="App.goPage('blog')">เรื่องเล่า / ความรู้</a>
+    <a data-page="gallery" onclick="App.goPage('gallery')">คลังภาพ</a>
+    <a data-page="contact" onclick="App.goPage('contact')">ติดต่อ</a>
+  </nav>
+</header>
+
+<!-- ============ HOME ============ -->
+<section class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-data-network" aria-hidden="true">
+      <svg viewBox="0 0 1440 760" preserveAspectRatio="xMidYMid slice">
+        <ellipse class="network-orbit" cx="920" cy="350" rx="360" ry="225"/>
+        <ellipse class="network-orbit" cx="920" cy="350" rx="255" ry="315"/>
+        <g>
+          <path id="heroPathA" class="network-line" d="M120 210 C360 70 620 110 820 292 S1120 520 1360 190"/>
+          <path id="heroPathB" class="network-line" d="M210 560 C430 410 610 560 810 350 S1100 130 1320 500"/>
+          <path id="heroPathC" class="network-line" d="M510 80 C650 220 690 470 920 545 S1210 510 1380 620"/>
+          <path class="network-line" d="M380 330 C560 260 680 250 810 350 C970 470 1160 390 1280 250"/>
+        </g>
+        <g>
+          <circle class="network-node" cx="120" cy="210" r="4"/><circle class="network-node" cx="510" cy="80" r="4"/>
+          <circle class="network-node" cx="380" cy="330" r="5"/><circle class="network-node" cx="810" cy="350" r="6"/>
+          <circle class="network-node" cx="920" cy="545" r="5"/><circle class="network-node" cx="1280" cy="250" r="4"/>
+          <circle class="network-node" cx="1320" cy="500" r="5"/><circle class="network-node" cx="1380" cy="620" r="4"/>
+        </g>
+        <circle class="network-particle" r="3"><animateMotion dur="9s" repeatCount="indefinite"><mpath href="#heroPathA"/></animateMotion></circle>
+        <circle class="network-particle" r="3"><animateMotion dur="11s" begin="-4s" repeatCount="indefinite"><mpath href="#heroPathB"/></animateMotion></circle>
+        <circle class="network-particle" r="2.5"><animateMotion dur="13s" begin="-7s" repeatCount="indefinite"><mpath href="#heroPathC"/></animateMotion></circle>
+      </svg>
+    </div>
+    <div class="hero-inner">
+      <div class="hero-left edit-host">
+        <button class="edit-fab" style="top:-6px;right:-6px" onclick="App.editProfile()"><i class="fa-solid fa-pen"></i></button>
+        <div class="hero-eyebrow">Executive Agri-Tech Research Portfolio</div>
+        <h1 class="title-th" id="heroTitleTH">ดร.กิตติ โพธิ์จวง</h1>
+        <div class="title-en" id="heroTitleEN">Dr. Kitti Phojuang</div>
+        <div class="subtitle" id="heroSubtitle">นักวิชาการส่งเสริมการเกษตรชำนาญการ</div>
+        <div class="typing" id="heroTyping"></div>
+        <div class="reflection" id="heroReflection"></div>
+        <div class="hero-actions">
+          <button class="hero-btn primary" onclick="App.goPage('dashboards')"><i class="fa-solid fa-chart-line"></i> ดูผลงานดิจิทัล</button>
+          <button class="hero-btn" onclick="App.goPage('research')"><i class="fa-solid fa-flask"></i> งานวิจัยและนวัตกรรม</button>
+        </div>
+      </div>
+      <div class="hero-right edit-host"><img id="heroImage" src="3. Kitti.png?v=portrait-3-3-20260925" alt="รูปโปรไฟล์ ดร.กิตติ โพธิ์จวง"><button class="edit-fab" onclick="App.editProfile()"><i class="fa-solid fa-pen"></i></button></div>
+      <div class="hero-role">Agricultural Data Scientist<br>Agri-Tech Researcher</div>
+    </div>
+    <div class="hero-marquee" aria-hidden="true">
+      <div class="hero-marquee-track">
+        <div class="hero-marquee-set"><span class="name-th">ดร.กิตติ โพธิ์จวง</span><span class="separator">•</span><span class="identity">AGRICULTURAL DATA SCIENTIST</span><span class="separator">•</span><span class="name-en">Dr. Kitti Phojuang</span><span class="separator">•</span><span class="identity">DATA FOR FIELD IMPACT</span><span class="separator">•</span></div>
+        <div class="hero-marquee-set"><span class="name-th">ดร.กิตติ โพธิ์จวง</span><span class="separator">•</span><span class="identity">AGRICULTURAL DATA SCIENTIST</span><span class="separator">•</span><span class="name-en">Dr. Kitti Phojuang</span><span class="separator">•</span><span class="identity">DATA FOR FIELD IMPACT</span><span class="separator">•</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container impact-shell reveal-block">
+    <div class="impact-label"><span>00</span> ผลกระทบและประสบการณ์วิชาชีพ</div>
+    <div class="stats-grid edit-host" id="statsGrid"></div>
+    <button class="edit-add-btn" onclick="App.editStat()"><i class="fa-solid fa-plus"></i> เพิ่มสถิติ</button>
+  </div>
+
+  <div class="home-intro reveal-block">
+    <div class="container home-intro-grid">
+      <div class="home-intro-lead">เปลี่ยนข้อมูลภาคการเกษตรให้เป็นเครื่องมือที่คนในพื้นที่เข้าใจ ใช้ตัดสินใจ และต่อยอดได้จริง</div>
+      <div class="home-intro-side">การผสานงานวิจัย ข้อมูลเชิงพื้นที่ เทคโนโลยี IoT และกระบวนการส่งเสริมการเกษตร ทำให้ผลงานทุกชิ้นเชื่อมจากโจทย์พื้นที่ไปสู่การใช้งานจริงอย่างเป็นระบบ
+        <br><button class="round-link" onclick="App.goPage('about')">รู้จักแนวคิดการทำงาน</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="field-video reveal-block" aria-labelledby="fieldVideoTitle">
+    <div class="container field-video-grid">
+      <div class="field-video-copy">
+        <div class="section-index">FIELD NOTE · 01</div>
+        <h2 id="fieldVideoTitle">ข้อมูลที่ดี เริ่มจากการเข้าใจพื้นที่จริง</h2>
+        <p>ภาพสำรวจพื้นที่เกษตรสะท้อนกระบวนการทำงานตั้งแต่การมองเห็นบริบทเชิงพื้นที่ การเก็บข้อมูล ไปจนถึงการออกแบบระบบสนับสนุนการตัดสินใจที่เหมาะกับเกษตรกรและเจ้าหน้าที่</p>
+      </div>
+      <figure class="field-video-frame">
+        <video controls playsinline preload="metadata" poster="assets/field-impact-story-poster.jpg">
+          <source src="assets/field-impact-story.mp4" type="video/mp4">
+          เบราว์เซอร์นี้ไม่รองรับการเล่นวิดีโอ
+        </video>
+        <figcaption class="field-video-caption"><span>จากพื้นที่จริง สู่การตัดสินใจด้วยข้อมูล</span><span>วิดีโอเรื่องเล่า · 01:09 นาที</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <div class="container featured-works reveal-block">
+    <div class="editorial-heading">
+      <div class="section-index">01</div>
+      <div>
+        <h2 class="section-title"><i class="fa-solid fa-layer-group"></i> ผลงานเด่นด้านนวัตกรรมดิจิทัล</h2>
+        <p class="section-sub">ระบบที่พัฒนาจากข้อมูลพื้นที่จริง เพื่อสนับสนุนการตัดสินใจและยกระดับงานส่งเสริมการเกษตรจังหวัดกำแพงเพชร</p>
+      </div>
+      <button class="text-link" onclick="App.goPage('dashboards')">ดูผลงานดิจิทัลทั้งหมด <i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+    <div class="featured-grid" id="featuredWorksGrid"></div>
+  </div>
+
+  <div class="home-band alt expertise-band reveal-block">
+    <div class="container">
+      <div class="editorial-heading">
+        <div class="section-index">02</div>
+        <div>
+          <h2 class="section-title"><i class="fa-solid fa-diagram-project"></i> ความเชี่ยวชาญและเส้นทางวิชาการ</h2>
+          <p class="section-sub">การเชื่อมโยงวิทยาศาสตร์สิ่งแวดล้อม เทคโนโลยีข้อมูล และกระบวนการส่งเสริมการเกษตร</p>
+        </div>
+      </div>
+      <div class="edu-mindmap-grid">
+      <div>
+        <h3 class="panel-heading"><i class="fa-solid fa-graduation-cap"></i> ประวัติการศึกษา</h3>
+        <p class="section-sub">เรียงจากปีล่าสุดไปเก่าสุด</p>
+        <div class="vertical-timeline edit-host" id="eduTimeline"></div>
+        <button class="edit-add-btn" onclick="App.editEducation()"><i class="fa-solid fa-plus"></i> เพิ่มประวัติการศึกษา</button>
+      </div>
+      <div>
+        <h3 class="panel-heading"><i class="fa-solid fa-share-nodes"></i> เครือข่ายความเชี่ยวชาญ</h3>
+        <p class="section-sub">สำรวจความเชี่ยวชาญเชิงกลยุทธ์และหลักฐานผลงานที่เชื่อมโยงจากฐานข้อมูลกลาง</p>
+        <div class="expertise-toolbar">
+          <input id="expertiseSearch" type="search" placeholder="ค้นหาความเชี่ยวชาญ..." oninput="App.searchExpertise(this.value)">
+          <select id="expertiseWorkFilter" onchange="App.filterExpertiseWorks(this.value)"><option value="">ผลงานทุกประเภท</option><option value="Dashboards">ผลงานดิจิทัล</option><option value="Research">งานวิจัย</option><option value="Publications">ผลงานตีพิมพ์</option><option value="Projects">โครงการ</option><option value="References">หลักฐานอ้างอิง</option></select>
+          <button title="กลับสู่ภาพรวม" onclick="App.resetExpertiseGraph()"><i class="fa-solid fa-rotate-left"></i></button>
+        </div>
+        <div class="knowledge-graph-shell">
+          <div class="mindmap-wrap"><div class="mindmap edit-host" id="mindmapArea"></div></div>
+          <aside class="expertise-detail" id="expertiseDetail" aria-live="polite"></aside>
+        </div>
+        <a class="edit-add-btn" href="admin.html" target="_blank" rel="noopener"><i class="fa-solid fa-database"></i> จัดการความเชี่ยวชาญและความสัมพันธ์</a>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container reveal-block">
+    <div class="editorial-heading">
+      <div class="section-index">03</div>
+      <div>
+        <h2 class="section-title"><i class="fa-solid fa-microscope"></i> จากโจทย์พื้นที่สู่การใช้ประโยชน์</h2>
+        <p class="section-sub">ผลงานถูกพัฒนาผ่านการวิเคราะห์ปัญหา ทดลองใช้จริง และถ่ายทอดองค์ความรู้สู่ผู้ปฏิบัติงานและเกษตรกร</p>
+      </div>
+    </div>
+    <div class="research-story-grid">
+      <article class="research-story" style="--story-accent:#1B5E20" onclick="App.goPage('research')">
+        <i class="fa-solid fa-arrow-up-right-from-square story-arrow"></i><div class="story-icon"><i class="fa-solid fa-flask"></i></div>
+        <div class="story-type">Research & R2R</div><h3>วิจัยจากปัญหางานประจำ</h3><p>เปลี่ยนโจทย์จากพื้นที่เป็นหลักฐานเชิงวิชาการ เพื่อพัฒนาวิธีทำงานและขยายผลอย่างเป็นระบบ</p>
+      </article>
+      <article class="research-story" style="--story-accent:#0F4C81" onclick="App.goPage('innovation')">
+        <i class="fa-solid fa-arrow-up-right-from-square story-arrow"></i><div class="story-icon"><i class="fa-solid fa-lightbulb"></i></div>
+        <div class="story-type">Digital Innovation</div><h3>ออกแบบเครื่องมือเพื่อการตัดสินใจ</h3><p>เชื่อมข้อมูล GIS, Dashboard และ Web Application ให้ผู้ใช้เข้าถึงข้อมูลที่จำเป็นได้รวดเร็วขึ้น</p>
+      </article>
+      <article class="research-story" style="--story-accent:#D4A017" onclick="App.goPage('training')">
+        <i class="fa-solid fa-arrow-up-right-from-square story-arrow"></i><div class="story-icon"><i class="fa-solid fa-people-group"></i></div>
+        <div class="story-type">Knowledge Transfer</div><h3>สร้างคนและขยายผลในพื้นที่</h3><p>ถ่ายทอดทักษะข้อมูลและเทคโนโลยี เพื่อให้บุคลากรและเกษตรกรนำเครื่องมือไปใช้ได้จริง</p>
+      </article>
+    </div>
+  </div>
+
+  <div class="home-band alt explore-section reveal-block">
+    <div class="container">
+      <div class="editorial-heading">
+        <div class="section-index">04</div>
+        <div>
+          <h2 class="section-title"><i class="fa-solid fa-compass"></i> สำรวจแฟ้มผลงาน</h2>
+          <p class="section-sub">เข้าถึงข้อมูลตามหัวข้อที่สนใจ ทั้งผลงานวิชาการ โครงการ การถ่ายทอดความรู้ และเครือข่ายวิชาชีพ</p>
+        </div>
+      </div>
+    <div class="quick-grid" id="quickGrid"></div>
+    </div>
+  </div>
+
+  <div class="contact-cta reveal-block">
+    <div><div class="cta-label">05 · PROFESSIONAL CONNECTION</div><h2>ร่วมแลกเปลี่ยนและพัฒนานวัตกรรมการเกษตร</h2><p>งานวิจัย ข้อมูล และเทคโนโลยีที่ดี ควรนำไปสู่การใช้ประโยชน์ในพื้นที่จริง</p></div>
+    <button onclick="App.goPage('contact')"><i class="fa-solid fa-paper-plane"></i> ติดต่อและเครือข่ายวิชาการ</button>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="page" id="page-about">
+  <div class="container">
+    <h2 class="section-title"><i class="fa-solid fa-id-card"></i> ประวัติ</h2>
+    <div id="aboutContent" class="grid-3"></div>
+  </div>
+</section>
+
+<!-- ============ DASHBOARDS ============ -->
+<section class="page" id="page-dashboards">
+  <div class="container">
+    <h2 class="section-title"><i class="fa-solid fa-chart-line"></i> ผลงานดิจิทัล (Dashboard Portfolio)</h2>
+    <p class="section-sub" id="dashSub">ระบบ Dashboard ด้านการเกษตร</p>
+    <div class="toolbar">
+      <input type="text" id="dashSearch" placeholder="ค้นหา Dashboard...">
+      <select id="dashCategory"><option value="">ทุกหมวดหมู่</option></select>
+    </div>
+    <div class="grid-3" id="dashGrid"></div>
+    <button class="load-more" id="dashLoadMore">โหลดเพิ่ม</button>
+  </div>
+</section>
+
+<!-- ============ INNOVATION LAB ============ -->
+<section class="page" id="page-innovation">
+  <div class="container">
+    <h2 class="section-title"><i class="fa-solid fa-lightbulb"></i> ห้องปฏิบัติการนวัตกรรม</h2>
+    <p class="section-sub">Timeline นวัตกรรมและเทคโนโลยีที่พัฒนา</p>
+    <div class="timeline-scroll" id="innovationTimeline"></div>
+  </div>
+</section>
+
+<!-- ============ RESEARCH ============ -->
+<section class="page" id="page-research">
+  <div class="container">
+    <h2 class="section-title"><i class="fa-solid fa-flask"></i> งานวิจัย</h2>
+    <p class="section-sub">งานวิจัยที่เชื่อมโจทย์พื้นที่ ข้อมูล และการนำผลไปใช้จริง <button class="text-link" onclick="App.goPage('projects')">ชมบริบทการทำงานภาคสนามในหน้าโครงการ <i class="fa-solid fa-arrow-right"></i></button></p>
+    <div class="toolbar">
+      <input type="text" id="researchSearch" placeholder="ค้นหางานวิจัย...">
+    </div>
+    <div class="grid-3" id="researchGrid"></div>
+    <button class="load-more" id="researchLoadMore">โหลดเพิ่ม</button>
+  </div>
+</section>
+
+<!-- ============ PUBLICATIONS ============ -->
+<section class="page" id="page-publications">
+  <div class="container">
+    <h2 class="section-title"><i class="fa-solid fa-book"></i> ผลงานตีพิมพ์</h2>
+    <div class="toolbar">
+      <input type="text" id="pubSearch" placeholder="ค้นหาผลงานตีพิมพ์...">
+      <select id="pubType">
+        <option value="">ทุกประเภท</option>
+        <option value="Journal">Journal</option><option value="Conference">Conference</option>
+        <option value="Patent">Patent</option><option value="Petty Patent">Petty Patent</option>
+      </select>
+      <select id="pubSort"><option value="Year_desc">ปีล่าสุด</option><option value="Year_asc">ปีเก่าสุด</option></select>
+    </div>
+    <div class="grid-3" id="pubGrid"></div>
+    <button class="load-more" id="pubLoadMore">โหลดเพิ่ม</button>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section class="page" id="page-projects">
+  <div class="container">
+    <h2 class="section-title"><i class="fa-solid fa-diagram-successor"></i> โครงการ</h2>
+    <section class="subpage-video" aria-label="วิดีโอภาพรวมโครงการภาคสนาม">
+      <div class="subpage-video-copy"><div class="kicker">Field to Solution</div><h3>เห็นพื้นที่ เชื่อมข้อมูล ออกแบบทางเลือก</h3><p>ภาพรวมกระบวนการทำงานที่เชื่อมการสำรวจพื้นที่ ผู้ใช้งาน และข้อมูล เพื่อพัฒนาโครงการเกษตรอัจฉริยะที่ตอบโจทย์บริบทจริง</p></div>
+      <video controls playsinline preload="none" poster="assets/field-impact-story-poster.jpg"><source src="assets/field-impact-story.mp4" type="video/mp4"></video>
+    </section>
+    <div class="toolbar">
+      <select id="projCategory">
+        <option value="">ทุกประเภท</option>
+        <option value="Smart Farming">Smart Farming</option><option value="Precision Agriculture">Precision Agriculture</option>
+        <option value="Agricultural Extension">Agricultural Extension</option><option value="R2R">R2R</option>
+      </select>
+    </div>
+    <div class="grid-3" id="projGrid"></div>
+    <button class="load-more" id="projLoadMore">โหลดเพิ่ม</button>
+  </div>
+</section>
+
+<!-- ============ TRAINING ============ -->
+<section class="page" id="page-training">
+  <div class="container">
+    <div class="evidence-intro">
+      <div>
+        <div class="hero-eyebrow" style="color:var(--secondary)">Professional Evidence & References</div>
+        <h2 class="section-title"><i class="fa-solid fa-chalkboard-user"></i> วิทยากร พี่เลี้ยงงานวิจัย และการพัฒนาบุคลากร</h2>
+        <p class="evidence-lead">หลักฐานการมีส่วนร่วมในฐานะวิทยากร ผู้ทรงคุณวุฒิ และพี่เลี้ยงงานวิจัย เพื่อพัฒนางานส่งเสริมการเกษตรสู่งานวิจัยและขยายผลสู่การปฏิบัติ จัดเรียงจากกิจกรรมล่าสุดพร้อมแหล่งอ้างอิงต้นฉบับ</p>
+      </div>
+      <div class="evidence-summary" id="evidenceSummary"></div>
+    </div>
+
+    <div class="evidence-toolbar">
+      <input id="evidenceSearch" type="search" placeholder="ค้นหากิจกรรม บทบาท หรือหน่วยงาน...">
+      <select id="evidenceCategory"><option value="">ทุกหมวดหมู่</option></select>
+      <select id="evidenceYear"><option value="">ทุกปี</option></select>
+    </div>
+    <div class="evidence-timeline" id="evidenceTimeline"></div>
+  </div>
+</section>
+
+<!-- ============ BLOG ============ -->
+<section class="page" id="page-blog">
+  <div class="container">
+    <div class="blog-intro">
+      <div>
+        <div class="kicker">Knowledge & Story Hub</div>
+        <h2 class="section-title"><i class="fa-solid fa-book-open-reader"></i> เรื่องเล่าและคลังองค์ความรู้</h2>
+        <p>รวบรวมบทเรียนจากพื้นที่ องค์ความรู้ด้านข้อมูลและเทคโนโลยีการเกษตร ข่าวกิจกรรม และบทความจากแหล่งอ้างอิงที่ตรวจสอบได้</p>
+      </div>
+      <div class="blog-intro-note"><strong>จัดการจากศูนย์กลาง</strong><br>เขียนบทความเองหรือนำเข้าจากเว็บไซต์ ข่าว และ Facebook ผ่านหน้า Admin แล้วเผยแพร่สู่หน้านี้ได้ทันที</div>
+    </div>
+    <div class="blog-toolbar">
+      <input type="search" id="blogSearch" placeholder="ค้นหาเรื่องเล่า องค์ความรู้ หรือคำสำคัญ...">
+      <select id="blogContentType"><option value="">ทุกประเภทเนื้อหา</option></select>
+      <select id="blogSourceType"><option value="">ทุกแหล่งที่มา</option></select>
+    </div>
+    <div class="blog-featured" id="blogFeatured"></div>
+    <div class="blog-grid" id="blogGrid"></div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section class="page" id="page-gallery">
+  <div class="container">
+    <h2 class="section-title"><i class="fa-solid fa-images"></i> คลังภาพ</h2>
+    <div class="toolbar"><select id="albumFilter"><option value="">ทุกอัลบั้ม</option></select></div>
+    <div class="masonry" id="galleryGrid"></div>
+    <button class="load-more" id="galleryLoadMore">โหลดเพิ่ม</button>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="page" id="page-contact">
+  <div class="container">
+    <h2 class="section-title"><i class="fa-solid fa-address-book"></i> ติดต่อ</h2>
+    <div class="contact-grid">
+      <div class="contact-list" id="contactList"></div>
+      <iframe id="contactMap" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox"><span class="close" onclick="document.getElementById('lightbox').classList.remove('show')">&times;</span><img id="lightboxImg"></div>
+
+<!-- BLOG READER -->
+<div class="modal-overlay" id="blogReaderOverlay" onclick="App.closeBlog()">
+  <article class="blog-reader" onclick="event.stopPropagation()">
+    <button class="blog-reader-close" onclick="App.closeBlog()" aria-label="ปิดบทความ"><i class="fa-solid fa-xmark"></i></button>
+    <img class="blog-reader-cover" id="blogReaderImage" alt="" hidden>
+    <div class="blog-reader-content">
+      <div class="blog-badges" id="blogReaderBadges"></div>
+      <h2 id="blogReaderTitle"></h2>
+      <div class="blog-meta" id="blogReaderMeta"></div>
+      <div class="blog-reader-body" id="blogReaderBody"></div>
+      <a class="blog-source-link" id="blogReaderSource" target="_blank" rel="noopener noreferrer" hidden><i class="fa-solid fa-arrow-up-right-from-square"></i> อ่านจากแหล่งต้นฉบับ</a>
+    </div>
+  </article>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="loginModalOverlay">
+  <div class="modal">
+    <h3><i class="fa-solid fa-lock"></i> เข้าสู่ระบบเพื่อแก้ไขข้อมูล</h3>
+    <p class="hint">กรอกรหัสผ่านสำหรับแก้ไขเนื้อหาหน้าเว็บ (Inline Edit Mode)</p>
+    <div class="field"><label>รหัสผ่าน</label>
+      <div style="display:flex;gap:8px">
+        <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="off" style="flex:1" onkeydown="if(event.key==='Enter')App.submitLogin()">
+        <button type="button" onclick="App.toggleShowPassword()" style="border:1.5px solid var(--border);background:var(--bg);border-radius:8px;padding:0 12px;cursor:pointer" title="แสดง/ซ่อนรหัสผ่าน"><i class="fa-solid fa-eye" id="togglePwIcon"></i></button>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn ghost" onclick="App.closeLogin()" style="background:transparent;border:1.5px solid var(--primary);color:var(--primary);border-radius:8px;padding:9px 16px;cursor:pointer;font-family:inherit">ยกเลิก</button>
+      <button onclick="App.submitLogin()" style="background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 16px;cursor:pointer;font-family:inherit">เข้าสู่ระบบ</button>
+    </div>
+  </div>
+</div>
+
+<!-- GENERIC EDIT MODAL -->
+<div class="modal-overlay" id="editModalOverlay">
+  <div class="modal">
+    <h3 id="editModalTitle">แก้ไขข้อมูล</h3>
+    <div id="editModalFields"></div>
+    <div class="modal-actions">
+      <button onclick="EditUI.delete()" id="editModalDelete" style="background:#c62828;color:#fff;border:none;border-radius:8px;padding:9px 16px;cursor:pointer;font-family:inherit;margin-right:auto;display:none">ลบ</button>
+      <button onclick="EditUI.close()" style="background:transparent;border:1.5px solid var(--primary);color:var(--primary);border-radius:8px;padding:9px 16px;cursor:pointer;font-family:inherit">ยกเลิก</button>
+      <button onclick="EditUI.save()" style="background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 16px;cursor:pointer;font-family:inherit">บันทึก</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="appToast" style="position:fixed;bottom:24px;right:24px;background:var(--primary);color:#fff;padding:12px 20px;border-radius:8px;font-size:13px;box-shadow:0 4px 16px rgba(0,0,0,0.2);display:none;z-index:2500"></div>
+
+<footer>© 2026 Dr. Kitti Phojuang | กรมส่งเสริมการเกษตร</footer>
+
+<script>
+/* ===================== CONFIG — แก้ค่านี้ก่อนใช้งานจริง (ดู docs/07_deployment_manual.md) ===================== */
+const CONFIG = {
+  API_URL: 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec', // <-- แก้ตรงนี้
+  EDIT_PASSWORD: '' // Production ต้องเว้นว่าง; ระบบจริงตรวจ INLINE_EDIT_PASSWORD ผ่าน Apps Script
+};
+
+/* ===================== ผลงานดิจิทัลเด่น — เพิ่มรายการใหม่ใน Array นี้ได้โดยไม่ต้องแก้ HTML ===================== */
+const FEATURED_DIGITAL_WORKS = [
+  {
+    ID:'featured-agri-risk-burning',
+    Title:'ระบบประเมินและเฝ้าระวังความเสี่ยงการเผาในพื้นที่เกษตร จังหวัดกำแพงเพชร',
+    ShortTitle:'Agri-Risk Map Burning',
+    Category:'Web GIS และระบบเตือนภัยเชิงพื้นที่',
+    Description:'แผนที่เชิงโต้ตอบสำหรับติดตามจุดความร้อน ประเมินระดับความเสี่ยงรายพื้นที่ และเปรียบเทียบสถานการณ์ เพื่อสนับสนุนการวางแผนป้องกันการเผาในพื้นที่เกษตร',
+    Tags:['Web GIS','Hotspot','Risk Analytics','Leaflet'],
+    EmbedURL:'https://krit-pj.github.io/agri-risk-map-burning/',
+    Icon:'fa-map-location-dot',
+    Accent:'#C45122',
+    AccessNote:'เปิดใช้งานสาธารณะ',
+    Featured:true,
+    Status:'published',
+    SortOrder:1
+  },
+  {
+    ID:'featured-green-gain-hub-kpp',
+    Title:'Green Gain Hub: กำแพงเพชร',
+    ShortTitle:'Green Gain Hub KPP',
+    Category:'แพลตฟอร์มบริหารจัดการข้อมูลการเกษตร',
+    Description:'แพลตฟอร์มสำหรับผู้ใช้งานที่ลงทะเบียน เพื่อบันทึกข้อมูลการผลิตและช่วงเก็บเกี่ยว เชื่อมโยงข้อมูลที่จำเป็น และสนับสนุนการเข้าถึงคู่ค้าที่เหมาะสมในระดับพื้นที่',
+    Tags:['Web Application','Data Management','Smart Agriculture'],
+    EmbedURL:'https://krit-pj.github.io/Green_Gain_Hub-KPP/',
+    Icon:'fa-seedling',
+    Accent:'#2E7D32',
+    AccessNote:'ระบบสมาชิก',
+    Featured:true,
+    Status:'published',
+    SortOrder:2
+  }
+];
+
+/* ===================== หลักฐานผลงานและแหล่งอ้างอิง — เรียงตาม Timeline ล่าสุดก่อน ===================== */
+const PROFESSIONAL_EVIDENCE = [
+  {
+    ID:'evidence-2569-09-04', EventDate:'2026-09-04',
+    Title:'เวทีนำเสนอผลงานและแลกเปลี่ยนข้อคิดเห็น การขยายผลวิจัยสู่การปฏิบัติ รุ่นที่ 5',
+    Category:'การประเมินและนำเสนอผลงาน', Role:'วิทยากรและผู้ทรงคุณวุฒิให้ข้อเสนอแนะผลงานวิจัย',
+    Summary:'ร่วมประเมินการนำเสนอผลงาน แลกเปลี่ยนข้อคิดเห็น และให้ข้อเสนอแนะเพื่อพัฒนางานวิจัยและการนำผลไปใช้ในงานส่งเสริมการเกษตร',
+    SourceName:'ข่าวเกษตร สำนักงานส่งเสริมและพัฒนาการเกษตรที่ 4 จังหวัดขอนแก่น', SourceType:'โพสต์ Facebook',
+    SourceURL:'https://www.facebook.com/permalink.php?story_fbid=pfbid0cFbiXUGnsgxdinC9xC1PV2frKDh5zjtQ3rhTHhHgA4SsPddJAWQvhnHNsVjVFLo7l&id=100064497198202', Color:'#D4A017'
+  },
+  {
+    ID:'evidence-2569-07-08', EventDate:'2026-07-08',
+    Title:'การสื่อสารและประชาสัมพันธ์องค์ความรู้เพื่อสร้างความเปลี่ยนแปลงในการปฏิบัติงาน',
+    Category:'การสื่อสารองค์ความรู้', Role:'วิทยากรร่วมเสวนาและถ่ายทอดประสบการณ์จากพื้นที่',
+    Summary:'แลกเปลี่ยนประสบการณ์ด้านการสื่อสารองค์ความรู้ การถ่ายทอดผลการวิจัย และการประยุกต์ใช้ในการปฏิบัติงานส่งเสริมการเกษตร',
+    SourceName:'ข่าวเกษตร สำนักงานส่งเสริมและพัฒนาการเกษตรที่ 4 จังหวัดขอนแก่น', SourceType:'โพสต์ Facebook',
+    SourceURL:'https://www.facebook.com/permalink.php?story_fbid=pfbid02t9SXJy6Fp6GvQa9vDbbmaLDHbEZscHjAmVUu2ogRtbuXrD3X7bGNEcN4BLBboFQgl&id=100064497198202', Color:'#0F4C81'
+  },
+  {
+    ID:'evidence-2569-06-19', EventDate:'2026-06-19',
+    Title:'รายงานความก้าวหน้าการทำวิจัย ครั้งที่ 2 หลักสูตรขยายผลงานวิจัยสู่การปฏิบัติ',
+    Category:'การขยายผลวิจัยสู่การปฏิบัติ', Role:'ผู้ทรงคุณวุฒิร่วมให้ข้อคิดเห็นและคำแนะนำ',
+    Summary:'ให้ข้อเสนอแนะต่อความก้าวหน้าการดำเนินงานวิจัย สะท้อนมุมมอง และเสนอแนวทางต่อยอดผลงานวิจัยสู่การปฏิบัติอย่างเป็นรูปธรรม',
+    SourceName:'ข่าวเกษตร สำนักงานส่งเสริมและพัฒนาการเกษตรที่ 4 จังหวัดขอนแก่น', SourceType:'โพสต์ Facebook',
+    SourceURL:'https://www.facebook.com/permalink.php?story_fbid=pfbid02dsX2qJohzyAcUtTsJW4k8KpYCfgV426yUQ7xbeH8rY8vCYoh7HGzcYSGqc6GRPFDl&id=100064497198202', Color:'#1B5E20'
+  },
+  {
+    ID:'evidence-2569-04-07', EventDate:'2026-04-07',
+    Title:'วิเคราะห์และสังเคราะห์ Model การขยายผลวิจัยสู่การปฏิบัติในพื้นที่',
+    Category:'การขยายผลวิจัยสู่การปฏิบัติ', Role:'วิทยากรผู้เชี่ยวชาญร่วมแลกเปลี่ยนประสบการณ์',
+    Summary:'ร่วมพัฒนาศักยภาพบุคลากรในการวิเคราะห์รูปแบบการขยายผลและขับเคลื่อนผลงานวิจัยให้เกิดการใช้ประโยชน์ในพื้นที่',
+    SourceName:'ข่าวเกษตร สำนักงานส่งเสริมและพัฒนาการเกษตรที่ 4 จังหวัดขอนแก่น', SourceType:'โพสต์ Facebook',
+    SourceURL:'https://www.facebook.com/permalink.php?story_fbid=pfbid0UvfNbexckTs3E5L4sToHanLbRXz3k5NJeguatDSNg8bgVX8cSjboe531n8jSeZb4l&id=100064497198202', Color:'#1B5E20'
+  },
+  {
+    ID:'evidence-2565-08-02', EventDate:'2022-08-02',
+    Title:'เวทีนำเสนอผลงานวิจัย การพัฒนางานส่งเสริมการเกษตรสู่งานวิจัย',
+    Category:'การประเมินและนำเสนอผลงาน', Role:'วิทยากรประจำหลักสูตรและผู้ให้ข้อเสนอแนะ',
+    Summary:'ร่วมถ่ายทอดความรู้และประสบการณ์ในเวทีนำเสนอผลงานวิจัย 22 เรื่อง ซึ่งมุ่งเน้นผลงานที่ใช้ได้จริงและต่อยอดได้จริง',
+    SourceName:'ข่าวเกษตร สำนักงานส่งเสริมและพัฒนาการเกษตรที่ 4 จังหวัดขอนแก่น', SourceType:'โพสต์ Facebook',
+    SourceURL:'https://www.facebook.com/permalink.php?story_fbid=pfbid024a8ww8KRncB9CHSM1qLZYSa9JZkR4bz5Z3GyFmjiFZtTc8byA4kuUdY572RPETjol&id=100064497198202', Color:'#D4A017'
+  },
+  {
+    ID:'evidence-2565-05-02', EventDate:'2022-05-02',
+    Title:'เสริมความรู้การทำงานประจำสู่งานวิจัยสำหรับนักส่งเสริมการเกษตร',
+    Category:'การพัฒนางานประจำสู่งานวิจัย (R2R)', Role:'วิทยากรถ่ายทอดความรู้และแลกเปลี่ยนประสบการณ์',
+    Summary:'ร่วมเสริมองค์ความรู้ด้านการพัฒนางานประจำสู่งานวิจัยให้แก่นักวิชาการส่งเสริมการเกษตรในภาคตะวันออกเฉียงเหนือผ่านระบบออนไลน์',
+    SourceName:'ข่าวเกษตร สำนักงานส่งเสริมและพัฒนาการเกษตรที่ 4 จังหวัดขอนแก่น', SourceType:'โพสต์ Facebook',
+    SourceURL:'https://www.facebook.com/permalink.php?story_fbid=pfbid034rji5wn7JntQeWPVKmBY76SgdZvZgL1okfPWWAyji5t145TSR4vDD26W61CY7oKNl&id=100064497198202', Color:'#2E7D32'
+  },
+  {
+    ID:'evidence-2565-03-10', EventDate:'2022-03-10',
+    Title:'เสวนาการนำเสนอเค้าโครงวิจัยตามเอกสาร ว.1',
+    Category:'การพัฒนางานประจำสู่งานวิจัย (R2R)', Role:'วิทยากรผู้ให้คำปรึกษาการพัฒนาเค้าโครงวิจัย',
+    Summary:'ร่วมเติมเต็มองค์ความรู้และให้คำแนะนำการจัดทำเค้าโครงวิจัย เพื่อยกระดับงานส่งเสริมการเกษตรสู่งานวิจัยที่มีมาตรฐานและใช้แก้ปัญหาได้',
+    SourceName:'ข่าวเกษตร สำนักงานส่งเสริมและพัฒนาการเกษตรที่ 4 จังหวัดขอนแก่น', SourceType:'โพสต์ Facebook',
+    SourceURL:'https://www.facebook.com/permalink.php?story_fbid=pfbid0H4CgqGkU9VNQcpHYfCRbETgSzkCrpMgQNsSv1BM1e926yF23tP41JMh3Q7WuAKxGl&id=100064497198202', Color:'#2E7D32'
+  },
+  {
+    ID:'evidence-2565-02-23', EventDate:'2022-02-23',
+    Title:'พัฒนาศักยภาพนักส่งเสริมการเกษตรในการพัฒนางานประจำสู่งานวิจัย',
+    Category:'การพัฒนางานประจำสู่งานวิจัย (R2R)', Role:'วิทยากรร่วมบูรณาการหลักสูตร',
+    Summary:'ร่วมเป็นทีมวิทยากรพัฒนานักวิชาการส่งเสริมการเกษตร 57 คน ให้สามารถใช้กระบวนการวิจัยพัฒนางานประจำและสร้างต้นแบบการทำงาน',
+    SourceName:'ข่าวเกษตร สำนักงานส่งเสริมและพัฒนาการเกษตรที่ 4 จังหวัดขอนแก่น', SourceType:'โพสต์ Facebook',
+    SourceURL:'https://www.facebook.com/permalink.php?story_fbid=pfbid02wKMHxG4jBhLjLzztVSaTkRex7RAm99ijW4RLWo36G3ATFDRuQ7w49YmmUczuuWKUl&id=100064497198202', Color:'#2E7D32'
+  }
+];
+
+/* ===================== ข้อมูลผลงานจาก Curriculum Vitae ฉบับ 9 กรกฎาคม 2567 ===================== */
+const CV_PORTFOLIO_DATA = {
+  Research: [
+    {ID:'cv-research-data-viz-2565',Title:'ระบบสารสนเทศทางการเกษตรที่สำคัญในรูปแบบ Data Visualization ของจังหวัดกำแพงเพชร',Abstract:'พัฒนาระบบสารสนเทศเพื่อสื่อสารข้อมูลการเกษตรที่สำคัญของจังหวัดกำแพงเพชรในรูปแบบที่เข้าใจและนำไปใช้ตัดสินใจได้ง่าย',Year:2565,Field:'Agricultural Data Visualization',Authors:'กิตติ โพธิ์จวง',FileURL:'1. Curriculum Vitae Dr. Kitti _9-7-2567.pdf',Tags:'Data Visualization,Agricultural Information',Status:'published'},
+    {ID:'cv-research-smart-farm-2565',Title:'การส่งเสริมการจัดการน้ำและธาตุอาหารพืชอย่างมีประสิทธิภาพด้วยระบบสมาร์ทฟาร์ม',Abstract:'แนวคิดการประยุกต์ระบบ Smart Farm เพื่อจัดการน้ำและธาตุอาหารพืชในจังหวัดกำแพงเพชรอย่างมีประสิทธิภาพ',Year:2565,Field:'Smart Farming',Authors:'กิตติ โพธิ์จวง',FileURL:'1. Curriculum Vitae Dr. Kitti _9-7-2567.pdf',Tags:'Smart Farm,IoT,Plant Nutrition',Status:'published'},
+    {ID:'cv-research-banana-r2r-2565',Title:'การศึกษาแนวทางการพัฒนากระบวนการผลิตและยกระดับคุณภาพผลผลิตกล้วยไข่กำแพงเพชร',Abstract:'ผลงานวิจัยในงานประจำเพื่อพัฒนากระบวนการผลิตและยกระดับคุณภาพผลผลิตกล้วยไข่ของจังหวัดกำแพงเพชร',Year:2565,Field:'Routine to Research (R2R)',Authors:'กิตติ โพธิ์จวง',FileURL:'1. Curriculum Vitae Dr. Kitti _9-7-2567.pdf',Tags:'R2R,Banana,Quality Improvement',Status:'published'},
+    {ID:'cv-research-online-extension-2564',Title:'การขับเคลื่อนงานส่งเสริมการเกษตรด้วยระบบออนไลน์ในสภาวการณ์ COVID-19',Abstract:'กรณีศึกษาโครงการพัฒนานักส่งเสริมการเกษตรมืออาชีพ โดยประยุกต์ระบบออนไลน์เพื่อให้การพัฒนาบุคลากรดำเนินต่อเนื่องในช่วงการแพร่ระบาด',Year:2564,Field:'Agricultural Extension',Authors:'กิตติ โพธิ์จวง',FileURL:'1. Curriculum Vitae Dr. Kitti _9-7-2567.pdf',Tags:'Online Extension,COVID-19,Capacity Building',Status:'published'},
+    {ID:'cv-research-banana-management-2564',Title:'แนวทางการจัดการกล้วยไข่กำแพงเพชรให้ได้คุณภาพ',Abstract:'การวิจัยในงานประจำเพื่อสังเคราะห์แนวทางการจัดการกล้วยไข่กำแพงเพชรให้ได้คุณภาพตามความต้องการของตลาด',Year:2564,Field:'Routine to Research (R2R)',Authors:'กิตติ โพธิ์จวง',FileURL:'1. Curriculum Vitae Dr. Kitti _9-7-2567.pdf',Tags:'R2R,Banana,Agricultural Extension',Status:'published'},
+    {ID:'cv-research-voc-rubber-2566',Title:'การศึกษาความเข้มข้นของสารอินทรีย์ระเหยง่ายในพื้นที่สวนยางพาราที่ระดับความสูงแตกต่างกัน',Abstract:'งานวิจัยในพื้นที่อำเภอปากคาด จังหวัดบึงกาฬ โดยปฏิบัติหน้าที่อาจารย์ที่ปรึกษาวิจัยร่วมให้แก่นักศึกษามหาวิทยาลัยราชภัฏอุดรธานี',Year:2566,Field:'Environmental Science',Authors:'นักศึกษาสาขาวิทยาศาสตร์สิ่งแวดล้อม; ที่ปรึกษาร่วม: ดร.กิตติ โพธิ์จวง',FileURL:'1. Curriculum Vitae Dr. Kitti _9-7-2567.pdf',Tags:'VOC,Rubber Plantation,Environmental Monitoring',Status:'published'}
+  ],
+  Publications: [
+    {ID:'cv-pub-2021-plants',Title:'Cost-Effective Modern Chemical Sensor System for Soil Macronutrient Analysis Applied to Thai Sustainable and Precision Agriculture',Type:'Journal',Authors:'Sutasinee Apichai; Chalermpong Saenjum; Thanawat Pattananandecha; Kitti Phojuang; et al.',Source:'Plants, 10, 1524',Year:2021,DOI_URL:'',Tags:'Chemical Sensors,Soil Macronutrients,Precision Agriculture'},
+    {ID:'cv-pub-2020-cmu',Title:'Simple Cost-Effective Sequential Injection Lab at Valve with Remote Control Employing Everyday Communication Technology with a Webcam Camera Detector for the Determination of Iron and Phosphate as Model Analytes',Type:'Journal',Authors:'Wasin Wongwilai; Kanokwan Kiwfo; Kitti Phojuang; et al.',Source:'CMU Journal of Natural Sciences, 19(4), 917-929',Year:2020,DOI_URL:'',Tags:'Remote Laboratory,Chemical Analysis'},
+    {ID:'cv-pub-2018-water-quality',Title:'Smart Laboratory Information System for Water Quality Monitoring',Type:'Journal',Authors:'Kitti Phojuang; Siraprapa Wattanakul; Supara Grudpan; Wasin Wongwilai; Kate Grudpan',Source:'PARIPEX - Indian Journal of Research, 7(12), 26-29',Year:2018,DOI_URL:'',Tags:'Water Quality,Information System,IoT'},
+    {ID:'cv-pub-2020-microfluidic',Title:'Simple Natural Material Based Microfluidic Platforms with a Smartphone Detection Employing Natural Reagent for Acidity Assay',Type:'Journal',Authors:'Kanokwan Kiwfo; Wasin Wongwilai; Tadao Sakai; Norio Teshima; Hiroya Murakami; Pathinan Paengnakorn; Kitti Phojuang; et al.',Source:'Journal of Flow Injection Analysis, 37(1), 9-12',Year:2020,DOI_URL:'',Tags:'Microfluidics,Smartphone Detection'},
+    {ID:'cv-pub-2007-bts',Title:'Study of atmospheric stability in Bangkok Mass Transit System (BTS) area by meteorological pre-processor model',Type:'Conference',Authors:'Kitti Phojuang; Prapassara Nilagupta; Surat Baulert; Bongkotrat Pitiyon',Source:'Proceedings of 45th Kasetsart University Annual Conference, pp. 755-762',Year:2007,DOI_URL:'',Tags:'Atmospheric Stability,Environmental Modeling'},
+    {ID:'cv-pub-2021-css-symposium',Title:'Simple Chemical Sensor Systems (CSSs) developed for sustainable agriculture',Type:'Conference',Authors:'Kitti Phojuang; Pheeraya Jaikang; Kanokwan Kiwfo; et al.',Source:'One-Day E-Symposium on Green Innovation in Chemical Analysis',Year:2021,DOI_URL:'',Tags:'Chemical Sensors,Sustainable Agriculture'},
+    {ID:'cv-pub-2017-iot-agriculture',Title:'Internet of Things (IoT) bridging chemical analysis for agriculture: Experiences in Chiang Mai',Type:'Conference',Authors:'Kitti Phojuang; Wasin Wongwilai; Kate Grudpan',Source:'21st International Conference on Flow Injection Analysis, Saint Petersburg, Russia',Year:2017,DOI_URL:'',Tags:'IoT,Chemical Analysis,Agriculture'},
+    {ID:'cv-pub-2016-asianalysis',Title:'Internet of Things (IoT) in Modern Chemical Analysis',Type:'Conference',Authors:'Kitti Phojuang; Wasin Wongwilai; Supara Grudpan; Siraprapa Wattanakul; Kate Grudpan',Source:'13th Asian Conference on Analytical Sciences, Chiang Mai',Year:2016,DOI_URL:'',Tags:'IoT,Analytical Science'},
+    {ID:'cv-pub-2016-picoexplorer',Title:'Modern chemical analysis employing PiCOEXPLORER and modern information technology',Type:'Conference',Authors:'Kitti Phojuang; Kanokwan Kiwfo; Kajorngai Thajee; et al.',Source:'International Forum 2016 on I&E Sensing Technology and Environment Monitoring, Kyushu University',Year:2016,DOI_URL:'',Tags:'PiCOEXPLORER,Environmental Monitoring'},
+    {ID:'cv-pub-2015-picoscope',Title:'Down scaling chemical analysis employing PiCOSCOPE and modern information technology',Type:'Conference',Authors:'Kanokwan Kiwfo; Kajorngai Thajee; Pheeraya Jaikang; Sutasinee Apichai; Kitti Phojuang; et al.',Source:'52nd JAFIA Annual Symposium, Kiryu, Japan',Year:2015,DOI_URL:'',Tags:'PiCOSCOPE,Chemical Analysis'},
+    {ID:'cv-pub-2014-green-analysis',Title:'Modern information technology for Environmental Analysis: Green analytical chemistry experiences',Type:'Conference',Authors:'Wasin Wongwilai; Kanokwan Kiwfo; Kitti Phojuang; et al.',Source:'International Symposia on Research toward Green Innovation, Chiang Mai',Year:2014,DOI_URL:'',Tags:'Environmental Analysis,Green Chemistry'},
+    {ID:'cv-pub-2014-icfia',Title:'Analytical Chemistry Made Easy with Every Day Modern IT for Flow Based and Down Scaling Analysis',Type:'Conference',Authors:'Wasin Wongwilai; Kitti Phojuang; Siraprapa Wattanakul; Supara Grudpan; Kate Grudpan',Source:'19th International Conference on Flow Injection Analysis, Fukuoka, Japan',Year:2014,DOI_URL:'',Tags:'Analytical Chemistry,Modern IT'},
+    {ID:'cv-pub-2013-water-monitoring',Title:'Novel Water Quality Monitoring Employing Modern Information Technology: Study Cases in Thailand',Type:'Conference',Authors:'W. Wongwilai; Kitti Phojuang; I. D. McKelvie; Kate Grudpan',Source:'Asianalysis XII, Fukuoka, Japan',Year:2013,DOI_URL:'',Tags:'Water Quality,Modern IT'},
+    {ID:'cv-pub-2012-flooding',Title:'Novel Water Quality Monitoring Approach by Employing Modern Information Technology: A Case Study for the Effects Due to Flooding in Thailand',Type:'Conference',Authors:'Kitti Phojuang; Wasin Wongwilai; Somchai Lapanantnoppakhun; Ian D. McKelvie; Kate Grudpan',Source:'6th PACCON, Chiang Mai',Year:2012,DOI_URL:'',Tags:'Water Quality,Flooding,Monitoring'},
+    {ID:'cv-patent-19843',Title:'ระบบตรวจวัดการเปลี่ยนแปลงทางเคมี',Type:'Petty Patent',Authors:'กิตติ โพธิ์จวง และคณะ',Source:'อนุสิทธิบัตรเลขที่ 19843',Year:'',DOI_URL:'',Tags:'Chemical Monitoring,Patent'}
+  ],
+  Projects: [
+    {ID:'cv-project-smart-farm-2565',Title:'การส่งเสริมการจัดการน้ำและธาตุอาหารพืชด้วยระบบ Smart Farm',Description:'แนวคิดพัฒนาระบบเพื่อสนับสนุนการจัดการน้ำและธาตุอาหารพืชอย่างมีประสิทธิภาพในจังหวัดกำแพงเพชร',Category:'Smart Farming',YearStart:2565,YearEnd:2565,CoverImageFileID:'',Status:'published'},
+    {ID:'cv-project-banana-r2r-2565',Title:'พัฒนากระบวนการผลิตและยกระดับคุณภาพกล้วยไข่กำแพงเพชร',Description:'งาน R2R ที่เชื่อมโจทย์การผลิตในพื้นที่กับการพัฒนาคุณภาพผลผลิต',Category:'R2R',YearStart:2565,YearEnd:2565,CoverImageFileID:'',Status:'published'},
+    {ID:'cv-project-css-npk-2562',Title:'การศึกษาธาตุอาหารพืชหลักด้วยวิธี CSS-A และชุดทดสอบดิน',Description:'ศึกษาธาตุอาหาร N P K ความเป็นกรด-ด่าง และค่าการนำไฟฟ้า พร้อมพัฒนาระบบจัดเตรียมสารละลายปุ๋ยน้ำอัตโนมัติ',Category:'Precision Agriculture',YearStart:2562,YearEnd:2563,CoverImageFileID:'',Status:'published'},
+    {ID:'cv-project-rice-css-2562',Title:'ถ่ายทอดและทดสอบระบบเซ็นเซอร์ทางเคมีสำหรับเกษตรแม่นยำในแปลงนาข้าว',Description:'ถ่ายทอดองค์ความรู้และทดสอบระบบ CSS เพื่อวิเคราะห์ธาตุอาหารพืชในดินร่วมกับศูนย์วิจัยข้าวและกรมการข้าว',Category:'Precision Agriculture',YearStart:2562,YearEnd:2562,CoverImageFileID:'',Status:'published'},
+    {ID:'cv-project-chemical-sensor-2561',Title:'การพัฒนาและประยุกต์ระบบเซ็นเซอร์ทางเคมีสำหรับเกษตรแม่นยำ',Description:'โครงการวิจัยจากข้อมูลเชิงจุดสู่ข้อมูลเชิงพื้นที่ ตามสัญญา RDG6120019',Category:'Precision Agriculture',YearStart:2561,YearEnd:2562,CoverImageFileID:'',Status:'published'},
+    {ID:'cv-project-soil-sensor-2559',Title:'การพัฒนาเซ็นเซอร์ทางเคมีเพื่อวิเคราะห์ธาตุอาหารพืชในดิน',Description:'โครงการพัฒนาเซ็นเซอร์สำหรับเกษตรแบบแม่นยำ ตามสัญญา SRI5920209',Category:'Precision Agriculture',YearStart:2559,YearEnd:2560,CoverImageFileID:'',Status:'published'}
+  ],
+  Training: [
+    {ID:'cv-training-mentor-2566',Title:'การพัฒนาศักยภาพเจ้าหน้าที่เพื่อการเป็นพี่เลี้ยงที่ดี (To be DOAE Good Mentor)',Type:'Training',Role:'ผู้ผ่านการฝึกอบรม',Date:'2023-03-16',Organizer:'กรมส่งเสริมการเกษตร',CertificateFileID:'',SourceURL:'1. Curriculum Vitae Dr. Kitti _9-7-2567.pdf'},
+    {ID:'cv-training-r2r-speaker-2566',Title:'การพัฒนางานส่งเสริมการเกษตรด้วยวิธีการวิจัย รุ่นที่ 2',Type:'Workshop',Role:'วิทยากร',Date:'2023-10-30',Organizer:'สำนักงานส่งเสริมและพัฒนาการเกษตรที่ 4 จังหวัดขอนแก่น',CertificateFileID:'',SourceURL:'1. Curriculum Vitae Dr. Kitti _9-7-2567.pdf'},
+    {ID:'cv-training-professional-mentor-2566',Title:'โครงการพัฒนานักส่งเสริมการเกษตรมืออาชีพ',Type:'Mentoring',Role:'คณะทำงานพี่เลี้ยง',Date:'2023-07-04',Organizer:'สำนักงานส่งเสริมและพัฒนาการเกษตรที่ 6 จังหวัดเชียงใหม่',CertificateFileID:'',SourceURL:'1. Curriculum Vitae Dr. Kitti _9-7-2567.pdf'},
+    {ID:'cv-training-data-viz-2564',Title:'Data Visualization',Type:'Training',Role:'ผู้ผ่านการพัฒนาออนไลน์',Date:'2021-10-28',Organizer:'สำนักงานคณะกรรมการข้าราชการพลเรือน',CertificateFileID:'',SourceURL:'1. Curriculum Vitae Dr. Kitti _9-7-2567.pdf'},
+    {ID:'cv-training-digital-literacy-2564',Title:'Digital Literacy',Type:'Training',Role:'ผู้ผ่านการพัฒนาออนไลน์',Date:'2021-10-17',Organizer:'สำนักงานคณะกรรมการข้าราชการพลเรือน',CertificateFileID:'',SourceURL:'1. Curriculum Vitae Dr. Kitti _9-7-2567.pdf'},
+    {ID:'cv-training-excel-2566',Title:'การใช้ Microsoft Excel เพื่อการบริหารข้อมูล',Type:'Training',Role:'ผู้ผ่านการพัฒนาออนไลน์',Date:'2023-03-29',Organizer:'สำนักงานคณะกรรมการข้าราชการพลเรือน',CertificateFileID:'',SourceURL:'1. Curriculum Vitae Dr. Kitti _9-7-2567.pdf'},
+    {ID:'cv-training-growth-2566',Title:'การสร้าง Growth Mindset เพื่อผลสำเร็จของชีวิตและงาน',Type:'Training',Role:'ผู้ผ่านการพัฒนาออนไลน์',Date:'2023-03-02',Organizer:'สำนักงานคณะกรรมการข้าราชการพลเรือน',CertificateFileID:'',SourceURL:'1. Curriculum Vitae Dr. Kitti _9-7-2567.pdf'},
+    {ID:'cv-training-smart-city-2566',Title:'The Fundamentals of Smart City',Type:'Training',Role:'ผู้ผ่านการอบรมและแบบทดสอบ',Date:'2023-03-01',Organizer:'สำนักงานส่งเสริมเศรษฐกิจดิจิทัล',CertificateFileID:'',SourceURL:'1. Curriculum Vitae Dr. Kitti _9-7-2567.pdf'}
+  ]
+};
+const CV_TRAINING_EVIDENCE = CV_PORTFOLIO_DATA.Training.map((item,index) => ({
+  ID:`evidence-${item.ID}`, EventDate:item.Date, Title:item.Title,
+  Category:item.Type === 'Mentoring' ? 'การเป็นพี่เลี้ยงและพัฒนาบุคลากร' : 'การพัฒนาทักษะวิชาชีพ',
+  Role:item.Role, Summary:`${item.Role} จัดโดย ${item.Organizer}`,
+  SourceName:'Curriculum Vitae Dr. Kitti ฉบับ 9 กรกฎาคม 2567', SourceType:'เอกสารประวัติผลงาน',
+  SourceURL:item.SourceURL, Color:index % 2 ? '#0F4C81' : '#2E7D32'
+}));
+
+/* ===================== ข้อมูลตั้งต้นจาก CV (ใช้เมื่อยังไม่ได้เชื่อม Google Sheet หรือ Sheet ยังไม่มีข้อมูล) ===================== */
+const FALLBACK_DATA = {
+  Profile: [{ ID:'fallback-profile', NameEN:'Dr. Kitti Phojuang', NameTH:'ดร.กิตติ โพธิ์จวง',
+    Position:'นักวิชาการส่งเสริมการเกษตรชำนาญการ',
+    OrgLine1:'สำนักงานเกษตรจังหวัดกำแพงเพชร', OrgLine2:'กรมส่งเสริมการเกษตร', OrgLine3:'กระทรวงเกษตรและสหกรณ์',
+    ProfessionalIdentity:'Agricultural Data Scientist,Agri-Tech Researcher,Digital Innovation Specialist',
+    ProfileImageFileID:'', LogoFileID:'', Phone:'084-115-7666', Email:'phojuang.kitti@gmail.com', Line:'0841157666',
+    GoogleScholarURL:'', ResearchGateURL:'', OrcidURL:'', MapEmbedURL:'' }],
+  Hero: [{ ID:'fallback-hero', TitleEN:'Dr. Kitti Phojuang', TitleTH:'ดร.กิตติ โพธิ์จวง',
+    Subtitle:'นักวิชาการส่งเสริมการเกษตรชำนาญการ',
+    TypingPhrases:'Agricultural Data Scientist|Agri-Tech Researcher|Digital Innovation Specialist',
+    ReflectionText:'มุ่งพัฒนาระบบสารสนเทศทางการเกษตรและ Smart Farming ด้วยเทคโนโลยี IoT เพื่อยกระดับงานส่งเสริมการเกษตรด้วยกระบวนการวิจัยในงานประจำ (R2R)' }],
+  DashboardStatistics: [
+    { ID:'fb-s1', Label:'ประสบการณ์และความเชี่ยวชาญ', Value:5, Suffix:' ด้าน', Icon:'fa-star', LinkTarget:'about', SortOrder:1 },
+    { ID:'fb-s2', Label:'ผลงานวิจัยตีพิมพ์', Value:15, Suffix:' เรื่อง', Icon:'fa-flask', LinkTarget:'publications', SortOrder:2 },
+    { ID:'fb-s3', Label:'ประสบการณ์ทำงาน', Value:6, Suffix:' ตำแหน่ง', Icon:'fa-briefcase', LinkTarget:'about', SortOrder:3 },
+    { ID:'fb-s4', Label:'สิทธิบัตร/อนุสิทธิบัตร', Value:1, Suffix:' ฉบับ', Icon:'fa-certificate', LinkTarget:'publications', SortOrder:4 },
+    { ID:'fb-s5', Label:'ผลงาน/บทความ', Value:5, Suffix:' ชิ้น', Icon:'fa-pen-nib', LinkTarget:'blog', SortOrder:5 }
+  ],
+  Education: [
+    { ID:'fb-e1', UniversityName:'มหาวิทยาลัยเชียงใหม่', UniversityLogoFileID:'', Degree:'วิทยาศาสตรดุษฎีบัณฑิต (ปร.ด.)', FieldOfStudy:'วิทยาศาสตร์สิ่งแวดล้อม', YearStart:2563, YearEnd:2563, SortOrder:1 },
+    { ID:'fb-e2', UniversityName:'มหาวิทยาลัยสุโขทัยธรรมาธิราช', UniversityLogoFileID:'', Degree:'สาธารณสุขศาสตรบัณฑิต', FieldOfStudy:'อาชีวอนามัยและความปลอดภัย', YearStart:2552, YearEnd:2552, SortOrder:2 },
+    { ID:'fb-e3', UniversityName:'มหาวิทยาลัยเกษตรศาสตร์', UniversityLogoFileID:'', Degree:'วิทยาศาสตรมหาบัณฑิต', FieldOfStudy:'วิทยาศาสตร์สิ่งแวดล้อม', YearStart:2549, YearEnd:2549, SortOrder:3 },
+    { ID:'fb-e4', UniversityName:'สถาบันราชภัฏนครสวรรค์', UniversityLogoFileID:'', Degree:'วิทยาศาสตรบัณฑิต', FieldOfStudy:'วิทยาศาสตร์สิ่งแวดล้อม', YearStart:2543, YearEnd:2543, SortOrder:4 }
+  ],
+  Mindmap: [
+    { ID:'fb-m1', NodeLabel:'Environmental Science', LinkTarget:'research', Icon:'fa-leaf', Color:'', SortOrder:1 },
+    { ID:'fb-m2', NodeLabel:'Occupational Health & Safety', LinkTarget:'research', Icon:'fa-shield-heart', Color:'', SortOrder:2 },
+    { ID:'fb-m3', NodeLabel:'Teaching Profession', LinkTarget:'training', Icon:'fa-chalkboard-user', Color:'', SortOrder:3 },
+    { ID:'fb-m4', NodeLabel:'Technician (Basic)', LinkTarget:'projects', Icon:'fa-screwdriver-wrench', Color:'', SortOrder:4 },
+    { ID:'fb-m5', NodeLabel:'Computer Science', LinkTarget:'dashboards', Icon:'fa-microchip', Color:'', SortOrder:5 },
+    { ID:'fb-m6', NodeLabel:'Agricultural Extension', LinkTarget:'projects', Icon:'fa-seedling', Color:'', SortOrder:6 },
+    { ID:'fb-m7', NodeLabel:'Researcher / Civil Servant', LinkTarget:'research', Icon:'fa-flask', Color:'', SortOrder:7 },
+    { ID:'fb-m8', NodeLabel:'Environmental Scientist', LinkTarget:'research', Icon:'fa-globe', Color:'', SortOrder:8 }
+  ],
+  Research: CV_PORTFOLIO_DATA.Research,
+  Publications: CV_PORTFOLIO_DATA.Publications,
+  Projects: CV_PORTFOLIO_DATA.Projects,
+  Training: CV_PORTFOLIO_DATA.Training,
+  Blog: [
+    { ID:'blog-risk-map-story', Title:'จากจุดความร้อนสู่แผนที่ความเสี่ยง: เปลี่ยนข้อมูลให้ช่วยวางแผนพื้นที่', Slug:'from-hotspots-to-risk-map',
+      Excerpt:'เรื่องเล่าการเปลี่ยนข้อมูลจุดความร้อนและบริบทพื้นที่เกษตรให้เป็นภาพรวมที่อ่านง่าย เพื่อสนับสนุนการเฝ้าระวังและจัดลำดับพื้นที่ทำงาน',
+      Content:'ปัญหาการเผาในพื้นที่เกษตรไม่ได้ต้องการเพียงตัวเลขจำนวนจุดความร้อน แต่ต้องการคำตอบว่าพื้นที่ใดควรได้รับการติดตามก่อน และข้อมูลแต่ละชุดเชื่อมโยงกันอย่างไร\n\nแนวคิดของ Agri-Risk Map Burning คือการนำข้อมูลเชิงพื้นที่มาจัดระเบียบและสื่อสารผ่านแผนที่เชิงโต้ตอบ ผู้ใช้งานสามารถสำรวจสถานการณ์ เปรียบเทียบระดับความเสี่ยง และใช้ข้อมูลประกอบการวางแผนเชิงพื้นที่ได้สะดวกขึ้น\n\nบทเรียนสำคัญคือเครื่องมือข้อมูลที่ดีต้องเริ่มจากคำถามของผู้ใช้ในพื้นที่ แสดงผลให้เข้าใจได้เร็ว และเปิดโอกาสให้ปรับปรุงข้อมูลอย่างต่อเนื่อง',
+      CoverImageFileID:'', CoverImageURL:'', Category:'การจัดการความเสี่ยง', ContentType:'เรื่องเล่าจากพื้นที่', SourceType:'เขียนเอง', SourceURL:'https://krit-pj.github.io/agri-risk-map-burning/', Author:'ดร.กิตติ โพธิ์จวง', Tags:'Web GIS,Hotspot,Risk Analytics', PublishDate:'2026-09-25', ReadTime:3, Featured:'true', Status:'published' },
+    { ID:'blog-data-question', Title:'ข้อมูลการเกษตรที่ดีควรตอบคำถามอะไร', Slug:'questions-good-agricultural-data-should-answer',
+      Excerpt:'กรอบคิดสั้น ๆ สำหรับออกแบบข้อมูลและ Dashboard ให้ช่วยตัดสินใจได้จริง แทนการสะสมตัวเลขจำนวนมากโดยไม่มีบริบท',
+      Content:'ข้อมูลการเกษตรมีคุณค่าเมื่อช่วยให้ผู้ใช้ตัดสินใจได้ดีขึ้น การออกแบบระบบจึงควรเริ่มจากคำถาม ไม่ใช่เริ่มจากกราฟ\n\nคำถามพื้นฐานที่ควรตอบให้ได้ ได้แก่ เกิดอะไรขึ้น เกิดที่ไหน เปลี่ยนแปลงจากช่วงก่อนอย่างไร ใครได้รับผลกระทบ และควรดำเนินการอะไรต่อ เมื่อกำหนดคำถามชัดเจนจึงเลือกตัวชี้วัด แหล่งข้อมูล และรูปแบบการแสดงผลที่เหมาะสม\n\nDashboard ที่ดีไม่จำเป็นต้องมีองค์ประกอบจำนวนมาก แต่ต้องลดเวลาค้นหาคำตอบ แสดงที่มาของข้อมูล และสื่อสารข้อจำกัดอย่างตรงไปตรงมา',
+      CoverImageFileID:'', CoverImageURL:'', Category:'การใช้ข้อมูล', ContentType:'องค์ความรู้', SourceType:'เขียนเอง', SourceURL:'', Author:'ดร.กิตติ โพธิ์จวง', Tags:'Data Analytics,Dashboard,Decision Support', PublishDate:'2026-09-18', ReadTime:3, Featured:'false', Status:'published' },
+    { ID:'blog-green-gain-hub', Title:'เบื้องหลัง Green Gain Hub: เชื่อมข้อมูลการผลิตกับโอกาสของเกษตรกร', Slug:'behind-green-gain-hub-kpp',
+      Excerpt:'แนวคิดการพัฒนาแพลตฟอร์มที่จัดระเบียบข้อมูลการผลิต ช่วงเก็บเกี่ยว และข้อมูลที่จำเป็นต่อการเชื่อมโยงผู้เกี่ยวข้องในระดับพื้นที่',
+      Content:'Green Gain Hub: กำแพงเพชร เริ่มจากความต้องการเห็นข้อมูลการผลิตที่กระจัดกระจายอยู่ในรูปแบบที่นำไปใช้ต่อได้\n\nระบบออกแบบให้ผู้ใช้งานที่ลงทะเบียนสามารถบันทึกข้อมูลสำคัญของการผลิตและช่วงเก็บเกี่ยว เพื่อสร้างฐานข้อมูลที่เป็นระบบมากขึ้น ข้อมูลเหล่านี้ช่วยให้เห็นภาพรวม วางแผน และสนับสนุนการเชื่อมโยงกับผู้เกี่ยวข้องที่เหมาะสม\n\nการพัฒนาแพลตฟอร์มลักษณะนี้ต้องให้ความสำคัญกับคุณภาพข้อมูล ความง่ายในการใช้งาน และสิทธิของผู้ใช้ควบคู่กันไป',
+      CoverImageFileID:'', CoverImageURL:'', Category:'นวัตกรรมดิจิทัล', ContentType:'นวัตกรรมดิจิทัล', SourceType:'เขียนเอง', SourceURL:'https://krit-pj.github.io/Green_Gain_Hub-KPP/', Author:'ดร.กิตติ โพธิ์จวง', Tags:'Data Platform,Smart Agriculture,Digital Transformation', PublishDate:'2026-09-10', ReadTime:3, Featured:'false', Status:'published' }
+  ], Gallery: [], References: [], Dashboards: []
+};
+
+function driveImg(fileId, fallback) {
+  return fileId ? `https://drive.google.com/uc?export=view&id=${fileId}` : (fallback || '');
+}
+/* รองรับทั้ง Drive File ID, URL ตรง, และ data: URI (กรณีอัปโหลดรูปโดยยังไม่เชื่อม Backend) */
+function resolveImg(value, fallback) {
+  if (!value) return fallback || '';
+  if (value.startsWith('data:') || value.startsWith('http')) return value;
+  return driveImg(value, fallback);
+}
+const MINDMAP_SUBSKILLS = {
+  'Environmental Science': ['Biological','Physical','Chemical','Geographical'],
+  'Occupational Health & Safety': ['Light','Sound & Noise','Heat & Stress'],
+  'Teaching Profession': ['Planning','Teaching'],
+  'Technician (Basic)': ['Plan Drawing','Electrician','Construction'],
+  'Computer Science': ['Hardware','Software','Programming'],
+  'Agricultural Extension': ['R2R','Smart Farming'],
+  'Researcher / Civil Servant': ['Researcher','Civil Servant'],
+  'Environmental Scientist': ['Field Survey','Lab Analysis']
+};
+function api(sheet, params) {
+  params = params || {};
+  const qs = new URLSearchParams(Object.assign({ sheet, action:'list' }, params)).toString();
+  return fetch(`${CONFIG.API_URL}?${qs}`).then(r => r.json())
+    .catch(() => ({ status:'fallback', total:(FALLBACK_DATA[sheet]||[]).length, data: FALLBACK_DATA[sheet] || [] }))
+    .then(res => {
+      const normalized = (res.status === 'ok' && res.data && res.data.length)
+        ? res
+        : { status:'fallback', total:(FALLBACK_DATA[sheet]||[]).length, data: FALLBACK_DATA[sheet] || [] };
+      if (sheet !== 'Dashboards') return normalized;
+
+      const query = String(params.q || '').toLowerCase();
+      const category = String(params.category || '');
+      const featured = FEATURED_DIGITAL_WORKS.filter(item => {
+        const haystack = `${item.Title} ${item.ShortTitle} ${item.Category} ${item.Description} ${(item.Tags||[]).join(' ')}`.toLowerCase();
+        return (!query || haystack.includes(query)) && (!category || item.Category === category);
+      });
+      const remote = normalized.data || [];
+      const remoteUrls = new Set(remote.map(item => item.EmbedURL).filter(Boolean));
+      const fallbackFeatured = featured.filter(item => !remoteUrls.has(item.EmbedURL));
+      const data = remote.concat(fallbackFeatured);
+      return Object.assign({}, normalized, { data, total:Math.max(Number(normalized.total)||0, data.length) });
+    });
+}
+function apiWrite(action, sheet, id, data) {
+  const token = sessionStorage.getItem('edit_token') || '';
+  return fetch(CONFIG.API_URL, { method:'POST', body: JSON.stringify({ action, sheet, token, id, data }) }).then(r => r.json());
+}
+function esc(s){ return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function showToast(msg){ const t=document.getElementById('appToast'); t.textContent=msg; t.style.display='block'; clearTimeout(t._timer); t._timer=setTimeout(()=>t.style.display='none', 2600); }
+
+const App = (function () {
+  const QUICK_LINKS = [
+    {label:'ประวัติ',page:'about',icon:'fa-id-card'},
+    {label:'ผลงานดิจิทัล',page:'dashboards',icon:'fa-chart-line'},
+    {label:'ห้องปฏิบัติการนวัตกรรม',page:'innovation',icon:'fa-lightbulb'},
+    {label:'งานวิจัย',page:'research',icon:'fa-flask'},
+    {label:'ผลงานตีพิมพ์',page:'publications',icon:'fa-book'},
+    {label:'โครงการ',page:'projects',icon:'fa-diagram-successor'},
+    {label:'วิทยากร / R2R',page:'training',icon:'fa-chalkboard-user'},
+    {label:'เรื่องเล่า / ความรู้',page:'blog',icon:'fa-book-open-reader'},
+    {label:'คลังภาพ',page:'gallery',icon:'fa-images'},
+    {label:'ติดต่อ',page:'contact',icon:'fa-address-book'},
+    {label:'หน้าแรก',page:'home',icon:'fa-house'}
+  ];
+
+  function init() {
+    const savedTheme = localStorage.getItem('eportfolio_theme') || 'light';
+    setTheme(savedTheme);
+    setFontSize(localStorage.getItem('eportfolio_font_size') || 'large');
+    loadProfile();
+    loadHero();
+    loadStats();
+    renderFeaturedWorks();
+    loadEducation();
+    loadMindmap();
+    renderQuickGrid();
+    loadContact();
+    bindToolbars();
+    applyEditModeUI();
+    initReveal();
+    document.querySelector('#mainNav a[data-page="home"]')?.classList.add('active');
+  }
+
+  function initReveal() {
+    const blocks = document.querySelectorAll('.reveal-block');
+    if (!('IntersectionObserver' in window)) {
+      blocks.forEach(block => block.classList.add('is-visible'));
+      return;
+    }
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold:0.08, rootMargin:'0px 0px -30px 0px' });
+    blocks.forEach(block => observer.observe(block));
+  }
+
+  /* ---------- THEME: กลางวัน/กลางคืน รวมเป็นปุ่มเดียว สลับอัตโนมัติ, ไว้ทุกข์แยกปุ่ม ---------- */
+  function setTheme(theme) {
+    const isMourning = theme === 'mourning';
+    document.documentElement.setAttribute('data-theme', isMourning ? (localStorage.getItem('eportfolio_base_theme') || 'light') : theme);
+    document.body.classList.toggle('mourning', isMourning);
+    if (!isMourning) localStorage.setItem('eportfolio_base_theme', theme);
+    localStorage.setItem('eportfolio_theme', theme);
+
+    const toggleBtn = document.getElementById('themeToggle');
+    const baseTheme = isMourning ? (localStorage.getItem('eportfolio_base_theme') || 'light') : theme;
+    if (toggleBtn) toggleBtn.innerHTML = baseTheme === 'dark' ? '🌙 กลางคืน' : '☀ กลางวัน';
+    const mournBtn = document.getElementById('themeMourning');
+    if (mournBtn) mournBtn.classList.toggle('active', isMourning);
+  }
+  function toggleDayNight() {
+    const current = localStorage.getItem('eportfolio_theme') === 'mourning'
+      ? (localStorage.getItem('eportfolio_base_theme') || 'light')
+      : (localStorage.getItem('eportfolio_theme') || 'light');
+    setTheme(current === 'dark' ? 'light' : 'dark');
+  }
+  function toggleMourning() {
+    setTheme(localStorage.getItem('eportfolio_theme') === 'mourning' ? (localStorage.getItem('eportfolio_base_theme') || 'light') : 'mourning');
+  }
+  function setFontSize(level) {
+    const allowed = ['large','xlarge','xxlarge'];
+    const value = allowed.includes(level) ? level : 'large';
+    document.documentElement.setAttribute('data-font-size', value);
+    localStorage.setItem('eportfolio_font_size', value);
+    document.querySelectorAll('[data-font-level]').forEach(button => {
+      const active = button.dataset.fontLevel === value;
+      button.classList.toggle('active', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+  }
+
+  /* ---------- LOGIN / EDIT MODE (รหัสผ่านสำหรับแก้ไขเนื้อหาหน้าเว็บ) ---------- */
+  function openLogin() { document.getElementById('loginModalOverlay').classList.add('show'); document.getElementById('loginPassword').value=''; document.getElementById('loginPassword').focus(); }
+  function closeLogin() { document.getElementById('loginModalOverlay').classList.remove('show'); }
+  function toggleShowPassword() {
+    const input = document.getElementById('loginPassword');
+    const icon = document.getElementById('togglePwIcon');
+    const show = input.type === 'password';
+    input.type = show ? 'text' : 'password';
+    icon.className = show ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
+  }
+  function submitLogin() {
+    const pwd = (document.getElementById('loginPassword').value || '').trim();
+    if (isApiConfigured()) {
+      fetch(CONFIG.API_URL, { method:'POST', body:JSON.stringify({ action:'verifyEditPassword', password:pwd }) })
+        .then(r=>r.json()).then(res => {
+          if (res.status !== 'ok') throw new Error(res.message || 'เข้าสู่ระบบไม่สำเร็จ');
+          sessionStorage.setItem('edit_mode','1'); sessionStorage.setItem('edit_token',res.token);
+          closeLogin(); applyEditModeUI(); showToast('เข้าสู่ระบบแก้ไขสำเร็จ');
+        }).catch(err=>showToast(err.message || 'เชื่อมต่อระบบยืนยันตัวตนไม่ได้'));
+      return;
+    }
+    if (!CONFIG.EDIT_PASSWORD) {
+      showToast('โหมดแก้ไขต้องเชื่อมต่อ Apps Script ก่อนใช้งาน');
+      return;
+    }
+    if (pwd === CONFIG.EDIT_PASSWORD) {
+      sessionStorage.setItem('edit_mode', '1');
+      sessionStorage.setItem('edit_token', 'local-preview');
+      closeLogin();
+      applyEditModeUI();
+      showToast('เข้าสู่ระบบแก้ไขสำเร็จ');
+    } else {
+      showToast('รหัสผ่านไม่ถูกต้อง');
+    }
+  }
+  function logoutEdit() {
+    sessionStorage.removeItem('edit_mode'); sessionStorage.removeItem('edit_token');
+    applyEditModeUI(); showToast('ออกจากระบบแก้ไขแล้ว');
+  }
+  function isEditMode() { return sessionStorage.getItem('edit_mode') === '1'; }
+  function applyEditModeUI() {
+    document.body.classList.toggle('edit-mode', isEditMode());
+    const btn = document.getElementById('loginBtn');
+    btn.classList.toggle('logged-in', isEditMode());
+    btn.innerHTML = isEditMode() ? '<i class="fa-solid fa-unlock"></i> ออกจากระบบแก้ไข' : '<i class="fa-solid fa-lock"></i> เข้าสู่ระบบ';
+    btn.onclick = isEditMode() ? logoutEdit : openLogin;
+  }
+
+  function goPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + pageId).classList.add('active');
+    document.querySelectorAll('#mainNav a').forEach(a => a.classList.toggle('active', a.dataset.page === pageId));
+    window.scrollTo({ top:0, behavior:'smooth' });
+    loadPageData(pageId);
+  }
+
+  const loadedPages = {};
+  function loadPageData(pageId) {
+    if (loadedPages[pageId]) return;
+    loadedPages[pageId] = true;
+    const map = {
+      about: loadAbout, dashboards: () => loadDashboards(true), innovation: loadInnovation,
+      research: () => loadResearch(true), publications: () => loadPublications(true),
+      projects: () => loadProjects(true), training: () => loadTraining(true),
+      blog: () => loadBlog(true), gallery: () => loadGallery(true)
+    };
+    if (map[pageId]) map[pageId]();
+  }
+
+  /* ---------- HOME ---------- */
+  function loadProfile() {
+    api('Profile').then(res => {
+      let p = (res.data && res.data[0]) || {};
+      let override = null;
+      try { override = JSON.parse(localStorage.getItem('eportfolio_profile_override') || 'null'); } catch(e) {}
+      if (override) p = Object.assign({}, p, override);
+      document.getElementById('orgLogo').src = resolveImg(p.LogoFileID, 'LOGO-DOAE.png');
+      document.getElementById('orgText').innerHTML = `<strong>${esc(p.OrgLine1||'สำนักงานเกษตรจังหวัดกำแพงเพชร')}</strong>${esc(p.OrgLine2||'กรมส่งเสริมการเกษตร')} · ${esc(p.OrgLine3||'กระทรวงเกษตรและสหกรณ์')}`;
+      document.getElementById('heroImage').src = resolveImg(p.ProfileImageFileID, '3. Kitti.png?v=portrait-3-3-20260925');
+      window._profile = p;
+      loadAbout();
+      loadContact(p);
+    });
+  }
+
+  let typingTimer;
+  function loadHero() {
+    api('Hero').then(res => {
+      let h = (res.data && res.data[0]) || {};
+      let override = null;
+      try { override = JSON.parse(localStorage.getItem('eportfolio_hero_override') || 'null'); } catch(e) {}
+      if (override) h = Object.assign({}, h, override);
+      document.getElementById('heroTitleEN').textContent = h.TitleEN || 'Dr. Kitti Phojuang';
+      document.getElementById('heroTitleTH').textContent = h.TitleTH || 'ดร.กิตติ โพธิ์จวง';
+      document.getElementById('heroSubtitle').textContent = h.Subtitle || '';
+      document.getElementById('heroReflection').textContent = h.ReflectionText || '';
+      window._hero = h;
+      const phrases = (h.TypingPhrases || 'Agricultural Data Scientist|Agri-Tech Researcher|Digital Innovation Specialist').split('|');
+      typeLoop(document.getElementById('heroTyping'), phrases, 0, 0, true);
+    });
+  }
+  function typeLoop(el, phrases, pIndex, cIndex, typing) {
+    clearTimeout(typingTimer);
+    const phrase = phrases[pIndex % phrases.length];
+    if (typing) {
+      el.textContent = phrase.slice(0, cIndex);
+      if (cIndex <= phrase.length) typingTimer = setTimeout(() => typeLoop(el, phrases, pIndex, cIndex+1, true), 70);
+      else typingTimer = setTimeout(() => typeLoop(el, phrases, pIndex, cIndex, false), 1400);
+    } else {
+      el.textContent = phrase.slice(0, cIndex);
+      if (cIndex >= 0) typingTimer = setTimeout(() => typeLoop(el, phrases, pIndex, cIndex-1, false), 30);
+      else typingTimer = setTimeout(() => typeLoop(el, phrases, pIndex+1, 0, true), 200);
+    }
+  }
+
+  function loadStats() {
+    api('DashboardStatistics').then(res => {
+      window._statsData = res.data || [];
+      const grid = document.getElementById('statsGrid');
+      const pageByLabel = label => /วิจัยตีพิมพ์|สิทธิบัตร/.test(label) ? 'publications' : /บทความ/.test(label) ? 'blog' : /ประสบการณ์ทำงาน|ความเชี่ยวชาญ/.test(label) ? 'about' : 'projects';
+      grid.innerHTML = (res.data||[]).map(s => `
+        <button type="button" class="stat-card edit-host" onclick="App.goPage('${esc(s.LinkTarget||pageByLabel(s.Label||''))}')" aria-label="เปิดข้อมูล ${esc(s.Label)}"><i class="fa-solid ${esc(s.Icon||'fa-circle-check')}"></i>
+          <div class="val">${esc(s.Value)}${esc(s.Suffix||'')}</div>
+          <div class="label">${esc(s.Label)}</div>
+          <span class="edit-fab" onclick="event.stopPropagation();App.editStat('${s.ID}')"><i class="fa-solid fa-pen"></i></span>
+        </button>`).join('') || emptyHTML('ยังไม่มีข้อมูลสถิติ');
+    });
+  }
+
+  function loadEducation() {
+    api('Education').then(res => {
+      const list = (res.data || []).slice().sort((a, b) => (Number(b.YearStart)||0) - (Number(a.YearStart)||0));
+      window._eduData = list;
+      const el = document.getElementById('eduTimeline');
+      el.innerHTML = list.map(e => `
+        <div class="vt-item edit-host">
+          <div class="year">${esc(e.YearStart)}${e.YearEnd && e.YearEnd!==e.YearStart ? ' - '+esc(e.YearEnd) : ''}</div>
+          <div class="degree">${esc(e.Degree)}</div>
+          <div class="field">${esc(e.FieldOfStudy)}</div>
+          <div class="uni">${e.UniversityLogoFileID ? `<img src="${driveImg(e.UniversityLogoFileID)}" style="width:18px;height:18px;border-radius:50%;display:inline-block;vertical-align:middle;margin-right:6px">` : ''}${esc(e.UniversityName)}</div>
+          <button class="edit-fab" onclick="App.editEducation('${e.ID}')"><i class="fa-solid fa-pen"></i></button>
+        </div>`).join('') || emptyHTML('ยังไม่มีข้อมูลการศึกษา');
+    });
+  }
+
+  function loadMindmap() {
+    if (!isApiConfigured()) {
+      const model = buildFallbackExpertiseModel();
+      window._expertiseData = model.nodes;
+      window._expertiseRelations = model.relations;
+      window._expertiseLinks = model.links;
+      window._workRegistry = buildFallbackWorkRegistry();
+      renderExpertiseGraph(model.nodes, model.relations, model.links);
+      return;
+    }
+    const workTypes = ['Dashboards','Research','Publications','Projects','Training','Blog','References'];
+    Promise.all([
+      api('Expertise',{limit:500}), api('ExpertiseRelations',{limit:500}), api('ExpertiseLinks',{limit:500}), api('Mindmap',{limit:500}),
+      ...workTypes.map(type => api(type,{limit:500}))
+    ]).then(results => {
+      let nodes = (results[0].data || []).filter(item => item.Status !== 'draft');
+      let relations = (results[1].data || []).filter(item => item.Status !== 'draft');
+      let links = (results[2].data || []).filter(item => item.Status !== 'draft');
+      if (!nodes.length) {
+        const model = buildFallbackExpertiseModel();
+        nodes = model.nodes; relations = model.relations; links = model.links;
+      }
+      const registry = {};
+      workTypes.forEach((type,index) => (results[index+4].data || []).forEach(item => {
+        registry[`${type}:${item.ID}`] = Object.assign({ WorkType:type },item);
+      }));
+      PROFESSIONAL_EVIDENCE.forEach(item => { if (!registry[`References:${item.ID}`]) registry[`References:${item.ID}`] = Object.assign({WorkType:'References'},item); });
+      window._expertiseData = nodes;
+      window._expertiseRelations = relations;
+      window._expertiseLinks = links;
+      window._workRegistry = Object.assign(buildFallbackWorkRegistry(),registry);
+      renderExpertiseGraph(nodes, relations, links);
+    }).catch(() => {
+      const model = buildFallbackExpertiseModel();
+      window._expertiseData = model.nodes; window._expertiseRelations = model.relations;
+      window._expertiseLinks = model.links;
+      window._workRegistry = buildFallbackWorkRegistry();
+      renderExpertiseGraph(model.nodes, model.relations, model.links);
+    });
+  }
+
+  function buildFallbackExpertiseModel(legacyNodes) {
+    if (legacyNodes && legacyNodes.length) {
+      const nodes = [];
+      legacyNodes.forEach((item,index) => {
+        const parentID = `legacy-${index+1}`;
+        nodes.push({ ID:parentID, Name:item.NodeLabel, ParentID:'', Level:'2', Category:item.NodeLabel, Description:`องค์ความรู้และประสบการณ์ด้าน ${item.NodeLabel}`, Icon:item.Icon, Color:item.Color || (index%2?'#0F4C81':'#2E7D32'), LinkTarget:item.LinkTarget, SortOrder:index+1, Status:'published' });
+        (MINDMAP_SUBSKILLS[item.NodeLabel] || []).forEach((name,childIndex) => nodes.push({ ID:`${parentID}-skill-${childIndex+1}`, Name:name, ParentID:parentID, Level:'3', Category:item.NodeLabel, Description:`ทักษะย่อยด้าน ${name}`, Icon:'fa-circle', Color:item.Color||'#D4A017', LinkTarget:item.LinkTarget, SortOrder:childIndex+1, Status:'published' }));
+      });
+      return { nodes, relations:[], links:[] };
+    }
+    const groups = [
+      ['strategic-1','Agricultural Data & Visualization','ข้อมูลการเกษตร การวิเคราะห์เชิงพื้นที่ และการสื่อสารข้อมูลเพื่อการตัดสินใจ','fa-chart-area','#0F6B78','dashboards',['Data Analytics','Data Visualization','Web GIS']],
+      ['strategic-2','Smart Farming & IoT','เทคโนโลยีดิจิทัลและระบบอัจฉริยะสำหรับการจัดการเกษตรระดับพื้นที่','fa-satellite-dish','#2E7D32','dashboards',['IoT Applications','Precision Agriculture','Decision Support']],
+      ['strategic-3','Agricultural Extension & R2R','การพัฒนางานส่งเสริมการเกษตรจากโจทย์งานประจำสู่หลักฐานเชิงวิจัย','fa-seedling','#558B2F','training',['Extension Systems','R2R','Capacity Building']],
+      ['strategic-4','Environmental & Risk Science','การประเมินสิ่งแวดล้อม ความเสี่ยง และปัจจัยที่มีผลต่อระบบการผลิต','fa-earth-asia','#0277BD','research',['Environmental Monitoring','Risk Assessment','Occupational Health']],
+      ['strategic-5','Research & Digital Innovation','การออกแบบงานวิจัยและพัฒนาแพลตฟอร์มดิจิทัลจากปัญหาในพื้นที่','fa-flask-vial','#6A4C93','research',['Research Design','Digital Platforms','Early Warning Systems']],
+      ['strategic-6','Training & Knowledge Transfer','การเป็นวิทยากร พี่เลี้ยง และถ่ายทอดองค์ความรู้สู่การเปลี่ยนแปลง','fa-chalkboard-user','#B26A00','training',['Mentoring','Facilitation','Knowledge Communication']]
+    ];
+    const nodes = [];
+    groups.forEach((g,index) => {
+      nodes.push({ID:g[0],Name:g[1],ParentID:'',Level:'2',Category:g[1],Description:g[2],Icon:g[3],Color:g[4],LinkTarget:g[5],SortOrder:index+1,Status:'published'});
+      g[6].forEach((name,childIndex)=>nodes.push({ID:`${g[0]}-skill-${childIndex+1}`,Name:name,ParentID:g[0],Level:'3',Category:g[1],Description:`ทักษะย่อยด้าน ${name}`,Icon:'fa-circle',Color:g[4],LinkTarget:g[5],SortOrder:childIndex+1,Status:'published'}));
+    });
+    const relations = [
+      ['strategic-1','Dashboards','featured-agri-risk-burning',5,'การวิเคราะห์ข้อมูลเชิงพื้นที่และ Web GIS'],
+      ['strategic-1-skill-3','Dashboards','featured-agri-risk-burning',5,'การพัฒนาแผนที่เชิงโต้ตอบ'],
+      ['strategic-2','Dashboards','featured-green-gain-hub-kpp',5,'แพลตฟอร์มบริหารจัดการข้อมูลการเกษตร'],
+      ['strategic-2-skill-3','Dashboards','featured-green-gain-hub-kpp',5,'ระบบสนับสนุนการตัดสินใจ'],
+      ['strategic-3-skill-2','References','evidence-2565-02-23',5,'การพัฒนางานประจำสู่งานวิจัย'],
+      ['strategic-3-skill-2','References','evidence-2565-03-10',5,'การเป็นพี่เลี้ยงเค้าโครงวิจัย'],
+      ['strategic-4-skill-2','Dashboards','featured-agri-risk-burning',5,'การประเมินความเสี่ยงการเผาในพื้นที่เกษตร'],
+      ['strategic-5','References','evidence-2569-09-04',4,'ผู้ทรงคุณวุฒิประเมินผลงานวิจัย'],
+      ['strategic-6','References','evidence-2569-07-08',4,'วิทยากรถ่ายทอดองค์ความรู้'],
+      ['strategic-6-skill-1','References','evidence-2569-06-19',4,'ให้คำปรึกษาและข้อเสนอแนะงานวิจัย']
+      ,['strategic-2','Projects','cv-project-smart-farm-2565',5,'ประยุกต์ Smart Farm เพื่อจัดการน้ำและธาตุอาหารพืช']
+      ,['strategic-3-skill-2','Research','cv-research-banana-r2r-2565',5,'พัฒนางานประจำสู่งานวิจัยจากโจทย์กล้วยไข่ในพื้นที่']
+      ,['strategic-4-skill-1','Research','cv-research-voc-rubber-2566',4,'การติดตามสารอินทรีย์ระเหยง่ายในพื้นที่เกษตร']
+      ,['strategic-5','Publications','cv-pub-2021-plants',5,'ผลงานตีพิมพ์ด้านระบบเซ็นเซอร์เพื่อเกษตรแม่นยำ']
+      ,['strategic-6','Training','cv-training-mentor-2566',4,'การพัฒนาศักยภาพการเป็นพี่เลี้ยง']
+    ].map((r,index)=>({ID:`fallback-rel-${index+1}`,ExpertiseID:r[0],WorkType:r[1],WorkID:r[2],Weight:r[3],Note:r[4],Status:'published'}));
+    const links = [
+      ['strategic-1','strategic-2','applies',5,'ข้อมูลและการสร้างภาพสนับสนุนระบบเกษตรอัจฉริยะ'],
+      ['strategic-1','strategic-5','supports',5,'การวิเคราะห์ข้อมูลเป็นฐานของงานวิจัยและนวัตกรรม'],
+      ['strategic-2','strategic-4','evidence',4,'เซ็นเซอร์และ IoT เชื่อมข้อมูลสิ่งแวดล้อมกับการประเมินความเสี่ยง'],
+      ['strategic-3','strategic-5','extends',5,'กระบวนการ R2R พัฒนาโจทย์งานประจำเป็นองค์ความรู้วิจัย'],
+      ['strategic-3','strategic-6','supports',4,'งานส่งเสริมการเกษตรขยายผลผ่านการพัฒนาคน'],
+      ['strategic-4','strategic-5','supports',4,'วิทยาศาสตร์สิ่งแวดล้อมเป็นฐานหลักฐานของนวัตกรรม'],
+      ['strategic-5','strategic-6','applies',5,'ถ่ายทอดผลวิจัยและนวัตกรรมสู่ผู้ปฏิบัติงานและพื้นที่']
+    ].map((item,index)=>({ID:`fallback-link-${index+1}`,SourceExpertiseID:item[0],TargetExpertiseID:item[1],RelationType:item[2],Weight:item[3],Note:item[4],Status:'published'}));
+    return { nodes, relations, links };
+  }
+
+  function buildFallbackWorkRegistry() {
+    const registry = {};
+    FEATURED_DIGITAL_WORKS.forEach(item => registry[`Dashboards:${item.ID}`] = Object.assign({WorkType:'Dashboards'},item));
+    PROFESSIONAL_EVIDENCE.forEach(item => registry[`References:${item.ID}`] = Object.assign({WorkType:'References'},item));
+    Object.keys(CV_PORTFOLIO_DATA).forEach(type => (CV_PORTFOLIO_DATA[type]||[]).forEach(item => {
+      registry[`${type}:${item.ID}`] = Object.assign({WorkType:type},item);
+    }));
+    return registry;
+  }
+
+  /* 3 ระดับ: บุคคล -> ทะเบียนความเชี่ยวชาญ -> ทักษะย่อย เชื่อมผลงานด้วย ID ถาวร */
+  function renderExpertiseGraph(nodes, relations, knowledgeLinks) {
+    const area = document.getElementById('mindmapArea');
+    const cx = 340, cy = 280, rx = 235, ry = 185;
+    const parents = nodes.filter(node => !node.ParentID && String(node.Level||'2') === '2').sort((a,b)=>(Number(a.SortOrder)||0)-(Number(b.SortOrder)||0));
+    const n = parents.length || 1;
+    let lines = '';
+    const positions = {};
+    parents.forEach((node,i) => {
+      const angle = (2 * Math.PI / n) * i - Math.PI / 2;
+      positions[node.ID] = {x:cx + Math.cos(angle) * rx,y:cy + Math.sin(angle) * ry,angle};
+    });
+    const nodeById = Object.fromEntries(nodes.map(node=>[String(node.ID),node]));
+    const rootID = id => { const node=nodeById[String(id)]; return node && node.ParentID ? String(node.ParentID) : String(id||''); };
+    (knowledgeLinks||[]).forEach((link,index) => {
+      const sourceID=rootID(link.SourceExpertiseID),targetID=rootID(link.TargetExpertiseID);
+      const source=positions[sourceID],target=positions[targetID];
+      if (!source || !target || sourceID===targetID) return;
+      const bend=(index%2?1:-1)*28, mx=(source.x+target.x)/2, my=(source.y+target.y)/2+bend;
+      lines += `<path class="knowledge-link" data-source-id="${esc(sourceID)}" data-target-id="${esc(targetID)}" d="M ${source.x} ${source.y} Q ${mx} ${my} ${target.x} ${target.y}" style="stroke-width:${1+Math.min(5,Number(link.Weight)||1)*.22}"/>`;
+    });
+    const portrait = resolveImg((window._profile||{}).ProfileImageFileID,'3. Kitti.png?v=portrait-3-3-20260925');
+    let html = `<button class="mindmap-center" style="left:${cx}px;top:${cy}px;border:0;cursor:pointer" onclick="App.resetExpertiseGraph()"><img src="${esc(portrait)}" alt=""><span>Dr. Kitti<br>Phojuang</span></button>`;
+
+    parents.forEach((node, i) => {
+      const {x:bx,y:by,angle} = positions[node.ID];
+      const children = nodes.filter(child => String(child.ParentID) === String(node.ID)).sort((a,b)=>(Number(a.SortOrder)||0)-(Number(b.SortOrder)||0));
+      const linkedIDs = new Set([node.ID,...children.map(child=>child.ID)]);
+      const relationCount = new Set(relations.filter(rel=>linkedIDs.has(rel.ExpertiseID)).map(rel=>`${rel.WorkType}:${rel.WorkID}`)).size;
+      const weight = Math.min(5,relationCount);
+      const bend = i%2===0 ? 18 : -18;
+      const mx = (cx+bx)/2 + Math.cos(angle+Math.PI/2)*bend, my = (cy+by)/2 + Math.sin(angle+Math.PI/2)*bend;
+      const path = `M ${cx} ${cy} Q ${mx} ${my} ${bx} ${by}`;
+      lines += `<path class="expertise-line" data-expertise-id="${esc(node.ID)}" d="${path}" style="--line-color:${esc(node.Color||'#2E7D32')};stroke-width:${1.5+weight*.25}"/><path class="expertise-line flow" data-expertise-id="${esc(node.ID)}" d="${path}" style="--line-color:${esc(node.Color||'#2E7D32')}"/>`;
+      html += `<button class="mindmap-node level2" data-expertise-id="${esc(node.ID)}" style="left:${bx}px;top:${by}px;--node-color:${esc(node.Color||'#2E7D32')}" onclick="App.focusExpertise('${esc(node.ID)}')">
+        <i class="fa-solid ${esc(node.Icon||'fa-circle')}"></i><span class="node-label">${esc(node.Name)}</span>${relationCount?`<span class="relation-count">${relationCount}</span>`:''}
+      </button>`;
+
+      const m = children.length;
+      children.forEach((child, j) => {
+        const spread = (22 * Math.PI / 180);
+        const childAngle = angle + (j - (m - 1) / 2) * spread;
+        const lx = bx + Math.cos(childAngle) * 92, ly = by + Math.sin(childAngle) * 72;
+        const childPath = `M ${bx} ${by} Q ${(bx+lx)/2} ${(by+ly)/2} ${lx} ${ly}`;
+        lines += `<path class="expertise-line child-line" data-parent-id="${esc(node.ID)}" d="${childPath}" style="--line-color:${esc(child.Color||node.Color||'#D4A017')}"/>`;
+        html += `<button class="mindmap-node level3" data-expertise-id="${esc(child.ID)}" data-parent-id="${esc(node.ID)}" style="left:${lx}px;top:${ly}px;--node-color:${esc(child.Color||node.Color||'#D4A017')}" onclick="App.focusExpertise('${esc(child.ID)}')">${esc(child.Name)}</button>`;
+      });
+    });
+
+    area.innerHTML = `<svg class="connections" viewBox="0 0 680 560">${lines}</svg>` + html;
+    resetExpertiseGraph();
+  }
+
+  function focusExpertise(id) {
+    const nodes = window._expertiseData || [];
+    const relations = window._expertiseRelations || [];
+    const knowledgeLinks = window._expertiseLinks || [];
+    const detail = document.getElementById('expertiseDetail');
+    const area = document.getElementById('mindmapArea');
+    if (!detail || !area) return;
+    const selected = nodes.find(node => String(node.ID) === String(id));
+    area.classList.toggle('has-focus',!!selected);
+    const selectedParentID = selected ? (selected.ParentID || selected.ID) : '';
+    const nodeById = Object.fromEntries(nodes.map(node=>[String(node.ID),node]));
+    const rootID = nodeID => { const node=nodeById[String(nodeID)]; return node && node.ParentID ? String(node.ParentID) : String(nodeID||''); };
+    const graphRelations = knowledgeLinks.map(link=>Object.assign({},link,{SourceRootID:rootID(link.SourceExpertiseID),TargetRootID:rootID(link.TargetExpertiseID)}));
+    const neighbors = new Set();
+    graphRelations.forEach(link => {
+      if (String(link.SourceRootID)===String(selectedParentID)) neighbors.add(String(link.TargetRootID));
+      if (String(link.TargetRootID)===String(selectedParentID)) neighbors.add(String(link.SourceRootID));
+    });
+    area.querySelectorAll('.mindmap-node[data-expertise-id]').forEach(el => {
+      const active = String(el.dataset.expertiseId) === String(id);
+      const elementRoot = String(el.dataset.parentId || el.dataset.expertiseId);
+      const graphNeighbor = !!selected && neighbors.has(elementRoot);
+      const related = selected && (String(el.dataset.parentId) === String(selectedParentID) || String(el.dataset.expertiseId) === String(selectedParentID) || graphNeighbor);
+      el.classList.toggle('active',active); el.classList.toggle('related',!!related);
+      el.classList.toggle('graph-neighbor',graphNeighbor && el.classList.contains('level2'));
+      if (el.classList.contains('level3')) el.classList.toggle('visible',!!selected && String(el.dataset.parentId) === String(selectedParentID));
+    });
+    area.querySelectorAll('.expertise-line').forEach(line => {
+      line.classList.toggle('active',!!selected && (String(line.dataset.expertiseId)===String(selectedParentID) || String(line.dataset.parentId)===String(selectedParentID)));
+      if (line.classList.contains('child-line')) line.classList.toggle('visible',!!selected && String(line.dataset.parentId)===String(selectedParentID));
+    });
+    area.querySelectorAll('.knowledge-link').forEach(line => {
+      line.classList.toggle('active',!!selected && (String(line.dataset.sourceId)===String(selectedParentID) || String(line.dataset.targetId)===String(selectedParentID)));
+    });
+    if (!selected) {
+      detail.style.setProperty('--detail-color','#2E7D32');
+      const parents = nodes.filter(node=>!node.ParentID);
+      detail.innerHTML = `<div class="detail-eyebrow">Expertise Intelligence</div><h4>เครือข่ายความเชี่ยวชาญ</h4><p>เลือกกลุ่มความเชี่ยวชาญเพื่อเปิดทักษะย่อย ผลงานอ้างอิง และโหนดความรู้ที่เกี่ยวข้อง</p><div class="expertise-metrics"><div class="expertise-metric"><strong>${parents.length}</strong><span>กลุ่มเชิงกลยุทธ์</span></div><div class="expertise-metric"><strong>${relations.length}</strong><span>ความสัมพันธ์ผลงาน</span></div><div class="expertise-metric"><strong>${knowledgeLinks.length}</strong><span>ลิงก์องค์ความรู้</span></div></div>`;
+      return;
+    }
+    const parentNode = selected.ParentID ? nodes.find(node=>String(node.ID)===String(selected.ParentID)) : selected;
+    const children = nodes.filter(node=>String(node.ParentID)===String(parentNode?.ID));
+    const childIDs = children.map(node=>node.ID);
+    const expertiseIDs = new Set([parentNode?.ID,...childIDs]);
+    const relationMap = new Map();
+    relations.filter(rel=>expertiseIDs.has(rel.ExpertiseID)).forEach(rel => {
+      const key = `${rel.WorkType}:${rel.WorkID}`, existing = relationMap.get(key);
+      if (!existing) relationMap.set(key,Object.assign({},rel));
+      else {
+        existing.Weight = Math.max(Number(existing.Weight)||0,Number(rel.Weight)||0);
+        if (rel.Note && !String(existing.Note||'').includes(rel.Note)) existing.Note = [existing.Note,rel.Note].filter(Boolean).join(' · ');
+      }
+    });
+    const linked = [...relationMap.values()].sort((a,b)=>(Number(b.Weight)||0)-(Number(a.Weight)||0));
+    const pageByType = {Dashboards:'dashboards',Research:'research',Publications:'publications',Projects:'projects',Training:'training',Blog:'blog',References:'training'};
+    const labels = {Dashboards:'ผลงานดิจิทัล',Research:'งานวิจัย',Publications:'ผลงานตีพิมพ์',Projects:'โครงการ',Training:'กิจกรรมพัฒนา',Blog:'เรื่องเล่า / ความรู้',References:'หลักฐานอ้างอิง'};
+    const works = linked.map(rel => {
+      const work = (window._workRegistry||{})[`${rel.WorkType}:${rel.WorkID}`];
+      if (!work) return '';
+      return `<div class="expertise-work"><span class="work-type">${esc(labels[rel.WorkType]||rel.WorkType)}</span><div><strong>${esc(work.Title||work.Label||rel.WorkID)}</strong>${rel.Note?`<p>${esc(rel.Note)}</p>`:''}</div><button title="เปิดหน้าที่เกี่ยวข้อง" onclick="App.goPage('${pageByType[rel.WorkType]||selected.LinkTarget||'home'}')"><i class="fa-solid fa-arrow-right"></i></button></div>`;
+    }).filter(Boolean).join('');
+    const chips = children.map(child=>`<button onclick="App.focusExpertise('${esc(child.ID)}')">${esc(child.Name)}</button>`).join('');
+    const relationTypeLabels = {supports:'สนับสนุน',applies:'ประยุกต์ใช้',extends:'ต่อยอด',evidence:'หลักฐานร่วม',related:'เกี่ยวข้อง'};
+    const graphMap = new Map();
+    graphRelations.filter(link=>String(link.SourceRootID)===String(parentNode?.ID)||String(link.TargetRootID)===String(parentNode?.ID)).forEach(link => {
+      const otherID=String(link.SourceRootID)===String(parentNode?.ID)?link.TargetRootID:link.SourceRootID;
+      const existing=graphMap.get(otherID);
+      if (!existing || Number(link.Weight)>Number(existing.Weight)) graphMap.set(otherID,Object.assign({},link,{OtherID:otherID}));
+    });
+    const graphItems=[...graphMap.values()].sort((a,b)=>(Number(b.Weight)||0)-(Number(a.Weight)||0));
+    const graphHTML=graphItems.map(link=>{const other=nodeById[String(link.OtherID)];return other?`<div class="knowledge-relation"><button onclick="App.focusExpertise('${esc(other.ID)}')">${esc(other.Name)}</button><span>${esc(relationTypeLabels[link.RelationType]||link.RelationType||'เกี่ยวข้อง')} · ${esc(link.Weight||1)}/5</span>${link.Note?`<p>${esc(link.Note)}</p>`:''}</div>`:''}).join('');
+    detail.style.setProperty('--detail-color',parentNode?.Color||selected.Color||'#2E7D32');
+    detail.innerHTML = `<div class="detail-eyebrow">Strategic Expertise</div><h4><i class="fa-solid ${esc(parentNode?.Icon||selected.Icon||'fa-circle-nodes')}"></i> ${esc(selected.Name)}</h4><p>${esc(selected.Description||`ความเชี่ยวชาญด้าน ${selected.Name}`)}</p><div class="expertise-metrics"><div class="expertise-metric"><strong>${children.length}</strong><span>ทักษะย่อย</span></div><div class="expertise-metric"><strong>${linked.length}</strong><span>ผลงานเชื่อมโยง</span></div><div class="expertise-metric"><strong>${graphItems.length}</strong><span>โหนดที่เกี่ยวข้อง</span></div></div>${chips?`<div class="skill-chips">${chips}</div>`:''}<div class="expertise-related-list">${works||'<div class="expertise-empty">ยังไม่มีผลงานที่เชื่อมโยงกับหัวข้อนี้</div>'}</div>${graphHTML?`<div class="knowledge-relations"><h5>Knowledge Links</h5>${graphHTML}</div>`:''}`;
+  }
+
+  function searchExpertise(value) {
+    const q = String(value||'').trim().toLowerCase();
+    const area = document.getElementById('mindmapArea');
+    const nodes = window._expertiseData || [];
+    if (!area) return;
+    area.querySelectorAll('.mindmap-node[data-expertise-id]').forEach(el => {
+      const item = nodes.find(node=>String(node.ID)===String(el.dataset.expertiseId));
+      const descendants = item && !item.ParentID ? nodes.filter(node=>String(node.ParentID)===String(item.ID)) : [];
+      const searchable = [item,...descendants].filter(Boolean).map(node=>`${node.Name||''} ${node.Category||''} ${node.Description||''}`).join(' ').toLowerCase();
+      const match = !q || searchable.includes(q);
+      el.classList.toggle('search-muted',!match); el.classList.toggle('search-match',!!q&&match);
+    });
+  }
+
+  function filterExpertiseWorks(workType) {
+    const area = document.getElementById('mindmapArea');
+    const nodes = window._expertiseData || [], relations = window._expertiseRelations || [];
+    if (!area) return;
+    area.classList.toggle('is-filtered',!!workType);
+    area.querySelectorAll('.mindmap-node[data-expertise-id]').forEach(el => {
+      const id = el.dataset.expertiseId;
+      const descendants = nodes.filter(node=>String(node.ParentID)===String(id)).map(node=>node.ID);
+      const ids = new Set([id,...descendants]);
+      const match = !workType || relations.some(rel=>ids.has(rel.ExpertiseID)&&rel.WorkType===workType);
+      el.classList.toggle('filter-muted',!match);
+    });
+  }
+
+  function resetExpertiseGraph() {
+    const search = document.getElementById('expertiseSearch'), filter = document.getElementById('expertiseWorkFilter');
+    if (search) search.value=''; if (filter) filter.value='';
+    searchExpertise(''); filterExpertiseWorks(''); focusExpertise('');
+  }
+
+  function renderQuickGrid() {
+    document.getElementById('quickGrid').innerHTML = QUICK_LINKS.map(q => `
+      <div class="quick-card" onclick="App.goPage('${q.page}')"><i class="fa-solid ${q.icon}"></i><span>${q.label}</span></div>`).join('');
+  }
+
+  function renderFeaturedWorks() {
+    const grid = document.getElementById('featuredWorksGrid');
+    if (!grid) return;
+    const paint = source => {
+      const works = (source||[]).filter(work => work.Featured === true || /^(true|1|yes)$/i.test(String(work.Featured||'')) || String(work.ID||'').startsWith('featured-')).sort((a,b)=>(Number(a.SortOrder)||0)-(Number(b.SortOrder)||0)).slice(0,4);
+      grid.innerHTML = works.map((work,index) => {
+        const tags = Array.isArray(work.Tags) ? work.Tags : String(work.Tags||'').split(',').map(v=>v.trim()).filter(Boolean);
+        return `
+      <article class="work-card" style="--work-accent:${esc(work.Accent||'#2E7D32')}">
+        <div class="work-number">${String(index+1).padStart(2,'0')}</div>
+        <div class="work-main">
+          <div class="work-kicker">${esc(work.Category)}</div>
+          <h3>${esc(work.Title)}</h3>
+          <p>${esc(work.Description)}</p>
+        </div>
+        <div class="work-meta">
+          <div class="tech-tags">${tags.map(tag => `<span>${esc(tag)}</span>`).join('')}</div>
+          <div class="work-actions">
+            <a class="visit-work" href="${esc(work.EmbedURL)}" target="_blank" rel="noopener noreferrer">เปิดระบบ <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            <span class="work-note">${esc(work.AccessNote||'')}</span>
+          </div>
+        </div>
+        <div class="work-visual" aria-hidden="true">
+          <span class="signal s1"></span><span class="signal s2"></span><span class="signal s3"></span>
+          <i class="fa-solid ${esc(work.Icon||'fa-chart-line')}"></i>
+        </div>
+      </article>`;
+      }).join('');
+    };
+    paint(FEATURED_DIGITAL_WORKS);
+    if (isApiConfigured()) api('Dashboards',{limit:100,status:'published'}).then(res => paint(res.data||[]));
+  }
+
+  /* ---------- ABOUT ---------- */
+  function loadAbout() {
+    const p = window._profile || {};
+    document.getElementById('aboutContent').innerHTML = `
+      <div class="item-card"><div class="body">
+        <h4>${esc(p.NameTH)}</h4><p>${esc(p.Position)}</p>
+        <p style="margin-top:10px">${esc(p.ProfessionalIdentity||'').split(',').join(' · ')}</p>
+      </div></div>
+      <div class="item-card"><div class="body">
+        <h4>หน่วยงาน</h4><p>${esc(p.OrgLine1)}<br>${esc(p.OrgLine2)}<br>${esc(p.OrgLine3)}</p>
+      </div></div>`;
+  }
+
+  /* ---------- GENERIC PAGINATED LIST HELPER ---------- */
+  function makeListLoader(opts) {
+    let page = 1; const limit = 12;
+    function load(reset) {
+      if (reset) { page = 1; document.getElementById(opts.gridId).innerHTML = ''; }
+      const params = Object.assign({ page, limit }, opts.getParams());
+      api(opts.sheet, params).then(res => {
+        const grid = document.getElementById(opts.gridId);
+        if (page === 1 && !(res.data||[]).length) { grid.innerHTML = emptyHTML('ยังไม่มีข้อมูล'); }
+        grid.insertAdjacentHTML('beforeend', (res.data||[]).map(opts.renderItem).join(''));
+        const btn = document.getElementById(opts.loadMoreId);
+        if (btn) btn.style.display = (page * limit < res.total) ? 'block' : 'none';
+        page++;
+      });
+    }
+    if (opts.loadMoreId) document.getElementById(opts.loadMoreId).onclick = () => load(false);
+    return load;
+  }
+
+  function emptyHTML(msg) { return `<div class="empty-state"><i class="fa-solid fa-circle-info"></i><p>${msg}</p></div>`; }
+
+  /* ---------- DASHBOARDS ---------- */
+  let loadDashboardsFn;
+  function loadDashboards(reset) {
+    if (!loadDashboardsFn) {
+      loadDashboardsFn = makeListLoader({
+        sheet:'Dashboards', gridId:'dashGrid', loadMoreId:'dashLoadMore',
+        getParams: () => ({ q: document.getElementById('dashSearch').value, category: document.getElementById('dashCategory').value, status:'published' }),
+        renderItem: d => `<article class="item-card" style="border-top:4px solid ${esc(d.Accent||'var(--secondary)')}">
+          ${d.CoverImageFileID
+            ? `<img class="cover" src="${resolveImg(d.CoverImageFileID)}" loading="lazy" alt="ภาพตัวอย่าง ${esc(d.Title)}">`
+            : `<div class="work-visual" style="min-height:160px;--work-accent:${esc(d.Accent||'#0F4C81')}" aria-hidden="true"><span class="signal s1"></span><span class="signal s2"></span><i class="fa-solid ${esc(d.Icon||'fa-chart-line')}"></i></div>`}
+          <div class="body"><span class="tag">${esc(d.Category)}</span><h4>${esc(d.Title)}</h4><p>${esc(d.Description)}</p>
+          ${Array.isArray(d.Tags)?`<div class="tech-tags" style="margin-top:12px">${d.Tags.map(tag=>`<span>${esc(tag)}</span>`).join('')}</div>`:''}
+          ${d.EmbedURL?`<a class="visit-work" href="${esc(d.EmbedURL)}" target="_blank" rel="noopener noreferrer">เปิดระบบ <i class="fa-solid fa-arrow-up-right-from-square"></i></a>`:''}</div></article>`
+      });
+      const categories = [...new Set(FEATURED_DIGITAL_WORKS.map(item => item.Category))];
+      document.getElementById('dashCategory').insertAdjacentHTML('beforeend', categories.map(cat => `<option value="${esc(cat)}">${esc(cat)}</option>`).join(''));
+    }
+    loadDashboardsFn(reset);
+  }
+
+  /* ---------- INNOVATION (reuse Projects: category Smart Farming/Precision Agriculture as timeline) ---------- */
+  function loadInnovation() {
+    api('Projects', { limit: 100 }).then(res => {
+      document.getElementById('innovationTimeline').innerHTML = (res.data||[]).map(p => `
+        <div class="timeline-card">
+          ${p.CoverImageFileID?`<img src="${driveImg(p.CoverImageFileID)}">`:''}
+          <div class="degree">${esc(p.Title)}</div><div class="field">${esc(p.Category)}</div>
+          <div class="year">${esc(p.YearStart)} - ${esc(p.YearEnd)}</div>
+        </div>`).join('') || emptyHTML('ยังไม่มีข้อมูลนวัตกรรม');
+    });
+  }
+
+  /* ---------- RESEARCH ---------- */
+  let loadResearchFn;
+  function loadResearch(reset) {
+    if (!loadResearchFn) {
+      loadResearchFn = makeListLoader({
+        sheet:'Research', gridId:'researchGrid', loadMoreId:'researchLoadMore',
+        getParams: () => ({ q: document.getElementById('researchSearch').value, status:'published' }),
+        renderItem: r => `<div class="item-card"><div class="body">
+          <span class="tag">${esc(r.Field)}</span><h4>${esc(r.Title)}</h4><p>${esc(r.Abstract)}</p>
+          <div class="meta">${esc(r.Authors)} · ${esc(r.Year)}</div>
+          ${r.FileURL?`<a class="meta" href="${esc(r.FileURL)}" target="_blank">ดาวน์โหลด PDF</a>`:''}</div></div>`
+      });
+    }
+    loadResearchFn(reset);
+  }
+
+  /* ---------- PUBLICATIONS ---------- */
+  let loadPubFn;
+  function loadPublications(reset) {
+    if (!loadPubFn) {
+      loadPubFn = makeListLoader({
+        sheet:'Publications', gridId:'pubGrid', loadMoreId:'pubLoadMore',
+        getParams: () => ({ q: document.getElementById('pubSearch').value, type: document.getElementById('pubType').value }),
+        renderItem: p => `<div class="item-card"><div class="body">
+          <span class="tag">${esc(p.Type)}</span><h4>${esc(p.Title)}</h4><p>${esc(p.Source)}</p>
+          <div class="meta">${esc(p.Authors)} · ${esc(p.Year)}</div>
+          ${p.DOI_URL?`<a class="meta" href="${esc(p.DOI_URL)}" target="_blank">ดูรายละเอียด</a>`:''}</div></div>`
+      });
+    }
+    loadPubFn(reset);
+  }
+
+  /* ---------- PROJECTS ---------- */
+  let loadProjFn;
+  function loadProjects(reset) {
+    if (!loadProjFn) {
+      loadProjFn = makeListLoader({
+        sheet:'Projects', gridId:'projGrid', loadMoreId:'projLoadMore',
+        getParams: () => ({ category: document.getElementById('projCategory').value, status:'published' }),
+        renderItem: p => `<div class="item-card">
+          ${p.CoverImageFileID?`<img class="cover" src="${driveImg(p.CoverImageFileID)}">`:''}
+          <div class="body"><span class="tag">${esc(p.Category)}</span><h4>${esc(p.Title)}</h4><p>${esc(p.Description)}</p>
+          <div class="meta">${esc(p.YearStart)} - ${esc(p.YearEnd)}</div></div></div>`
+      });
+    }
+    loadProjFn(reset);
+  }
+
+  /* ---------- PROFESSIONAL EVIDENCE / TRAINING ---------- */
+  const EVIDENCE_COLORS = {
+    'การพัฒนางานประจำสู่งานวิจัย (R2R)':'#2E7D32',
+    'การขยายผลวิจัยสู่การปฏิบัติ':'#1B5E20',
+    'การสื่อสารองค์ความรู้':'#0F4C81',
+    'การประเมินและนำเสนอผลงาน':'#D4A017'
+  };
+  let evidenceFiltersReady = false;
+
+  function isApiConfigured() {
+    return !!CONFIG.API_URL && CONFIG.API_URL.indexOf('YOUR_DEPLOYMENT_ID') === -1;
+  }
+
+  function loadLocalEvidence() {
+    try { return JSON.parse(localStorage.getItem('eportfolio_custom_references') || '[]'); }
+    catch (e) { return []; }
+  }
+
+  function allEvidence() {
+    // ให้ข้อมูลจากฐานจริงมีสิทธิ์ทับข้อมูลตั้งต้น เมื่อใช้ URL อ้างอิงเดียวกัน
+    const combined = (window._remoteEvidence || []).concat(loadLocalEvidence(), PROFESSIONAL_EVIDENCE, CV_TRAINING_EVIDENCE);
+    const seen = new Set();
+    return combined.filter(item => {
+      const key = normalizeReferenceUrl(item.SourceURL || '') || item.ID;
+      if (seen.has(key)) return false;
+      seen.add(key); return true;
+    }).sort((a,b) => String(b.EventDate||'').localeCompare(String(a.EventDate||'')));
+  }
+
+  function normalizeReferenceUrl(url) {
+    return String(url || '').trim().replace(/&amp;/g,'&').replace(/\/$/,'');
+  }
+
+  function formatThaiDate(value) {
+    const parts = String(value || '').slice(0,10).split('-');
+    if (parts.length !== 3) return value || 'ไม่ระบุวันที่';
+    const months = ['','มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+    return `${Number(parts[2])} ${months[Number(parts[1])]} ${Number(parts[0])+543}`;
+  }
+
+  function makeReferenceCitation(item) {
+    if (item.Citation) return item.Citation;
+    return `${item.SourceName || 'ไม่ทราบแหล่งที่มา'}. (${formatThaiDate(item.EventDate)}). ${item.Title} [${item.SourceType || 'เว็บเพจ'}]. ${item.SourceURL}`;
+  }
+
+  function setupEvidenceFilters(items) {
+    if (evidenceFiltersReady) return;
+    const cat = document.getElementById('evidenceCategory');
+    const year = document.getElementById('evidenceYear');
+    [...new Set(items.map(i=>i.Category).filter(Boolean))].forEach(value => cat.insertAdjacentHTML('beforeend', `<option value="${esc(value)}">${esc(value)}</option>`));
+    [...new Set(items.map(i=>String(i.EventDate||'').slice(0,4)).filter(Boolean))].sort().reverse().forEach(value => year.insertAdjacentHTML('beforeend', `<option value="${esc(value)}">พ.ศ. ${Number(value)+543}</option>`));
+    evidenceFiltersReady = true;
+  }
+
+  function renderEvidenceTimeline() {
+    const items = allEvidence();
+    setupEvidenceFilters(items);
+    const q = (document.getElementById('evidenceSearch')?.value || '').trim().toLowerCase();
+    const category = document.getElementById('evidenceCategory')?.value || '';
+    const year = document.getElementById('evidenceYear')?.value || '';
+    const filtered = items.filter(item => {
+      const text = `${item.Title} ${item.Category} ${item.Role} ${item.Summary} ${item.SourceName}`.toLowerCase();
+      return (!q || text.includes(q)) && (!category || item.Category === category) && (!year || String(item.EventDate||'').startsWith(year));
+    });
+
+    const summary = document.getElementById('evidenceSummary');
+    if (summary) summary.innerHTML = `
+      <div class="summary-box"><strong>${items.length}</strong><span>หลักฐานอ้างอิง</span></div>
+      <div class="summary-box"><strong>${new Set(items.map(i=>i.Category)).size}</strong><span>มิติการพัฒนา</span></div>
+      <div class="summary-box"><strong>${new Set(items.map(i=>String(i.EventDate).slice(0,4))).size}</strong><span>ปีที่มีผลงาน</span></div>
+      <div class="summary-box"><strong>${items.filter(i=>/วิทยากร|ผู้ทรงคุณวุฒิ/.test(i.Role||'')).length}</strong><span>บทบาทวิทยากร/ผู้ทรงคุณวุฒิ</span></div>`;
+
+    const timeline = document.getElementById('evidenceTimeline');
+    if (!timeline) return;
+    timeline.innerHTML = filtered.length ? filtered.map(item => {
+      const color = item.Color || EVIDENCE_COLORS[item.Category] || '#1B5E20';
+      const dateParts = formatThaiDate(item.EventDate).split(' ');
+      return `<article class="evidence-item" style="--evidence-color:${esc(color)}">
+        <span class="evidence-dot" aria-hidden="true"></span>
+        <div class="evidence-date"><strong>${esc(dateParts.slice(0,2).join(' '))}</strong><span>พ.ศ. ${esc(dateParts[2]||'')}</span></div>
+        <div class="evidence-category"><i class="fa-solid fa-tag"></i> ${esc(item.Category)}</div>
+        <h3>${esc(item.Title)}</h3>
+        <div class="evidence-role"><i class="fa-solid fa-user-tie"></i>${esc(item.Role)}</div>
+        <p class="summary">${esc(item.Summary)}</p>
+        <div class="citation-box"><strong>การอ้างอิง:</strong> ${esc(makeReferenceCitation(item))}</div>
+        <div class="evidence-actions"><span class="source-name">${esc(item.SourceName)}</span><a class="source-link" href="${esc(item.SourceURL)}" target="_blank" rel="noopener noreferrer">ดูหลักฐานต้นฉบับ <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
+      </article>`;
+    }).join('') : `<div class="empty-evidence"><i class="fa-solid fa-magnifying-glass"></i><p>ไม่พบหลักฐานที่ตรงกับตัวกรอง</p></div>`;
+  }
+
+  function loadTraining() {
+    renderEvidenceTimeline();
+    if (isApiConfigured() && !window._referencesRequested) {
+      window._referencesRequested = true;
+      api('References', { limit:500 }).then(res => {
+        window._remoteEvidence = (res.data || []).filter(item => item.Status !== 'draft');
+        evidenceFiltersReady = false;
+        document.getElementById('evidenceCategory').innerHTML = '<option value="">ทุกหมวดหมู่</option>';
+        document.getElementById('evidenceYear').innerHTML = '<option value="">ทุกปี</option>';
+        renderEvidenceTimeline();
+      }).catch(()=>{});
+    }
+  }
+
+  /* ---------- BLOG ---------- */
+  const BLOG_COLORS = {'เรื่องเล่าจากพื้นที่':'#2E7D32','องค์ความรู้':'#0F4C81','ข่าวและกิจกรรม':'#C45122','บทความวิชาการ':'#6A5A9E','นวัตกรรมดิจิทัล':'#00897B'};
+  let blogFiltersReady = false;
+  function blogSourceIcon(source) {
+    if (/facebook/i.test(source||'')) return 'fa-brands fa-facebook';
+    if (/ข่าว|website|เว็บไซต์/i.test(source||'')) return 'fa-solid fa-newspaper';
+    return 'fa-solid fa-pen-nib';
+  }
+  function blogImage(item) { return resolveImg(item.CoverImageFileID || item.CoverImageURL, ''); }
+  function renderBlogMedia(item, className) {
+    const src = blogImage(item);
+    return `<div class="${className}">${src?`<img src="${esc(src)}" loading="lazy" alt="${esc(item.Title)}">`:`<div class="blog-media-placeholder"><i class="fa-solid fa-seedling"></i></div>`}</div>`;
+  }
+  function blogBadges(item) {
+    return `<div class="blog-badges"><span class="blog-badge">${esc(item.ContentType || item.Category || 'บทความ')}</span><span class="blog-badge source"><i class="${blogSourceIcon(item.SourceType)}"></i> ${esc(item.SourceType || 'เขียนเอง')}</span></div>`;
+  }
+  function blogMeta(item, includeAction) {
+    return `<div class="blog-meta"><span><i class="fa-regular fa-calendar"></i>${esc(item.PublishDate || '')}</span><span><i class="fa-regular fa-clock"></i>${esc(item.ReadTime || 3)} นาที</span>${includeAction?'<span class="blog-read-action">อ่านเรื่องนี้ <i class="fa-solid fa-arrow-right"></i></span>':''}</div>`;
+  }
+  function renderBlogCollection() {
+    const data = (window._blogData || []).filter(item => item.Status !== 'draft').sort((a,b)=>String(b.PublishDate||'').localeCompare(String(a.PublishDate||'')));
+    if (!blogFiltersReady) {
+      const types = [...new Set(data.map(item=>item.ContentType || item.Category).filter(Boolean))];
+      const sources = [...new Set(data.map(item=>item.SourceType || 'เขียนเอง').filter(Boolean))];
+      document.getElementById('blogContentType').insertAdjacentHTML('beforeend',types.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join(''));
+      document.getElementById('blogSourceType').insertAdjacentHTML('beforeend',sources.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join(''));
+      blogFiltersReady = true;
+    }
+    const q = document.getElementById('blogSearch').value.trim().toLowerCase();
+    const type = document.getElementById('blogContentType').value;
+    const source = document.getElementById('blogSourceType').value;
+    const filtered = data.filter(item => {
+      const haystack = `${item.Title||''} ${item.Excerpt||''} ${item.Content||''} ${item.Tags||''} ${item.Category||''}`.toLowerCase();
+      return (!q || haystack.includes(q)) && (!type || (item.ContentType || item.Category) === type) && (!source || (item.SourceType || 'เขียนเอง') === source);
+    });
+    const featured = filtered.find(item => String(item.Featured).toLowerCase() === 'true') || filtered[0];
+    document.getElementById('blogFeatured').innerHTML = featured ? `<article class="blog-featured-card" role="button" tabindex="0" data-blog-id="${esc(featured.ID)}" onclick="App.openBlog(this.dataset.blogId)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();App.openBlog(this.dataset.blogId)}">
+      ${renderBlogMedia(featured,'blog-featured-media')}<div class="blog-featured-copy">${blogBadges(featured)}<h3>${esc(featured.Title)}</h3><p>${esc(featured.Excerpt)}</p>${blogMeta(featured,true)}</div></article>` : '';
+    const remaining = featured ? filtered.filter(item=>item.ID !== featured.ID) : filtered;
+    document.getElementById('blogGrid').innerHTML = remaining.length ? remaining.map(item=>`<article class="blog-card" role="button" tabindex="0" data-blog-id="${esc(item.ID)}" style="--blog-accent:${BLOG_COLORS[item.ContentType]||'#2E7D32'}" onclick="App.openBlog(this.dataset.blogId)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();App.openBlog(this.dataset.blogId)}">
+      ${renderBlogMedia(item,'blog-card-media')}<div class="blog-card-copy">${blogBadges(item)}<h3>${esc(item.Title)}</h3><p>${esc(item.Excerpt)}</p>${blogMeta(item,false)}</div></article>`).join('') : (featured ? '' : '<div class="blog-empty"><i class="fa-solid fa-magnifying-glass"></i><p>ไม่พบเนื้อหาที่ตรงกับตัวกรอง</p></div>');
+  }
+  function loadBlog() {
+    api('Blog',{limit:500,status:'published'}).then(res => {
+      window._blogData = res.data || [];
+      blogFiltersReady = false;
+      document.getElementById('blogContentType').innerHTML = '<option value="">ทุกประเภทเนื้อหา</option>';
+      document.getElementById('blogSourceType').innerHTML = '<option value="">ทุกแหล่งที่มา</option>';
+      renderBlogCollection();
+    }).catch(()=>{ window._blogData = FALLBACK_DATA.Blog; renderBlogCollection(); });
+  }
+  function openBlog(id) {
+    const item = (window._blogData || []).find(entry=>String(entry.ID)===String(id));
+    if (!item) return;
+    const image = document.getElementById('blogReaderImage'), src = blogImage(item);
+    image.hidden = !src; image.src = src || ''; image.alt = item.Title || '';
+    document.getElementById('blogReaderBadges').innerHTML = blogBadges(item).replace('<div class="blog-badges">','').replace(/<\/div>$/,'');
+    document.getElementById('blogReaderTitle').textContent = item.Title || '';
+    document.getElementById('blogReaderMeta').innerHTML = `<span><i class="fa-solid fa-user-pen"></i>${esc(item.Author || 'ดร.กิตติ โพธิ์จวง')}</span>${blogMeta(item,false).replace(/^<div class="blog-meta">|<\/div>$/g,'')}`;
+    document.getElementById('blogReaderBody').innerHTML = String(item.Content || item.Excerpt || '').split(/\n\s*\n/).filter(Boolean).map(p=>`<p>${esc(p).replace(/\n/g,'<br>')}</p>`).join('');
+    const sourceLink = document.getElementById('blogReaderSource');
+    sourceLink.hidden = !item.SourceURL; sourceLink.href = item.SourceURL || '#';
+    document.getElementById('blogReaderOverlay').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeBlog() { document.getElementById('blogReaderOverlay').classList.remove('show'); document.body.style.overflow = ''; }
+
+  /* ---------- GALLERY ---------- */
+  let loadGalleryFn;
+  function loadGallery(reset) {
+    if (!loadGalleryFn) {
+      loadGalleryFn = makeListLoader({
+        sheet:'Gallery', gridId:'galleryGrid', loadMoreId:'galleryLoadMore',
+        getParams: () => ({ album: document.getElementById('albumFilter').value }),
+        renderItem: g => { const src = resolveImg(g.ImageFileID || g.ImageURL); return src ? `<div class="g-item" onclick="App.openLightbox('${esc(src)}')">
+          <img src="${esc(src)}" loading="lazy" alt="${esc(g.Caption)}"></div>` : ''; }
+      });
+      api('Gallery', { limit: 500 }).then(res => {
+        const albums = [...new Set((res.data||[]).map(g => g.Album).filter(Boolean))];
+        document.getElementById('albumFilter').insertAdjacentHTML('beforeend', albums.map(a => `<option value="${esc(a)}">${esc(a)}</option>`).join(''));
+      });
+    }
+    loadGalleryFn(reset);
+  }
+  function openLightbox(src) {
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightbox').classList.add('show');
+  }
+
+  /* ---------- CONTACT ---------- */
+  function loadContact(profile) {
+    const p = profile || window._profile || {};
+    const items = [
+      { icon:'fa-phone', label:p.Phone },
+      { icon:'fa-envelope', label:p.Email },
+      { icon:'fa-comment', label:p.Line },
+      { icon:'fa-graduation-cap', label:'Google Scholar', url:p.GoogleScholarURL },
+      { icon:'fa-flask', label:'ResearchGate', url:p.ResearchGateURL },
+      { icon:'fa-id-badge', label:'ORCID', url:p.OrcidURL }
+    ].filter(i => i.label);
+    document.getElementById('contactList').innerHTML = items.map(i => `
+      <div class="c-item"><i class="fa-solid ${i.icon}"></i>${i.url?`<a href="${esc(i.url)}" target="_blank">${esc(i.label)}</a>`:esc(i.label)}</div>`).join('');
+    if (p.MapEmbedURL) document.getElementById('contactMap').src = p.MapEmbedURL;
+  }
+
+  /* ---------- TOOLBAR DEBOUNCE BINDING ---------- */
+  function bindToolbars() {
+    const bindings = [
+      ['dashSearch','input',()=>loadDashboards(true)], ['dashCategory','change',()=>loadDashboards(true)],
+      ['researchSearch','input',()=>loadResearch(true)],
+      ['pubSearch','input',()=>loadPublications(true)], ['pubType','change',()=>loadPublications(true)],
+      ['projCategory','change',()=>loadProjects(true)],
+      ['evidenceSearch','input',renderEvidenceTimeline],
+      ['evidenceCategory','change',renderEvidenceTimeline],
+      ['evidenceYear','change',renderEvidenceTimeline],
+      ['blogSearch','input',renderBlogCollection], ['blogContentType','change',renderBlogCollection], ['blogSourceType','change',renderBlogCollection],
+      ['albumFilter','change',()=>loadGallery(true)]
+    ];
+    let t;
+    bindings.forEach(([id, evt, fn]) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener(evt, () => { clearTimeout(t); t = setTimeout(fn, evt==='input'?350:0); });
+    });
+  }
+
+  /* ---------- INLINE EDIT ACTIONS ---------- */
+  function editProfile() {
+    const p = window._profile || {}, h = window._hero || {};
+    EditUI.open('แก้ไขข้อมูลส่วนตัว / Hero', [
+      { key:'ProfileImageFileID', label:'รูปโปรไฟล์ (ครึ่งตัว)', type:'image', value:p.ProfileImageFileID, defaultSrc:'3. Kitti.png?v=portrait-3-3-20260925', folderKey:'Profile' },
+      { key:'NameTH', label:'ชื่อ (ไทย)', value:p.NameTH },
+      { key:'NameEN', label:'ชื่อ (English)', value:p.NameEN },
+      { key:'Position', label:'ตำแหน่ง', value:p.Position },
+      { key:'Subtitle', label:'Subtitle (Hero)', value:h.Subtitle },
+      { key:'ReflectionText', label:'ข้อความสะท้อนตัวตน', value:h.ReflectionText, type:'textarea' }
+    ], (data) => {
+      Object.assign(p, { NameTH:data.NameTH, NameEN:data.NameEN, Position:data.Position, ProfileImageFileID:data.ProfileImageFileID });
+      Object.assign(h, { Subtitle:data.Subtitle, ReflectionText:data.ReflectionText, TitleEN:data.NameEN, TitleTH:data.NameTH });
+      window._profile = p; window._hero = h;
+      document.getElementById('heroTitleEN').textContent = p.NameEN;
+      document.getElementById('heroTitleTH').textContent = p.NameTH;
+      document.getElementById('heroSubtitle').textContent = h.Subtitle;
+      document.getElementById('heroReflection').textContent = h.ReflectionText;
+      document.getElementById('heroImage').src = resolveImg(p.ProfileImageFileID, '3. Kitti.png?v=portrait-3-3-20260925');
+      loadAbout();
+      try {
+        localStorage.setItem('eportfolio_profile_override', JSON.stringify(p));
+        localStorage.setItem('eportfolio_hero_override', JSON.stringify(h));
+      } catch(e) {}
+      apiWrite(p.ID && !String(p.ID).startsWith('fallback') ? 'update':'create', 'Profile', p.ID, p).then(r=>{ if(r.id) p.ID=r.id; }).catch(()=>{});
+      apiWrite(h.ID && !String(h.ID).startsWith('fallback') ? 'update':'create', 'Hero', h.ID, h).then(r=>{ if(r.id) h.ID=r.id; }).catch(()=>{});
+      showToast('บันทึกข้อมูลแล้ว');
+    });
+  }
+
+  function editStat(id) {
+    const list = window._statsData || [];
+    const item = id ? list.find(s => s.ID === id) : { ID:null, Label:'', Value:'', Suffix:'', Icon:'fa-star', LinkTarget:'projects', SortOrder:list.length+1 };
+    EditUI.open(id ? 'แก้ไขสถิติ' : 'เพิ่มสถิติ', [
+      { key:'Label', label:'หัวข้อ', value:item.Label },
+      { key:'Value', label:'จำนวน', value:item.Value },
+      { key:'Suffix', label:'หน่วย', value:item.Suffix },
+      { key:'Icon', label:'FontAwesome icon class เช่น fa-flask', value:item.Icon },
+      { key:'LinkTarget', label:'หน้าปลายทาง เช่น about, publications, projects, blog', value:item.LinkTarget },
+      { key:'SortOrder', label:'ลำดับ', value:item.SortOrder }
+    ], (data) => {
+      if (id) Object.assign(item, data); else { data.ID = 'local-' + Date.now(); list.push(data); }
+      window._statsData = list;
+      apiWrite(id ? 'update':'create', 'DashboardStatistics', id, data).then(r=>{ if(!id && r.id){ data.ID=r.id; } }).catch(()=>{});
+      loadStats(); showToast('บันทึกแล้ว');
+    }, id ? () => { window._statsData = list.filter(s=>s.ID!==id); apiWrite('delete','DashboardStatistics',id,{}).catch(()=>{}); loadStats(); showToast('ลบแล้ว'); } : null);
+  }
+
+  function editEducation(id) {
+    const list = window._eduData || [];
+    const item = id ? list.find(e => e.ID === id) : { ID:null, UniversityName:'', Degree:'', FieldOfStudy:'', YearStart:'', YearEnd:'', SortOrder:list.length+1 };
+    EditUI.open(id ? 'แก้ไขประวัติการศึกษา' : 'เพิ่มประวัติการศึกษา', [
+      { key:'UniversityName', label:'มหาวิทยาลัย', value:item.UniversityName },
+      { key:'Degree', label:'วุฒิการศึกษา', value:item.Degree },
+      { key:'FieldOfStudy', label:'สาขา', value:item.FieldOfStudy },
+      { key:'YearStart', label:'ปีเริ่ม (พ.ศ.)', value:item.YearStart },
+      { key:'YearEnd', label:'ปีจบ (พ.ศ.)', value:item.YearEnd },
+      { key:'SortOrder', label:'ลำดับ', value:item.SortOrder }
+    ], (data) => {
+      if (id) Object.assign(item, data); else { data.ID = 'local-' + Date.now(); list.push(data); }
+      window._eduData = list;
+      apiWrite(id ? 'update':'create', 'Education', id, data).then(r=>{ if(!id && r.id){ data.ID=r.id; } }).catch(()=>{});
+      loadEducation(); showToast('บันทึกแล้ว');
+    }, id ? () => { window._eduData = list.filter(e=>e.ID!==id); apiWrite('delete','Education',id,{}).catch(()=>{}); loadEducation(); showToast('ลบแล้ว'); } : null);
+  }
+
+  function editMindmapNode(id) {
+    const list = window._mindmapData || [];
+    const item = id ? list.find(n => n.ID === id) : { ID:null, NodeLabel:'', LinkTarget:'home', Icon:'fa-circle', SortOrder:list.length+1 };
+    EditUI.open(id ? 'แก้ไข Node' : 'เพิ่ม Node', [
+      { key:'NodeLabel', label:'ชื่อ Node', value:item.NodeLabel },
+      { key:'LinkTarget', label:'ลิงก์ไปหน้า (home/research/projects/dashboards/training/...)', value:item.LinkTarget },
+      { key:'Icon', label:'FontAwesome icon class', value:item.Icon },
+      { key:'SortOrder', label:'ลำดับ', value:item.SortOrder }
+    ], (data) => {
+      if (id) Object.assign(item, data); else { data.ID = 'local-' + Date.now(); list.push(data); }
+      window._mindmapData = list;
+      apiWrite(id ? 'update':'create', 'Mindmap', id, data).then(r=>{ if(!id && r.id){ data.ID=r.id; } }).catch(()=>{});
+      loadMindmap(); showToast('บันทึกแล้ว');
+    }, id ? () => { window._mindmapData = list.filter(n=>n.ID!==id); apiWrite('delete','Mindmap',id,{}).catch(()=>{}); loadMindmap(); showToast('ลบแล้ว'); } : null);
+  }
+
+  return { init, setTheme, toggleDayNight, toggleMourning, setFontSize, goPage, openLightbox,
+    openLogin, closeLogin, submitLogin, logoutEdit, toggleShowPassword,
+    editProfile, editStat, editEducation, editMindmapNode,
+    openBlog, closeBlog,
+    focusExpertise, searchExpertise, filterExpertiseWorks, resetExpertiseGraph };
+})();
+
+/* ===================== GENERIC EDIT MODAL CONTROLLER ===================== */
+const EditUI = (function () {
+  let onSaveCb = null, onDeleteCb = null;
+  function renderField(f) {
+    if (f.type === 'textarea') return `<div class="field"><label>${f.label}</label><textarea data-key="${f.key}">${esc(f.value??'')}</textarea></div>`;
+    if (f.type === 'image') {
+      const preview = resolveImg(f.value, f.defaultSrc || '');
+      return `<div class="field"><label>${f.label}</label>
+        <div style="display:flex;gap:12px;align-items:center">
+          <img id="editImgPreview_${f.key}" src="${preview}" style="width:72px;height:72px;object-fit:cover;border-radius:8px;border:1px solid var(--border);background:var(--bg)">
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <input type="file" accept="image/*" onchange="EditUI.handleImageFile(event,'${f.key}','${f.folderKey||'Gallery'}')">
+            <button type="button" onclick="EditUI.clearImage('${f.key}','${f.defaultSrc||''}')" style="font-size:12px;color:#c62828;background:none;border:none;cursor:pointer;text-align:left;padding:0">ลบรูป (ใช้ภาพเริ่มต้น)</button>
+          </div>
+        </div>
+        <input type="hidden" data-key="${f.key}" value="${esc(f.value??'')}"></div>`;
+    }
+    return `<div class="field"><label>${f.label}</label><input data-key="${f.key}" value="${esc(f.value??'')}"></div>`;
+  }
+  function open(title, fields, onSave, onDelete) {
+    onSaveCb = onSave; onDeleteCb = onDelete || null;
+    document.getElementById('editModalTitle').textContent = title;
+    document.getElementById('editModalFields').innerHTML = fields.map(renderField).join('');
+    document.getElementById('editModalDelete').style.display = onDelete ? 'inline-block' : 'none';
+    document.getElementById('editModalOverlay').classList.add('show');
+  }
+  function close() { document.getElementById('editModalOverlay').classList.remove('show'); }
+  function save() {
+    const data = {};
+    document.querySelectorAll('#editModalFields [data-key]').forEach(el => data[el.dataset.key] = el.value);
+    if (onSaveCb) onSaveCb(data);
+    close();
+  }
+  function del() { if (onDeleteCb) onDeleteCb(); close(); }
+  function handleImageFile(e, key, folderKey) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function () {
+      const dataUrl = reader.result;
+      const base64 = dataUrl.split(',')[1];
+      const preview = document.getElementById('editImgPreview_' + key);
+      const hidden = document.querySelector(`#editModalFields input[type=hidden][data-key="${key}"]`);
+      if (preview) preview.src = dataUrl;
+      const token = sessionStorage.getItem('edit_token') || '';
+      fetch(CONFIG.API_URL, { method:'POST', body: JSON.stringify({ action:'uploadFile', token, folderKey, filename:file.name, mimeType:file.type, base64 }) })
+        .then(r => r.json())
+        .then(res => {
+          if (res.status === 'ok' && hidden) { hidden.value = res.fileId; if (preview) preview.src = res.url; showToast('อัปโหลดรูปขึ้น Google Drive สำเร็จ'); }
+          else { if (hidden) hidden.value = dataUrl; showToast('ยังไม่ได้เชื่อม Backend — บันทึกรูปไว้ในเครื่องชั่วคราว'); }
+        })
+        .catch(() => { if (hidden) hidden.value = dataUrl; showToast('ยังไม่ได้เชื่อม Backend — บันทึกรูปไว้ในเครื่องชั่วคราว'); });
+    };
+    reader.readAsDataURL(file);
+  }
+  function clearImage(key, defaultSrc) {
+    const hidden = document.querySelector(`#editModalFields input[type=hidden][data-key="${key}"]`);
+    const preview = document.getElementById('editImgPreview_' + key);
+    if (hidden) hidden.value = '';
+    if (preview) preview.src = defaultSrc || '';
+  }
+  return { open, close, save, delete: del, handleImageFile, clearImage };
+})();
+
+window.onload = App.init;
+</script>
+</body>
+</html>
