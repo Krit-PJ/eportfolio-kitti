@@ -12,9 +12,22 @@ scripts.forEach((source, index) => new vm.Script(source, { filename:`index-scrip
 
 assert.doesNotMatch(html, /จัดการจากศูนย์กลาง|สำรวจแฟ้มผลงาน|id=["']quickGrid["']/, 'public page must not show admin guidance or duplicate explorer');
 assert.match(html, /id="fieldVideoTitle">ข้อมูลที่ดี เริ่มจากการเข้าใจพื้นที่จริง/, 'field video invitation must remain in the homepage flow');
-assert.match(html, /class="field-video-dock"[^>]*hidden/, 'field video must start closed in a floating dock');
+assert.match(html, /class="field-video-box"/, 'field video must be presented as an inline playable box');
+assert.match(html, /<video id="fieldVideoPlayer" controls playsinline/, 'field video must expose native playback controls');
+assert.match(html, /body\{padding-left:0!important\}/, 'public navigation must not reserve a desktop sidebar');
+assert.match(html, /nav\.main-nav\{position:sticky!important/, 'public navigation must stay above page content');
+assert.match(html, /html\[data-font-size="xxlarge"\]/, 'font size levels must have explicit usable CSS');
 assert.match(html, /function openFieldVideo\s*\(/);
 assert.match(html, /function closeFieldVideo\s*\(/);
+assert.match(html, /previous\.data\.length && !result\.data\.length/, 'verified snapshot must survive an unexpectedly empty refresh');
+assert.match(html, /function loadEducation\s*\(\)[\s\S]*?getCanonicalData\('Education'\)/, 'education must use the canonical database pipeline');
+assert.match(html, /id="educationStatus"/, 'education must disclose its database status');
+assert.match(html, /class="footprint-card-media"/, 'homepage story cards must provide a meaningful cover-image slot');
+assert.match(html, /storyCover\(item\)/, 'homepage story cards must resolve configured or contextual cover images');
+
+const expectedMenuOrder = ['home','about','dashboards','innovation','research','publications','projects','training','blog','contact'];
+const menuOrder = [...html.matchAll(/<a data-page="([^"]+)" onclick="App\.goPage/g)].map(match=>match[1]);
+assert.deepEqual(menuOrder, expectedMenuOrder, 'public menu order must match the approved top navigation');
 
 assert.match(html, /api\('Projects', \{ limit: 100, status:'published', isInnovation:true \}\)/, 'innovation page must request published innovation projects only');
 assert.match(html, /truthyFlag\(p\.IsInnovation\)/, 'innovation page must verify IsInnovation on returned rows');

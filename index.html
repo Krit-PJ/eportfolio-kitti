@@ -599,6 +599,39 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
   .nav-scrim{display:none;position:fixed;inset:0;z-index:1050;background:rgba(4,24,14,.52)}.nav-scrim.show{display:block}
 }
 @media(prefers-reduced-motion:reduce){.hero-marquee-track,.hero-data-network *{animation:none!important}.hero-marquee-track{transform:translateX(-35%)}.hero-data-network .network-particle{display:none}}
+
+/* v5 public navigation: keep the complete menu above the content. */
+body{padding-left:0!important}
+header.site-header{left:auto!important;width:100%!important}
+nav.main-nav{position:sticky!important;left:auto!important;top:64px!important;bottom:auto!important;width:100%!important;z-index:850!important;display:flex!important;flex-direction:row!important;justify-content:center!important;align-items:stretch!important;overflow-x:auto!important;overflow-y:hidden!important;padding:0 16px!important;background:rgba(255,255,255,.97)!important;border-bottom:1px solid var(--border)!important;box-shadow:0 6px 18px rgba(11,53,32,.08)!important;transition:none!important}
+nav.main-nav a,nav.main-nav a[data-page="home"]{position:relative!important;display:inline-flex!important;flex:0 0 auto!important;align-items:center!important;gap:7px!important;padding:13px 12px!important;background:transparent!important;color:#143c27!important;border:0!important;border-bottom:3px solid transparent!important;font-size:12px!important;font-weight:500!important}
+nav.main-nav a:hover,nav.main-nav a.active,nav.main-nav a[data-page="home"]:hover,nav.main-nav a[data-page="home"].active{color:#0b3d2e!important;background:rgba(102,187,106,.12)!important;border-bottom-color:var(--accent)!important}
+nav.main-nav a i{width:auto!important;color:var(--primary)!important}
+.public-nav-brand,.public-nav-close,.public-nav-toggle,.nav-scrim{display:none!important}
+[data-theme="dark"] nav.main-nav{background:rgba(12,26,20,.98)!important}
+[data-theme="dark"] nav.main-nav a,[data-theme="dark"] nav.main-nav a[data-page="home"]{color:#e8f5e9!important}
+[data-theme="dark"] nav.main-nav a i{color:#9ed1aa!important}
+@media(max-width:1100px){nav.main-nav{justify-content:flex-start!important;top:108px!important}nav.main-nav a,nav.main-nav a[data-page="home"]{padding:12px 11px!important}}
+@media(max-width:580px){nav.main-nav{top:151px!important}}
+
+/* Explicit levels avoid unsupported CSS multiplication. */
+html[data-font-size="large"]{font-size:16px}
+html[data-font-size="xlarge"]{font-size:18px}
+html[data-font-size="xxlarge"]{font-size:20px}
+html[data-font-size="xlarge"] .page :where(p,li,input,select,textarea,.label,.meta,.section-sub,.evidence-lead,.home-intro-side,.work-note),html[data-font-size="xlarge"] .modal{font-size:1.125em}
+html[data-font-size="xxlarge"] .page :where(p,li,input,select,textarea,.label,.meta,.section-sub,.evidence-lead,.home-intro-side,.work-note),html[data-font-size="xxlarge"] .modal{font-size:1.25em}
+html[data-font-size="xlarge"] nav.main-nav a{font-size:13px!important}
+html[data-font-size="xxlarge"] nav.main-nav a{font-size:14px!important}
+.font-size-control button.active{box-shadow:0 0 0 2px var(--accent);font-weight:700}
+
+/* Playable field-story card, visible directly in the homepage flow. */
+.field-video-invite{grid-template-columns:minmax(260px,.55fr) minmax(0,1.15fr)}
+.field-video-box{overflow:hidden;border:1px solid rgba(255,255,255,.28);border-radius:12px;background:#07110b;box-shadow:0 22px 50px rgba(0,0,0,.28)}
+.field-video-box video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#000}
+.field-video-box figcaption{display:flex;align-items:center;gap:8px;padding:11px 14px;border-top:1px solid rgba(255,255,255,.14);color:#c8d9cd;font-size:11px}
+.database-status{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:5px 9px;border:1px solid var(--border);border-radius:999px;background:var(--card-bg);color:var(--text-muted);font-size:10px}.database-status i{font-size:7px;color:#66a86f}.database-status.empty i{color:#d59a24}
+.footprint-card{padding:0;overflow:hidden;display:grid;grid-template-rows:150px 1fr}.footprint-card-media{position:relative;overflow:hidden;background:linear-gradient(145deg,#284d37,#0f4c51)}.footprint-card-media img{width:100%;height:100%;object-fit:cover;filter:saturate(.88);transition:transform .35s ease}.footprint-card:hover .footprint-card-media img{transform:scale(1.045)}.footprint-card-media::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(10,31,20,.52),transparent 62%)}.footprint-card-copy{position:relative;padding:22px 24px 26px}.footprint-card-copy .footprint-type{margin:9px 0 7px}.footprint-card-copy p{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+@media(max-width:760px){.field-video-invite{grid-template-columns:1fr}.field-video-box{width:100%}}
 </style>
 </head>
 <body>
@@ -723,6 +756,7 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
       <div>
         <h3 class="panel-heading"><i class="fa-solid fa-graduation-cap"></i> ประวัติการศึกษา</h3>
         <p class="section-sub">เรียงจากปีล่าสุดไปเก่าสุด</p>
+        <span class="database-status" id="educationStatus"><i class="fa-solid fa-circle"></i> กำลังอ่านจากฐานข้อมูลกลาง</span>
         <div class="vertical-timeline edit-host" id="eduTimeline"></div>
         <button class="edit-add-btn" onclick="App.editEducation()"><i class="fa-solid fa-plus"></i> เพิ่มประวัติการศึกษา</button>
       </div>
@@ -772,9 +806,12 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
     <div>
       <div class="section-index">04 · FIELD STORY</div>
       <h2 id="fieldVideoTitle">ข้อมูลที่ดี เริ่มจากการเข้าใจพื้นที่จริง</h2>
-      <p id="fieldVideoDescription">ชมคลิปสั้นจากการทำงานภาคสนาม เมื่อเปิดแล้ววิดีโอจะย่ออยู่มุมหน้าจอ จึงสำรวจผลงานส่วนอื่นต่อได้โดยไม่สะดุด</p>
+      <p id="fieldVideoDescription">ชมคลิปสั้นจากการทำงานภาคสนาม และกดเล่นได้ทันทีจากกล่องวิดีโอนี้</p>
     </div>
-    <button class="field-video-launcher" id="fieldVideoLauncher" type="button" onclick="App.openFieldVideo()"><i class="fa-solid fa-circle-play"></i> เปิดวิดีโอจากพื้นที่</button>
+    <figure class="field-video-box">
+      <video id="fieldVideoPlayer" controls playsinline preload="metadata" poster="assets/field-impact-story-poster.jpg"><source id="fieldVideoSource" src="assets/field-impact-story.mp4" type="video/mp4"></video>
+      <figcaption><i class="fa-solid fa-circle-play"></i> คลิปจากพื้นที่จริง · พร้อมกดเล่น</figcaption>
+    </figure>
   </section>
 
   <section class="footprint-band reveal-block" aria-labelledby="footprintTitle">
@@ -925,11 +962,6 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
 </section>
 
 <div class="lightbox" id="lightbox"><span class="close" onclick="document.getElementById('lightbox').classList.remove('show')">&times;</span><img id="lightboxImg"></div>
-
-<aside class="field-video-dock" id="fieldVideoDock" aria-label="วิดีโอเรื่องเล่าจากพื้นที่" hidden>
-  <div class="field-video-dock-head"><span>จากพื้นที่จริง สู่การตัดสินใจด้วยข้อมูล</span><button class="field-video-close" type="button" onclick="App.closeFieldVideo()" aria-label="ปิดวิดีโอ"><i class="fa-solid fa-xmark"></i></button></div>
-  <video id="fieldVideoPlayer" controls playsinline preload="metadata" poster="assets/field-impact-story-poster.jpg"><source id="fieldVideoSource" src="assets/field-impact-story.mp4" type="video/mp4"></video>
-</aside>
 
 <div class="modal-overlay" id="metricOverlay" onclick="App.closeMetricDataset()">
   <section class="metric-reader" onclick="event.stopPropagation()" aria-modal="true" role="dialog" aria-labelledby="metricTitle">
@@ -1321,6 +1353,12 @@ const App = (function () {
     refreshingSheets.add(sheet);
     fetchAllPublished(sheet).then(result => {
       if (!result.unavailable) {
+        const previous = readVerifiedSnapshot(sheet);
+        if (previous && previous.data.length && !result.data.length) {
+          canonicalCache.set(sheet, Promise.resolve(Object.assign({}, previous, { stale:true, emptyRefresh:true })));
+          document.dispatchEvent(new CustomEvent('portfolio:data-refresh-empty',{detail:{sheet}}));
+          return;
+        }
         const verified = storeVerifiedSnapshot(sheet, result);
         canonicalCache.set(sheet, Promise.resolve(verified));
         document.dispatchEvent(new CustomEvent('portfolio:data-updated',{detail:{sheet}}));
@@ -1394,8 +1432,16 @@ const App = (function () {
     if (!host) return;
     const recent = (items || []).filter(item => item.Status !== 'draft').sort((a,b)=>String(b.PublishDate||'').localeCompare(String(a.PublishDate||''))).slice(0,3);
     if (unavailable) { host.innerHTML = '<div class="data-unavailable">ข้อมูลเรื่องเล่ายังไม่พร้อมใช้งาน กรุณาลองใหม่ภายหลัง</div>'; return; }
+    const storyCover = item => {
+      const configured = blogImage(item);
+      if (configured) return configured;
+      const signal = `${item.Title||''} ${item.Tags||''} ${item.SourceURL||''}`.toLowerCase();
+      if (/risk|hotspot|burn|ความเสี่ยง/.test(signal)) return 'assets/snapshot-agri-risk-map.webp';
+      if (/green|gain|platform|smart/.test(signal)) return 'assets/snapshot-green-gain-hub.webp';
+      return 'assets/hero-field-impact-v2.webp';
+    };
     host.innerHTML = recent.map(item => `<button type="button" class="footprint-card" data-blog-id="${esc(item.ID)}" onclick="App.goPage('blog');setTimeout(()=>App.openBlog(this.dataset.blogId),0)">
-      <time datetime="${esc(item.PublishDate||'')}">${esc(formatThaiDate(item.PublishDate||''))}</time><span class="footprint-type">${esc(item.ContentType||item.Category||'บันทึกการทำงาน')}</span><h3>${esc(item.Title)}</h3><p>${esc(item.Excerpt||'')}</p></button>`).join('') || '<div class="blog-empty">กำลังรวบรวมร่องรอยการทำงาน</div>';
+      <span class="footprint-card-media"><img src="${esc(storyCover(item))}" loading="lazy" alt="ภาพหัวเรื่อง ${esc(item.Title)}"></span><span class="footprint-card-copy"><time datetime="${esc(item.PublishDate||'')}">${esc(formatThaiDate(item.PublishDate||''))}</time><span class="footprint-type">${esc(item.ContentType||item.Category||'บันทึกการทำงาน')}</span><h3>${esc(item.Title)}</h3><p>${esc(item.Excerpt||'')}</p></span></button>`).join('') || '<div class="blog-empty">ยังไม่มีเรื่องเล่าที่เผยแพร่จากฐานข้อมูลกลาง</div>';
   }
 
   /* ---------- THEME: กลางวัน/กลางคืน รวมเป็นปุ่มเดียว สลับอัตโนมัติ, ไว้ทุกข์แยกปุ่ม ---------- */
@@ -1559,18 +1605,15 @@ const App = (function () {
   function closeMetricDataset() { document.getElementById('metricOverlay').classList.remove('show'); document.body.style.overflow=''; }
 
   function openFieldVideo() {
-    const dock = document.getElementById('fieldVideoDock');
     const player = document.getElementById('fieldVideoPlayer');
-    if (!dock || !player) return;
-    dock.hidden = false;
+    if (!player) return;
+    player.scrollIntoView({behavior:'smooth',block:'center'});
     const playResult = player.play();
     if (playResult && typeof playResult.catch === 'function') playResult.catch(()=>{});
   }
   function closeFieldVideo() {
-    const dock = document.getElementById('fieldVideoDock');
     const player = document.getElementById('fieldVideoPlayer');
     if (player) player.pause();
-    if (dock) dock.hidden = true;
   }
 
   function loadEducation() {
@@ -1584,6 +1627,16 @@ const App = (function () {
       );
       window._eduData = list;
       const el = document.getElementById('eduTimeline');
+      const status = document.getElementById('educationStatus');
+      if (status) {
+        const label = res.unavailable ? 'ไม่สามารถอ่านฐานข้อมูลกลางได้' : list.length ? `ฐานข้อมูลกลาง · ${list.length} รายการ` : 'ฐานข้อมูลกลาง · ยังไม่มีรายการเผยแพร่';
+        status.classList.toggle('empty', !!res.unavailable || !list.length);
+        status.innerHTML = `<i class="fa-solid fa-circle"></i> ${esc(label)}`;
+      }
+      if (res.unavailable) {
+        el.innerHTML = '<div class="data-unavailable">ข้อมูลประวัติการศึกษาจากฐานข้อมูลยังไม่พร้อมใช้งาน กรุณาลองใหม่ภายหลัง</div>';
+        return;
+      }
       el.innerHTML = list.map(e => `
         <div class="vt-item edit-host">
           <div class="year">${e.YearStart && e.YearEnd && String(e.YearEnd)!==String(e.YearStart) ? `${esc(e.YearStart)} - ${esc(e.YearEnd)}` : esc(e.YearEnd||e.YearStart||'')}</div>
@@ -1591,7 +1644,7 @@ const App = (function () {
           <div class="field">${esc(e.FieldOfStudy)}</div>
           <div class="uni">${e.UniversityLogoFileID ? `<img src="${driveImg(e.UniversityLogoFileID)}" style="width:18px;height:18px;border-radius:50%;display:inline-block;vertical-align:middle;margin-right:6px">` : ''}${esc(e.UniversityName)}</div>
           <button class="edit-fab" aria-label="แก้ไขข้อมูลการศึกษา ${esc(e.Degree)}" onclick="App.editEducation('${e.ID}')"><i class="fa-solid fa-pen"></i></button>
-        </div>`).join('') || emptyHTML('ยังไม่มีข้อมูลการศึกษา');
+        </div>`).join('') || emptyHTML('ยังไม่มีประวัติการศึกษาที่เผยแพร่จากฐานข้อมูลกลาง');
     });
   }
 

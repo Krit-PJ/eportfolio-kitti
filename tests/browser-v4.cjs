@@ -22,13 +22,11 @@ const fs=require('node:fs');
  await page.locator('#expertiseDetail .expertise-work').first().click();
  await page.locator('#workDetailOverlay.show').waitFor();
  await page.getByRole('button',{name:'ปิดรายละเอียด',exact:true}).click();
- await page.locator('#fieldVideoLauncher').click();
- assert.equal(await page.locator('#fieldVideoDock').isVisible(),true);
- await page.evaluate(()=>window.scrollTo(0,document.body.scrollHeight));
- assert.equal(await page.locator('#fieldVideoDock').evaluate(el=>getComputedStyle(el).position),'fixed');
- await page.getByRole('button',{name:'ปิดวิดีโอ',exact:true}).click();
- assert.equal(await page.locator('#fieldVideoDock').isVisible(),false);
- assert.equal(await page.locator('#fieldVideoPlayer').evaluate(el=>el.paused),true);
+ assert.equal(await page.locator('.field-video-box #fieldVideoPlayer').isVisible(),true);
+ assert.equal(await page.locator('#fieldVideoPlayer').getAttribute('controls'),'');
+ await page.locator('[data-font-level="xxlarge"]').click();
+ assert.equal(await page.locator('[data-font-level="xxlarge"]').getAttribute('aria-pressed'),'true');
+ assert.equal(await page.evaluate(()=>document.documentElement.dataset.fontSize),'xxlarge');
  const out=path.resolve('../../outputs');fs.mkdirSync(out,{recursive:true});
  for(const width of [1440,900,390]){
   await page.setViewportSize({width,height:1000});
