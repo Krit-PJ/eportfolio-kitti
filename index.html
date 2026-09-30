@@ -47,6 +47,8 @@ header.site-header{position:sticky;top:0;z-index:900;background:var(--nav-bg);bo
 .header-top .org-text strong{display:block;font-size:14px;color:#fff}
 .theme-switch{display:flex;gap:6px}
 .theme-switch button{background:transparent;border:1.5px solid rgba(255,255,255,0.3);color:#dcecdd;border-radius:8px;padding:6px 9px;cursor:pointer;font-size:13px;transition:all var(--transition)}
+.theme-switch>a{display:inline-flex;align-items:center;gap:6px;background:transparent;border:1.5px solid rgba(255,255,255,.3);color:#dcecdd;border-radius:8px;padding:6px 9px;font-size:13px;transition:all var(--transition)}
+.theme-switch>a:hover{background:var(--accent);border-color:var(--accent);color:#1a1a1a}
 .theme-switch button:hover,.theme-switch button.active{background:var(--accent);border-color:var(--accent);color:#1a1a1a}
 .theme-switch button#themeMourning.active{background:#555;border-color:#555;color:#fff}
 .theme-switch button#loginBtn{border-color:rgba(255,255,255,0.3)}
@@ -56,7 +58,7 @@ header.site-header{position:sticky;top:0;z-index:900;background:var(--nav-bg);bo
   .header-top .org-text{text-align:left;font-size:11.5px;line-height:1.45}
   .header-top .org-text strong{font-size:13px}
   .theme-switch{grid-column:1/-1;justify-content:center;flex-wrap:wrap}
-  .theme-switch button{font-size:12px;padding:6px 8px}
+  .theme-switch button,.theme-switch>a{font-size:12px;padding:6px 8px}
 }
 
 /* LOGIN / EDIT MODALS */
@@ -572,6 +574,30 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
 }
 @media(max-width:480px){.hero-left .title-th{font-size:28px}.hero-left .title-en{font-size:13px}.hero-left .subtitle{font-size:13px}.hero-marquee-track{font-size:13px}.home-intro-lead{font-size:26px}.work-card{grid-template-columns:30px 1fr}.work-visual{display:none}.work-meta{grid-column:2}.editorial-heading .section-title{font-size:24px}.impact-label{font-size:22px}.field-video{padding:66px 0 72px}}
 @media(max-width:680px){.knowledge-graph-shell{display:block}.mindmap-wrap{padding:10px}.mindmap{display:grid;width:auto}.focus-card{display:grid!important;flex:none!important}.expertise-detail{border-top:1px solid var(--border)}.field-video-invite{grid-template-columns:1fr;padding:30px 22px}.field-video-launcher{justify-self:start}.field-video-dock{right:7px;bottom:7px;width:min(300px,calc(100vw - 14px))}.innovation-grid{grid-template-columns:1fr}.career-item{grid-template-columns:1fr}.career-item time{grid-column:1;grid-row:auto}.metric-list{padding:8px 16px 20px}}
+
+/* Public portfolio navigation: same visual family as Admin, lighter storytelling treatment. */
+.public-nav-brand{display:grid;grid-template-columns:44px minmax(0,1fr);gap:11px;align-items:center;padding:20px 16px 18px;border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:8px}
+.public-nav-brand img{width:44px;height:44px;object-fit:contain;padding:4px;background:#fff;border-radius:11px}
+.public-nav-brand strong{display:block;color:#fff;font-size:13px;line-height:1.35}.public-nav-brand span{display:block;color:#a9d7b5;font-size:9.5px;line-height:1.45;margin-top:3px}
+.public-nav-close,.public-nav-toggle{display:none}
+.snapshot-status{display:inline-flex;align-items:center;gap:6px;margin-left:8px;color:#d8e9dc;font-size:9px;font-weight:400;text-transform:none}.snapshot-status i{font-size:7px;color:#81c784}
+@media(min-width:1101px){
+  body{padding-left:252px}
+  header.site-header{left:252px;width:calc(100% - 252px)}
+  nav.main-nav{position:fixed;left:0;top:0;bottom:0;width:252px;z-index:950;display:flex;flex-direction:column;justify-content:flex-start;align-items:stretch;overflow-y:auto;padding:0 0 22px;background:linear-gradient(180deg,#0b3520,#10482c);border:0;box-shadow:8px 0 28px rgba(11,53,32,.12)}
+  nav.main-nav a,nav.main-nav a[data-page="home"]{position:relative;display:flex;align-items:center;gap:11px;padding:11px 17px;background:transparent;color:#d7eadc;border:0;border-left:3px solid transparent;font-size:12.5px;font-weight:400}
+  nav.main-nav a::after{display:none}nav.main-nav a i{width:19px;text-align:center;color:#9ed1aa}
+  nav.main-nav a:hover,nav.main-nav a.active,nav.main-nav a[data-page="home"]:hover,nav.main-nav a[data-page="home"].active{color:#fff;background:rgba(255,255,255,.09);border-left-color:var(--accent)}
+}
+@media(max-width:1100px){
+  .public-nav-toggle{display:inline-flex;align-items:center;justify-content:center;width:39px;height:39px;border-radius:8px;border:1px solid rgba(255,255,255,.28);background:transparent;color:#fff;cursor:pointer}
+  nav.main-nav{position:fixed;left:-270px;top:0;bottom:0;width:258px;z-index:1100;display:flex;flex-direction:column;align-items:stretch;overflow-y:auto;padding:0 0 22px;background:linear-gradient(180deg,#0b3520,#10482c);transition:left .25s ease;box-shadow:12px 0 35px rgba(0,0,0,.22)}
+  nav.main-nav.open{left:0}.public-nav-close{display:grid;place-items:center;position:absolute;right:10px;top:10px;width:32px;height:32px;border:0;border-radius:8px;background:rgba(255,255,255,.1);color:#fff;cursor:pointer}
+  nav.main-nav a,nav.main-nav a[data-page="home"]{display:flex;align-items:center;gap:11px;padding:11px 18px;background:transparent;color:#d7eadc;border:0;border-left:3px solid transparent;font-size:12.5px}
+  nav.main-nav a::after{display:none}nav.main-nav a i{width:19px;text-align:center}
+  nav.main-nav a:hover,nav.main-nav a.active,nav.main-nav a[data-page="home"]:hover,nav.main-nav a[data-page="home"].active{color:#fff;background:rgba(255,255,255,.09);border-left-color:var(--accent)}
+  .nav-scrim{display:none;position:fixed;inset:0;z-index:1050;background:rgba(4,24,14,.52)}.nav-scrim.show{display:block}
+}
 @media(prefers-reduced-motion:reduce){.hero-marquee-track,.hero-data-network *{animation:none!important}.hero-marquee-track{transform:translateX(-35%)}.hero-data-network .network-particle{display:none}}
 </style>
 </head>
@@ -585,6 +611,7 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
       กรมส่งเสริมการเกษตร · กระทรวงเกษตรและสหกรณ์
     </div>
     <div class="theme-switch">
+      <button class="public-nav-toggle" type="button" onclick="App.togglePublicNav()" aria-label="เปิดเมนู"><i class="fa-solid fa-bars"></i></button>
       <div class="font-size-control" role="group" aria-label="ปรับขนาดตัวอักษร">
         <button type="button" data-font-level="large" onclick="App.setFontSize('large')" title="ขนาดเริ่มต้น">ก+</button>
         <button type="button" data-font-level="xlarge" onclick="App.setFontSize('xlarge')" title="ตัวอักษรใหญ่">ก++</button>
@@ -592,22 +619,25 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
       </div>
       <button id="themeToggle" onclick="App.toggleDayNight()">☀ กลางวัน</button>
       <button id="themeMourning" onclick="App.toggleMourning()">🕊 ไว้ทุกข์</button>
-      <button id="loginBtn" onclick="App.openLogin()"><i class="fa-solid fa-lock"></i> เข้าสู่ระบบ</button>
+      <a id="loginBtn" href="admin.html"><i class="fa-solid fa-lock"></i> เข้าสู่ระบบ</a>
     </div>
   </div>
-  <nav class="main-nav" id="mainNav">
-    <a data-page="home" onclick="App.goPage('home')">หน้าแรก</a>
-    <a data-page="about" onclick="App.goPage('about')">ประวัติ</a>
-    <a data-page="dashboards" onclick="App.goPage('dashboards')">ระบบดิจิทัล</a>
-    <a data-page="innovation" onclick="App.goPage('innovation')">ห้องปฏิบัติการนวัตกรรม</a>
-    <a data-page="research" onclick="App.goPage('research')">งานวิจัย</a>
-    <a data-page="publications" onclick="App.goPage('publications')">ผลงานตีพิมพ์</a>
-    <a data-page="projects" onclick="App.goPage('projects')">โครงการ</a>
-    <a data-page="training" onclick="App.goPage('training')">วิทยากร / R2R</a>
-    <a data-page="blog" onclick="App.goPage('blog')">เรื่องเล่า ย้อนรอย</a>
-    <a data-page="contact" onclick="App.goPage('contact')">ติดต่อ</a>
-  </nav>
 </header>
+<nav class="main-nav" id="mainNav">
+    <button class="public-nav-close" type="button" onclick="App.closePublicNav()" aria-label="ปิดเมนู"><i class="fa-solid fa-xmark"></i></button>
+    <div class="public-nav-brand"><img src="LOGO-DOAE.png" alt="ตรากรมส่งเสริมการเกษตร"><div><strong>E-Portfolio</strong><span>สำนักงานเกษตรจังหวัดกำแพงเพชร</span></div></div>
+    <a data-page="home" onclick="App.goPage('home')"><i class="fa-solid fa-house"></i>หน้าแรก</a>
+    <a data-page="about" onclick="App.goPage('about')"><i class="fa-solid fa-address-card"></i>ประวัติ</a>
+    <a data-page="dashboards" onclick="App.goPage('dashboards')"><i class="fa-solid fa-chart-line"></i>ระบบดิจิทัล</a>
+    <a data-page="innovation" onclick="App.goPage('innovation')"><i class="fa-solid fa-lightbulb"></i>ห้องปฏิบัติการนวัตกรรม</a>
+    <a data-page="research" onclick="App.goPage('research')"><i class="fa-solid fa-flask-vial"></i>งานวิจัย</a>
+    <a data-page="publications" onclick="App.goPage('publications')"><i class="fa-solid fa-book-open"></i>ผลงานตีพิมพ์</a>
+    <a data-page="projects" onclick="App.goPage('projects')"><i class="fa-solid fa-diagram-project"></i>โครงการ</a>
+    <a data-page="training" onclick="App.goPage('training')"><i class="fa-solid fa-chalkboard-user"></i>วิทยากร / R2R</a>
+    <a data-page="blog" onclick="App.goPage('blog')"><i class="fa-solid fa-route"></i>เรื่องเล่า ย้อนรอย</a>
+    <a data-page="contact" onclick="App.goPage('contact')"><i class="fa-solid fa-envelope"></i>ติดต่อ</a>
+</nav>
+<div class="nav-scrim" id="navScrim" onclick="App.closePublicNav()" aria-hidden="true"></div>
 <div class="preview-notice" id="previewNotice" role="status"><i class="fa-solid fa-circle-info"></i> โหมดตัวอย่างในเครื่อง — ข้อมูลชุดนี้ใช้เพื่อแสดงรูปแบบหน้าเว็บ ไม่ใช่ข้อมูลจากระบบเผยแพร่จริง</div>
 
 <!-- ============ HOME ============ -->
@@ -664,7 +694,7 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
   </div>
 
   <div class="container impact-shell reveal-block">
-    <div class="impact-label"><span>00</span><span style="color:inherit;font:inherit;padding:0"> ผลงานที่ตรวจสอบได้และประสบการณ์วิชาชีพ <small class="source-note">นับจากรายการสถานะเผยแพร่ทั้งหมดในแหล่งข้อมูลเดียวกับรายการด้านใน</small></span></div>
+    <div class="impact-label"><span>00</span><span style="color:inherit;font:inherit;padding:0"> ผลงานที่ตรวจสอบได้และประสบการณ์วิชาชีพ <small class="source-note">นับจากรายการสถานะเผยแพร่ทั้งหมดในแหล่งข้อมูลเดียวกับรายการด้านใน</small><small class="snapshot-status" id="snapshotStatus"><i class="fa-solid fa-circle"></i> กำลังตรวจสอบข้อมูลล่าสุด</small></span></div>
     <div class="stats-grid edit-host" id="statsGrid"></div>
   </div>
 
@@ -742,7 +772,7 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
     <div>
       <div class="section-index">04 · FIELD STORY</div>
       <h2 id="fieldVideoTitle">ข้อมูลที่ดี เริ่มจากการเข้าใจพื้นที่จริง</h2>
-      <p>ชมคลิปสั้นจากการทำงานภาคสนาม เมื่อเปิดแล้ววิดีโอจะย่ออยู่มุมหน้าจอ จึงสำรวจผลงานส่วนอื่นต่อได้โดยไม่สะดุด</p>
+      <p id="fieldVideoDescription">ชมคลิปสั้นจากการทำงานภาคสนาม เมื่อเปิดแล้ววิดีโอจะย่ออยู่มุมหน้าจอ จึงสำรวจผลงานส่วนอื่นต่อได้โดยไม่สะดุด</p>
     </div>
     <button class="field-video-launcher" id="fieldVideoLauncher" type="button" onclick="App.openFieldVideo()"><i class="fa-solid fa-circle-play"></i> เปิดวิดีโอจากพื้นที่</button>
   </section>
@@ -898,7 +928,7 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
 
 <aside class="field-video-dock" id="fieldVideoDock" aria-label="วิดีโอเรื่องเล่าจากพื้นที่" hidden>
   <div class="field-video-dock-head"><span>จากพื้นที่จริง สู่การตัดสินใจด้วยข้อมูล</span><button class="field-video-close" type="button" onclick="App.closeFieldVideo()" aria-label="ปิดวิดีโอ"><i class="fa-solid fa-xmark"></i></button></div>
-  <video id="fieldVideoPlayer" controls playsinline preload="metadata" poster="assets/field-impact-story-poster.jpg"><source src="assets/field-impact-story.mp4" type="video/mp4"></video>
+  <video id="fieldVideoPlayer" controls playsinline preload="metadata" poster="assets/field-impact-story-poster.jpg"><source id="fieldVideoSource" src="assets/field-impact-story.mp4" type="video/mp4"></video>
 </aside>
 
 <div class="modal-overlay" id="metricOverlay" onclick="App.closeMetricDataset()">
@@ -929,25 +959,6 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
       <a class="blog-source-link" id="blogReaderSource" target="_blank" rel="noopener noreferrer" hidden><i class="fa-solid fa-arrow-up-right-from-square"></i> อ่านจากแหล่งต้นฉบับ</a>
     </div>
   </article>
-</div>
-
-<!-- LOGIN MODAL -->
-<div class="modal-overlay" id="loginModalOverlay">
-  <div class="modal">
-    <h3><i class="fa-solid fa-lock"></i> เข้าสู่ระบบเพื่อแก้ไขข้อมูล</h3>
-    <p class="hint">ใช้บัญชีผู้ดูแลเดียวกับระบบหลังบ้าน ระบบตรวจสอบข้อมูลที่ Apps Script เท่านั้น</p>
-    <div class="field"><label>ชื่อผู้ใช้</label><input type="text" id="loginUsername" value="" placeholder="กรอกชื่อผู้ใช้" autocomplete="username"></div>
-    <div class="field"><label>รหัสผ่าน</label>
-      <div style="display:flex;gap:8px">
-        <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="off" style="flex:1" onkeydown="if(event.key==='Enter')App.submitLogin()">
-        <button type="button" onclick="App.toggleShowPassword()" style="border:1.5px solid var(--border);background:var(--bg);border-radius:8px;padding:0 12px;cursor:pointer" title="แสดง/ซ่อนรหัสผ่าน"><i class="fa-solid fa-eye" id="togglePwIcon"></i></button>
-      </div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn ghost" onclick="App.closeLogin()" style="background:transparent;border:1.5px solid var(--primary);color:var(--primary);border-radius:8px;padding:9px 16px;cursor:pointer;font-family:inherit">ยกเลิก</button>
-      <button onclick="App.submitLogin()" style="background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 16px;cursor:pointer;font-family:inherit">เข้าสู่ระบบ</button>
-    </div>
-  </div>
 </div>
 
 <!-- GENERIC EDIT MODAL -->
@@ -1257,8 +1268,34 @@ function apiWrite(action, sheet, id, data) {
 function esc(s){ return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function showToast(msg){ const t=document.getElementById('appToast'); t.textContent=msg; t.style.display='block'; clearTimeout(t._timer); t._timer=setTimeout(()=>t.style.display='none', 2600); }
 
+const SNAPSHOT_VERSION = 1;
+const SNAPSHOT_PREFIX = `eportfolio_verified_snapshot_v${SNAPSHOT_VERSION}:`;
+function readVerifiedSnapshot(sheet) {
+  try {
+    const value = JSON.parse(localStorage.getItem(SNAPSHOT_PREFIX + sheet) || 'null');
+    if (!value || value.version !== SNAPSHOT_VERSION || !Array.isArray(value.data)) return null;
+    return { status:'ok', source:'verified-snapshot', cached:true, data:value.data, total:value.data.length, verifiedAt:value.verifiedAt };
+  } catch (error) { return null; }
+}
+function storeVerifiedSnapshot(sheet, result) {
+  if (!result || result.unavailable || !Array.isArray(result.data)) return result;
+  const verifiedAt = new Date().toISOString();
+  const value = { version:SNAPSHOT_VERSION, sheet, verifiedAt, data:result.data };
+  try { localStorage.setItem(SNAPSHOT_PREFIX + sheet, JSON.stringify(value)); } catch (error) {}
+  return Object.assign({}, result, { verifiedAt, cached:false });
+}
+function updateSnapshotStatus(results) {
+  const status = document.getElementById('snapshotStatus');
+  if (!status) return;
+  const stamps = (results || []).map(item=>item?.verifiedAt).filter(Boolean).sort().reverse();
+  if (!stamps.length) { status.innerHTML = '<i class="fa-solid fa-circle"></i> ใช้ข้อมูลตั้งต้นที่ตรวจสอบแล้ว'; return; }
+  const date = new Date(stamps[0]);
+  status.innerHTML = `<i class="fa-solid fa-circle"></i> ตรวจสอบล่าสุด ${esc(date.toLocaleString('th-TH',{dateStyle:'medium',timeStyle:'short'}))}`;
+}
+
 const App = (function () {
   const canonicalCache = new Map();
+  const refreshingSheets = new Set();
 
   async function fetchAllPublished(sheet) {
     const rows = [], seen = new Set();
@@ -1279,8 +1316,31 @@ const App = (function () {
     }
     return { status:apiConfigured() ? 'ok':'preview', source, data:rows, total:rows.length };
   }
+  function refreshCanonicalData(sheet) {
+    if (refreshingSheets.has(sheet)) return;
+    refreshingSheets.add(sheet);
+    fetchAllPublished(sheet).then(result => {
+      if (!result.unavailable) {
+        const verified = storeVerifiedSnapshot(sheet, result);
+        canonicalCache.set(sheet, Promise.resolve(verified));
+        document.dispatchEvent(new CustomEvent('portfolio:data-updated',{detail:{sheet}}));
+      }
+    }).finally(()=>refreshingSheets.delete(sheet));
+  }
   function getCanonicalData(sheet) {
-    if (!canonicalCache.has(sheet)) canonicalCache.set(sheet, fetchAllPublished(sheet));
+    if (!canonicalCache.has(sheet)) {
+      const cached = readVerifiedSnapshot(sheet);
+      if (cached) {
+        canonicalCache.set(sheet, Promise.resolve(cached));
+        refreshCanonicalData(sheet);
+      } else {
+        canonicalCache.set(sheet, fetchAllPublished(sheet).then(result => {
+          const verified = result.unavailable ? result : storeVerifiedSnapshot(sheet, result);
+          canonicalCache.set(sheet, Promise.resolve(verified));
+          return verified;
+        }));
+      }
+    }
     return canonicalCache.get(sheet);
   }
 
@@ -1288,6 +1348,15 @@ const App = (function () {
     const savedTheme = localStorage.getItem('eportfolio_theme') || 'light';
     setTheme(savedTheme);
     setFontSize(localStorage.getItem('eportfolio_font_size') || 'large');
+    document.addEventListener('portfolio:data-updated', event => {
+      const sheet = event.detail?.sheet;
+      if (['Research','Publications','Projects','Dashboards','Blog','Career'].includes(sheet)) loadStats();
+      if (sheet === 'Dashboards') renderFeaturedWorks();
+      if (sheet === 'Education') loadEducation();
+      if (sheet === 'Hero') loadHero();
+      if (sheet === 'Blog') getCanonicalData('Blog').then(res=>renderHomeFootprints(res.data,res.unavailable));
+      if (['Expertise','ExpertiseRelations','ExpertiseLinks','Dashboards','Research','Publications','Projects','Training','Blog','References'].includes(sheet)) loadMindmap();
+    });
     loadProfile();
     loadHero();
     document.getElementById('previewNotice')?.classList.toggle('show', !apiConfigured());
@@ -1364,47 +1433,32 @@ const App = (function () {
     });
   }
 
-  /* ---------- LOGIN / EDIT MODE (รหัสผ่านสำหรับแก้ไขเนื้อหาหน้าเว็บ) ---------- */
-  function openLogin() { document.getElementById('loginModalOverlay').classList.add('show'); document.getElementById('loginPassword').value=''; document.getElementById('loginUsername').focus(); }
-  function closeLogin() { document.getElementById('loginModalOverlay').classList.remove('show'); }
-  function toggleShowPassword() {
-    const input = document.getElementById('loginPassword');
-    const icon = document.getElementById('togglePwIcon');
-    const show = input.type === 'password';
-    input.type = show ? 'text' : 'password';
-    icon.className = show ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
+  /* ---------- ADMIN ENTRY: one authentication layer only ---------- */
+  function openLogin() { window.location.href = 'admin.html'; }
+  function closeLogin() {}
+  function toggleShowPassword() {}
+  function submitLogin() { openLogin(); }
+  function logoutEdit() { window.location.href = 'admin.html'; }
+  function isEditMode() { return false; }
+  function applyEditModeUI() { document.body.classList.remove('edit-mode'); }
+
+  function togglePublicNav() {
+    const nav = document.getElementById('mainNav');
+    const scrim = document.getElementById('navScrim');
+    const open = !nav.classList.contains('open');
+    nav.classList.toggle('open', open);
+    scrim.classList.toggle('show', open);
   }
-  function submitLogin() {
-    const username = (document.getElementById('loginUsername').value || '').trim();
-    const pwd = (document.getElementById('loginPassword').value || '').trim();
-    if (isApiConfigured()) {
-      fetch(CONFIG.API_URL, { method:'POST', body:JSON.stringify({ action:'verifyAdminCredentials', username, password:pwd }) })
-        .then(r=>r.json()).then(res => {
-          if (res.status !== 'ok') throw new Error(res.message || 'เข้าสู่ระบบไม่สำเร็จ');
-          sessionStorage.setItem('edit_mode','1'); sessionStorage.setItem('edit_token',res.token);
-          closeLogin(); applyEditModeUI(); showToast('เข้าสู่ระบบแก้ไขสำเร็จ');
-        }).catch(err=>showToast(err.message || 'เชื่อมต่อระบบยืนยันตัวตนไม่ได้'));
-      return;
-    }
-    showToast('โหมดแก้ไขต้องเชื่อมต่อ Apps Script ก่อนใช้งาน');
-  }
-  function logoutEdit() {
-    sessionStorage.removeItem('edit_mode'); sessionStorage.removeItem('edit_token');
-    applyEditModeUI(); showToast('ออกจากระบบแก้ไขแล้ว');
-  }
-  function isEditMode() { return sessionStorage.getItem('edit_mode') === '1'; }
-  function applyEditModeUI() {
-    document.body.classList.toggle('edit-mode', isEditMode());
-    const btn = document.getElementById('loginBtn');
-    btn.classList.toggle('logged-in', isEditMode());
-    btn.innerHTML = isEditMode() ? '<i class="fa-solid fa-unlock"></i> ออกจากระบบแก้ไข' : '<i class="fa-solid fa-lock"></i> เข้าสู่ระบบ';
-    btn.onclick = isEditMode() ? logoutEdit : openLogin;
+  function closePublicNav() {
+    document.getElementById('mainNav')?.classList.remove('open');
+    document.getElementById('navScrim')?.classList.remove('show');
   }
 
   function goPage(pageId) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('page-' + pageId).classList.add('active');
     document.querySelectorAll('#mainNav a').forEach(a => a.classList.toggle('active', a.dataset.page === pageId));
+    closePublicNav();
     window.scrollTo({ top:0, behavior:'smooth' });
     loadPageData(pageId);
   }
@@ -1440,7 +1494,7 @@ const App = (function () {
   }
 
   function loadHero() {
-    api('Hero').then(res => {
+    getCanonicalData('Hero').then(res => {
       let h = (res.data && res.data[0]) || {};
       let override = null;
       try { override = JSON.parse(localStorage.getItem('eportfolio_hero_override') || 'null'); } catch(e) {}
@@ -1449,6 +1503,13 @@ const App = (function () {
       document.getElementById('heroTitleTH').textContent = h.TitleTH || 'ดร.กิตติ โพธิ์จวง';
       document.getElementById('heroSubtitle').textContent = h.Subtitle || '';
       document.getElementById('heroReflection').textContent = h.ReflectionText || '';
+      document.getElementById('fieldVideoTitle').textContent = h.FieldVideoTitle || 'ข้อมูลที่ดี เริ่มจากการเข้าใจพื้นที่จริง';
+      document.getElementById('fieldVideoDescription').textContent = h.FieldVideoDescription || 'ชมคลิปสั้นจากการทำงานภาคสนาม เมื่อเปิดแล้ววิดีโอจะย่ออยู่มุมหน้าจอ จึงสำรวจผลงานส่วนอื่นต่อได้โดยไม่สะดุด';
+      const video = document.getElementById('fieldVideoPlayer');
+      const source = document.getElementById('fieldVideoSource');
+      const nextSource = h.FieldVideoURL || 'assets/field-impact-story.mp4';
+      if (source.getAttribute('src') !== nextSource) { source.src = nextSource; video.load(); }
+      video.poster = h.FieldVideoPosterURL || 'assets/field-impact-story-poster.jpg';
       window._hero = h;
       const roles = String(h.TypingPhrases || '').split('|').map(v=>v.trim()).filter(Boolean);
       if (roles.length) document.getElementById('heroRole').textContent = roles.join(' · ');
@@ -1465,8 +1526,9 @@ const App = (function () {
   ];
   async function loadStats() {
     const grid = document.getElementById('statsGrid');
-    grid.innerHTML = '<div class="data-unavailable">กำลังตรวจนับรายการเผยแพร่…</div>';
+    if (!grid.children.length) grid.innerHTML = '<div class="data-unavailable">กำลังอ่านค่าที่ตรวจสอบล่าสุด…</div>';
     const results = await Promise.all(metricDefinitions.map(def => getCanonicalData(def.key)));
+    updateSnapshotStatus(results);
     window._metricDatasets = {};
     const metrics = metricDefinitions.map((def,index) => {
       const result = results[index];
@@ -1512,13 +1574,19 @@ const App = (function () {
   }
 
   function loadEducation() {
-    api('Education').then(res => {
-      const list = (res.data || []).slice().sort((a, b) => (Number(b.YearStart)||0) - (Number(a.YearStart)||0));
+    getCanonicalData('Education').then(res => {
+      const effectiveYear = item => Number(item.YearEnd) || Number(item.YearStart) || 0;
+      const list = (res.data || []).slice().sort((a, b) =>
+        effectiveYear(b) - effectiveYear(a) ||
+        (Number(a.SortOrder)||9999) - (Number(b.SortOrder)||9999) ||
+        (Number(b.YearStart)||0) - (Number(a.YearStart)||0) ||
+        String(b.UpdatedAt||'').localeCompare(String(a.UpdatedAt||''))
+      );
       window._eduData = list;
       const el = document.getElementById('eduTimeline');
       el.innerHTML = list.map(e => `
         <div class="vt-item edit-host">
-          <div class="year">${esc(e.YearStart)}${e.YearEnd && e.YearEnd!==e.YearStart ? ' - '+esc(e.YearEnd) : ''}</div>
+          <div class="year">${e.YearStart && e.YearEnd && String(e.YearEnd)!==String(e.YearStart) ? `${esc(e.YearStart)} - ${esc(e.YearEnd)}` : esc(e.YearEnd||e.YearStart||'')}</div>
           <div class="degree">${esc(e.Degree)}</div>
           <div class="field">${esc(e.FieldOfStudy)}</div>
           <div class="uni">${e.UniversityLogoFileID ? `<img src="${driveImg(e.UniversityLogoFileID)}" style="width:18px;height:18px;border-radius:50%;display:inline-block;vertical-align:middle;margin-right:6px">` : ''}${esc(e.UniversityName)}</div>
@@ -1560,8 +1628,12 @@ const App = (function () {
       window._expertiseLinks = links;
       window._workRegistry = registry;
       if (!nodes.length) {
-        document.getElementById('mindmapArea').innerHTML = '<div class="expertise-empty">ยังไม่มีหมวดความเชี่ยวชาญที่เผยแพร่</div>';
-        document.getElementById('expertiseDetail').innerHTML = '<div class="expertise-empty">เพิ่มหลักฐานเชื่อมโยงแล้วข้อมูลจะปรากฏที่นี่</div>';
+        const fallback = buildFallbackExpertiseModel();
+        window._expertiseData = fallback.nodes;
+        window._expertiseRelations = fallback.relations;
+        window._expertiseLinks = fallback.links;
+        window._workRegistry = buildFallbackWorkRegistry();
+        renderExpertiseGraph(fallback.nodes, fallback.relations, fallback.links);
         return;
       }
       renderExpertiseGraph(nodes, relations, links);
@@ -1738,7 +1810,9 @@ const App = (function () {
       }).join('');
     };
     paint(FEATURED_DIGITAL_WORKS);
-    if (isApiConfigured()) api('Dashboards',{limit:100,status:'published'}).then(res => paint(res.data||[]));
+    getCanonicalData('Dashboards').then(res => {
+      if (!res.unavailable && (res.data||[]).length) paint(res.data);
+    });
   }
 
   /* ---------- ABOUT ---------- */
@@ -2224,6 +2298,7 @@ const App = (function () {
 
   return { init, setTheme, toggleDayNight, toggleMourning, setFontSize, goPage, openLightbox,
     openLogin, closeLogin, submitLogin, logoutEdit, toggleShowPassword,
+    togglePublicNav, closePublicNav,
     editProfile, editStat, editEducation, editMindmapNode,
     openBlog, closeBlog, openMetricDataset, closeMetricDataset,
     openWorkDetail, closeWorkDetail, openFieldVideo, closeFieldVideo,

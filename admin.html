@@ -232,7 +232,11 @@ const SCHEMAS = {
   Hero: { label:'Hero Section', icon:'fa-house', fields:[
     {key:'TitleEN',label:'หัวข้อ (EN)',type:'text'},{key:'TitleTH',label:'หัวข้อ (TH)',type:'text'},
     {key:'Subtitle',label:'ตำแหน่ง/Subtitle',type:'text'},{key:'TypingPhrases',label:'ข้อความ Typing (คั่นด้วย |)',type:'text'},
-    {key:'ReflectionText',label:'ข้อความสะท้อนตัวตน',type:'longtext'}
+    {key:'ReflectionText',label:'ข้อความสะท้อนตัวตน',type:'longtext'},
+    {key:'FieldVideoTitle',label:'หัวข้อวิดีโอภาคสนาม',type:'text'},
+    {key:'FieldVideoDescription',label:'คำอธิบายวิดีโอภาคสนาม',type:'longtext'},
+    {key:'FieldVideoURL',label:'URL วิดีโอภาคสนาม',type:'url'},
+    {key:'FieldVideoPosterURL',label:'URL ภาพปกวิดีโอ',type:'url'}
   ]},
   DashboardStatistics: { label:'สถิติหน้าแรก (คำนวณอัตโนมัติ)', icon:'fa-chart-simple', fields:[
     {key:'Label',label:'หัวข้อ',type:'text'},{key:'Value',label:'จำนวน',type:'number'},

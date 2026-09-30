@@ -9,7 +9,7 @@ const SHEET_SCHEMA = {
   Profile: ['ID','NameEN','NameTH','Position','OrgLine1','OrgLine2','OrgLine3',
     'ProfessionalIdentity','ProfileImageFileID','LogoFileID','Phone','Email','Line',
     'GoogleScholarURL','ResearchGateURL','OrcidURL','MapEmbedURL','CreatedAt','UpdatedAt'],
-  Hero: ['ID','TitleEN','TitleTH','Subtitle','TypingPhrases','ReflectionText','FieldVideoTitle','FieldVideoDescription','FieldVideoURL','FieldVideoPosterURL','CreatedAt','UpdatedAt'],
+  Hero: ['ID','TitleEN','TitleTH','Subtitle','TypingPhrases','ReflectionText','CreatedAt','UpdatedAt'],
   DashboardStatistics: ['ID','Label','Value','Suffix','Icon','LinkTarget','SortOrder','CreatedAt','UpdatedAt'],
   Education: ['ID','UniversityName','UniversityLogoFileID','Degree','FieldOfStudy','YearStart','YearEnd','SortOrder','CreatedAt','UpdatedAt'],
   Mindmap: ['ID','NodeLabel','LinkTarget','Icon','Color','SortOrder','CreatedAt','UpdatedAt'],
@@ -31,35 +31,32 @@ const SHEET_SCHEMA = {
 };
 
 function setupAllSheets() {
-  const ss = getPortfolioSpreadsheet_();
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
   Object.keys(SHEET_SCHEMA).forEach(function (name) {
     let sheet = ss.getSheetByName(name);
     if (!sheet) sheet = ss.insertSheet(name);
-    ensureSheetHeaders_(sheet, SHEET_SCHEMA[name]);
+    const headers = SHEET_SCHEMA[name];
+    sheet.clear();
+    sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
+    sheet.setFrozenRows(1);
+    sheet.getRange(1, 1, 1, headers.length).setFontWeight('bold').setBackground('#1B5E20').setFontColor('#FFFFFF');
   });
 
-  // ลบแท็บตั้งต้นเฉพาะเมื่อว่างจริง ไม่แตะข้อมูลผู้ใช้
-  ['Sheet1', 'ชีต1'].forEach(function (name) {
-    const sheet = ss.getSheetByName(name);
-    if (sheet && sheet.getLastRow() === 0 && sheet.getLastColumn() === 0 && ss.getSheets().length > 1) {
-      ss.deleteSheet(sheet);
-    }
-  });
+  // ลบ Sheet1 ตั้งต้นถ้ามีและไม่ได้ใช้
+  const defaultSheet = ss.getSheetByName('Sheet1');
+  if (defaultSheet && ss.getSheets().length > 1) ss.deleteSheet(defaultSheet);
 
-  // เติมค่าที่ขาดเท่านั้น รันซ้ำแล้วไม่ทับค่าเดิม
+  // ใส่ค่าตั้งต้นใน Settings
   const settings = ss.getSheetByName('Settings');
-  const defaults = {
-    SiteTitle: 'E-Portfolio | Dr. Kitti Phojuang',
-    DefaultTheme: 'light',
-    DriveParentFolderID: PORTFOLIO_PARENT_FOLDER_ID,
-    DriveRootFolderID: '',
-    ApiTokenHint: 'ตั้งค่าจริงที่ Project Settings > Script Properties key: API_TOKEN'
-  };
-  Object.keys(defaults).forEach(function (key) {
-    if (!getSetupSettingValue_(settings, key)) upsertSetting_(settings, key, defaults[key]);
-  });
+  const now = new Date().toISOString();
+  settings.getRange(2, 1, 4, 5).setValues([
+    [Utilities.getUuid(), 'SiteTitle', 'E-Portfolio | Dr. Kitti Phojuang', now, now],
+    [Utilities.getUuid(), 'DefaultTheme', 'light', now, now],
+    [Utilities.getUuid(), 'DriveRootFolderID', '', now, now],
+    [Utilities.getUuid(), 'ApiTokenHint', 'ตั้งค่าจริงที่ Project Settings > Script Properties key: API_TOKEN', now, now]
+  ]);
 
-  notifyPortfolio_(ss, 'ตรวจและเติมโครงสร้าง Sheet สำเร็จโดยไม่ล้างข้อมูลเดิม');
+  SpreadsheetApp.getUi().alert('สร้างโครงสร้าง Sheet สำเร็จ! อย่าลืมตั้งค่า API_TOKEN และบัญชีผู้ดูแลด้วย setAdminCredentials_() ใน Script Properties แล้วสร้างโฟลเดอร์ Drive');
 }
 
 /**
@@ -67,7 +64,7 @@ function setupAllSheets() {
  * ใช้ฟังก์ชันนี้แทน setupAllSheets() เมื่อติดตั้งบนระบบที่มีข้อมูลอยู่แล้ว
  */
 function migrateAddReferencesSheet() {
-  const ss = getPortfolioSpreadsheet_();
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
   let sheet = ss.getSheetByName('References');
   if (!sheet) sheet = ss.insertSheet('References');
   const headers = SHEET_SCHEMA.References;
@@ -76,7 +73,7 @@ function migrateAddReferencesSheet() {
     sheet.setFrozenRows(1);
     sheet.getRange(1, 1, 1, headers.length).setFontWeight('bold').setBackground('#1B5E20').setFontColor('#FFFFFF');
   }
-  notifyPortfolio_(ss, 'เพิ่ม Sheet References สำเร็จโดยไม่กระทบข้อมูลเดิม');
+  SpreadsheetApp.getUi().alert('เพิ่ม Sheet References สำเร็จโดยไม่กระทบข้อมูลเดิม');
 }
 
 /**
@@ -86,13 +83,13 @@ function migrateAddReferencesSheet() {
  * รันได้ซ้ำอย่างปลอดภัย
  */
 function migrateRelationalPortfolioSchema() {
-  const ss = getPortfolioSpreadsheet_();
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
   ['Expertise','ExpertiseRelations','ExpertiseLinks','References','Dashboards','Training','Gallery'].forEach(function (name) {
     let sheet = ss.getSheetByName(name);
     if (!sheet) sheet = ss.insertSheet(name);
     ensureSheetHeaders_(sheet, SHEET_SCHEMA[name]);
   });
-  notifyPortfolio_(ss, 'อัปเกรดโครงสร้างสัมพันธ์สำเร็จโดยไม่กระทบข้อมูลเดิม');
+  SpreadsheetApp.getUi().alert('อัปเกรดโครงสร้างสัมพันธ์สำเร็จโดยไม่กระทบข้อมูลเดิม');
 }
 
 /**
@@ -100,11 +97,11 @@ function migrateRelationalPortfolioSchema() {
  * รันครั้งเดียวหลังอัปเดตเวอร์ชันนี้
  */
 function migrateDashboardStatisticLinks() {
-  const ss = getPortfolioSpreadsheet_();
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
   let sheet = ss.getSheetByName('DashboardStatistics');
   if (!sheet) sheet = ss.insertSheet('DashboardStatistics');
   ensureSheetHeaders_(sheet, SHEET_SCHEMA.DashboardStatistics);
-  notifyPortfolio_(ss, 'เพิ่ม LinkTarget ให้การ์ดสถิติเรียบร้อยแล้ว');
+  SpreadsheetApp.getUi().alert('เพิ่ม LinkTarget ให้การ์ดสถิติเรียบร้อยแล้ว');
 }
 
 /**
@@ -112,29 +109,20 @@ function migrateDashboardStatisticLinks() {
  * รันครั้งเดียวเมื่อนำเวอร์ชันนี้ไปใช้กับ Google Sheet เดิม
  */
 function migrateBlogKnowledgeHub() {
-  const ss = getPortfolioSpreadsheet_();
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
   let sheet = ss.getSheetByName('Blog');
   if (!sheet) sheet = ss.insertSheet('Blog');
   ensureSheetHeaders_(sheet, SHEET_SCHEMA.Blog);
-  notifyPortfolio_(ss, 'อัปเกรด Blog เป็นศูนย์รวมเรื่องเล่าและองค์ความรู้เรียบร้อยแล้ว');
+  SpreadsheetApp.getUi().alert('อัปเกรด Blog เป็นศูนย์รวมเรื่องเล่าและองค์ความรู้เรียบร้อยแล้ว');
 }
 
 /** เพิ่มภาพหลักฐานแบบสัมพันธ์กับ Blog โดยไม่แตะข้อมูลเดิม */
 function migrateStoryEvidenceImages() {
-  const ss = getPortfolioSpreadsheet_();
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
   let sheet = ss.getSheetByName('EvidenceImages');
   if (!sheet) sheet = ss.insertSheet('EvidenceImages');
   ensureSheetHeaders_(sheet, SHEET_SCHEMA.EvidenceImages);
-  notifyPortfolio_(ss, 'เพิ่ม EvidenceImages สำหรับ “เรื่องเล่า ย้อนรอย” เรียบร้อยแล้ว');
-}
-
-/** เพิ่มการตั้งค่าวิดีโอภาคสนามใน Hero โดยไม่ล้างข้อมูลเดิม */
-function migrateHeroFieldVideo() {
-  const ss = getPortfolioSpreadsheet_();
-  let sheet = ss.getSheetByName('Hero');
-  if (!sheet) sheet = ss.insertSheet('Hero');
-  ensureSheetHeaders_(sheet, SHEET_SCHEMA.Hero);
-  notifyPortfolio_(ss, 'เพิ่มฟิลด์วิดีโอภาคสนามใน Hero เรียบร้อยแล้ว');
+  SpreadsheetApp.getUi().alert('เพิ่ม EvidenceImages สำหรับ “เรื่องเล่า ย้อนรอย” เรียบร้อยแล้ว');
 }
 
 /**
@@ -142,7 +130,7 @@ function migrateHeroFieldVideo() {
  * รายการ Publications และ Training เดิมที่ไม่มีสถานะจะถูกกำหนดเป็น published เพื่อคงการแสดงผลเดิม
  */
 function migratePortfolioV4() {
-  const ss = getPortfolioSpreadsheet_();
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
   ['Publications','Projects','Training','Career','EvidenceImages','Blog'].forEach(function (name) {
     let sheet = ss.getSheetByName(name);
     if (!sheet) sheet = ss.insertSheet(name);
@@ -158,7 +146,7 @@ function migratePortfolioV4() {
       range.setValues(values);
     }
   });
-  notifyPortfolio_(ss, 'อัปเกรด Portfolio V4 สำเร็จ: เพิ่มฟิลด์ใหม่โดยไม่ล้างข้อมูลเดิม');
+  SpreadsheetApp.getUi().alert('อัปเกรด Portfolio V4 สำเร็จ: เพิ่มฟิลด์ใหม่โดยไม่ล้างข้อมูลเดิม');
 }
 
 function ensureSheetHeaders_(sheet, requiredHeaders) {
@@ -185,15 +173,13 @@ function setupDriveFolders() {
   const lock = LockService.getScriptLock();
   lock.waitLock(30000);
   try {
-    const ss = getPortfolioSpreadsheet_();
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
     const settings = ss.getSheetByName('Settings');
     if (!settings) throw new Error('ไม่พบ Sheet "Settings" — ให้สร้างโครงสร้าง Sheet ก่อน');
 
     let root = tryGetDriveFolder_(getSetupSettingValue_(settings, 'DriveRootFolderID'));
     if (!root) {
-      const parentId = getSetupSettingValue_(settings, 'DriveParentFolderID') || PORTFOLIO_PARENT_FOLDER_ID;
-      const parent = DriveApp.getFolderById(parentId);
-      root = parent.createFolder('EPortfolio_Media');
+      root = DriveApp.createFolder('EPortfolio_Media');
       upsertSetting_(settings, 'DriveRootFolderID', root.getId());
       SpreadsheetApp.flush();
       ss.toast('ขั้นที่ 1/6 สำเร็จ: EPortfolio_Media', 'E-Portfolio', 8);
@@ -253,14 +239,4 @@ function upsertSetting_(settings, key, value) {
     }
   }
   settings.getRange(lastRow + 1, 1, 1, 5).setValues([[Utilities.getUuid(), key, value, now, now]]);
-}
-
-function notifyPortfolio_(ss, message) {
-  console.log(message);
-  try {
-    ss.toast(message, 'E-Portfolio', 8);
-  } catch (error) {
-    // Console output is sufficient when no spreadsheet UI is attached.
-  }
-  return message;
 }

@@ -9,7 +9,7 @@ const SHEET_SCHEMA = {
   Profile: ['ID','NameEN','NameTH','Position','OrgLine1','OrgLine2','OrgLine3',
     'ProfessionalIdentity','ProfileImageFileID','LogoFileID','Phone','Email','Line',
     'GoogleScholarURL','ResearchGateURL','OrcidURL','MapEmbedURL','CreatedAt','UpdatedAt'],
-  Hero: ['ID','TitleEN','TitleTH','Subtitle','TypingPhrases','ReflectionText','FieldVideoTitle','FieldVideoDescription','FieldVideoURL','FieldVideoPosterURL','CreatedAt','UpdatedAt'],
+  Hero: ['ID','TitleEN','TitleTH','Subtitle','TypingPhrases','ReflectionText','CreatedAt','UpdatedAt'],
   DashboardStatistics: ['ID','Label','Value','Suffix','Icon','LinkTarget','SortOrder','CreatedAt','UpdatedAt'],
   Education: ['ID','UniversityName','UniversityLogoFileID','Degree','FieldOfStudy','YearStart','YearEnd','SortOrder','CreatedAt','UpdatedAt'],
   Mindmap: ['ID','NodeLabel','LinkTarget','Icon','Color','SortOrder','CreatedAt','UpdatedAt'],
@@ -126,15 +126,6 @@ function migrateStoryEvidenceImages() {
   if (!sheet) sheet = ss.insertSheet('EvidenceImages');
   ensureSheetHeaders_(sheet, SHEET_SCHEMA.EvidenceImages);
   notifyPortfolio_(ss, 'เพิ่ม EvidenceImages สำหรับ “เรื่องเล่า ย้อนรอย” เรียบร้อยแล้ว');
-}
-
-/** เพิ่มการตั้งค่าวิดีโอภาคสนามใน Hero โดยไม่ล้างข้อมูลเดิม */
-function migrateHeroFieldVideo() {
-  const ss = getPortfolioSpreadsheet_();
-  let sheet = ss.getSheetByName('Hero');
-  if (!sheet) sheet = ss.insertSheet('Hero');
-  ensureSheetHeaders_(sheet, SHEET_SCHEMA.Hero);
-  notifyPortfolio_(ss, 'เพิ่มฟิลด์วิดีโอภาคสนามใน Hero เรียบร้อยแล้ว');
 }
 
 /**

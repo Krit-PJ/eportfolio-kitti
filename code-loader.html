@@ -1,0 +1,6 @@
+<!doctype html><meta charset="utf-8"><pre id="source"></pre>
+<script>
+fetch('Code-source.txt')
+  .then(function (response) { return response.text(); })
+  .then(function (text) { document.getElementById('source').textContent = text; });
+</script>
