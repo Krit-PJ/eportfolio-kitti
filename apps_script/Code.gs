@@ -233,7 +233,7 @@ function setAdminCredentialsExample() {
 }
 
 function setAdminCredentials_(username, password) {
-  if (!username || !password || String(password).length < 10) throw new Error('รหัสผ่านต้องยาวอย่างน้อย 10 ตัวอักษร');
+  if (!username || !password || String(password).length < 8) throw new Error('รหัสผ่านต้องยาวอย่างน้อย 8 ตัวอักษร');
   const hash = Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, String(password), Utilities.Charset.UTF_8));
   PropertiesService.getScriptProperties().setProperties({ ADMIN_USERNAME:String(username), ADMIN_PASSWORD_HASH:hash });
 }
