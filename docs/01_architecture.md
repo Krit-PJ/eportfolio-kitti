@@ -61,9 +61,8 @@
 
 ## 3. การไหลของข้อมูล — ตัวอย่าง "แอดมินเพิ่มงานวิจัยใหม่"
 
-1. แอดมิน Login ด้วย Google Account ที่หน้า `admin.html`
-   (ใช้ Google Identity Services ตรวจสอบ email อยู่ใน Sheet `Settings` →
-   คอลัมน์ `AdminEmails`)
+1. แอดมิน Login ด้วยชื่อผู้ใช้และรหัสผ่านที่หน้า `admin.html`
+   (Apps Script เปรียบเทียบชื่อผู้ใช้และ SHA-256 hash กับ Script Properties)
 2. กรอกฟอร์ม "เพิ่มงานวิจัย" → แนบไฟล์ปก (ถ้ามี)
 3. ถ้ามีไฟล์: frontend ส่ง base64 ไป
    `POST ${API_URL}` body: `{action:"uploadFile", sheet:"Research", file...}`

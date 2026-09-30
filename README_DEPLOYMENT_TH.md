@@ -1,6 +1,6 @@
 # คู่มือติดตั้ง E-Portfolio ฉบับพร้อมใช้งาน
 
-เอกสารนี้ครอบคลุมการเผยแพร่เว็บไซต์ด้วย GitHub Pages การสร้างฐานข้อมูล Google Sheets การติดตั้ง Google Apps Script API การตั้งค่า Google Login และการฝังเว็บไซต์ใน Google Sites
+เอกสารนี้ครอบคลุมการเผยแพร่เว็บไซต์ด้วย GitHub Pages การสร้างฐานข้อมูล Google Sheets การติดตั้ง Google Apps Script API การตั้งค่าบัญชีผู้ดูแล และการฝังเว็บไซต์ใน Google Sites
 
 ## 1. โครงสร้างระบบ
 
@@ -22,8 +22,13 @@ admin.html
 3. Kitti.png
 LOGO-DOAE.png
 assets/
-  field-impact-story.mp4
-  field-impact-story-poster.jpg
+  hero-field-impact-v2.png
+  hero-field-impact-v2.webp
+  hero-field-impact-v2-mobile.webp
+  snapshot-agri-risk-map.webp
+  snapshot-green-gain-hub.webp
+field-impact-story.mp4
+field-impact-story-poster.jpg
 ```
 
 ไม่ต้องอัปโหลดไฟล์ CV ไฟล์สำรอง รูปต้นฉบับ หรือโฟลเดอร์ `apps_script/` ไปยัง GitHub Pages โฟลเดอร์ `apps_script/` ใช้คัดลอกเข้า Google Apps Script เท่านั้น
@@ -54,8 +59,9 @@ assets/
 1. `migrateRelationalPortfolioSchema()`
 2. `migrateDashboardStatisticLinks()`
 3. `migrateBlogKnowledgeHub()`
+4. `migrateStoryEvidenceImages()`
 
-ทั้งสามฟังก์ชันเพิ่ม Sheet หรือคอลัมน์ที่ขาดโดยไม่ล้างข้อมูลเดิม ฟังก์ชันลำดับที่ 3 เพิ่มข้อมูลประเภทเนื้อหา แหล่งที่มา URL ต้นฉบับ ผู้เขียน รูปปก เวลาอ่าน และสถานะบทความเด่นให้ Sheet `Blog`
+ทั้งสี่ฟังก์ชันเพิ่ม Sheet หรือคอลัมน์ที่ขาดโดยไม่ล้างข้อมูลเดิม ฟังก์ชันลำดับที่ 4 เพิ่ม `EvidenceImages` สำหรับเชื่อมภาพหลายภาพกับแต่ละเรื่องเล่าแบบสัมพันธ์ผ่าน `BlogID`
 
 ## 4. ตั้งค่า Script Properties
 
@@ -64,10 +70,10 @@ assets/
 | Property | ค่า |
 |---|---|
 | `API_TOKEN` | Token แบบสุ่มและคาดเดายาก อย่างน้อย 32 ตัวอักษร |
-| `INLINE_EDIT_PASSWORD` | รหัสผ่านสำหรับปุ่มแก้ไขข้อมูลบนหน้าเว็บไซต์ |
-| `GOOGLE_CLIENT_ID` | OAuth Client ID เดียวกับที่ใส่ใน `admin.html` |
+| `ADMIN_USERNAME` | ชื่อผู้ใช้ระบบหลังบ้าน เช่น `Krit` |
+| `ADMIN_PASSWORD_HASH` | SHA-256 ในรูป Base64 ของรหัสผ่าน (ห้ามใส่รหัสผ่านจริง) |
 
-ห้ามเขียน `API_TOKEN` หรือ `INLINE_EDIT_PASSWORD` ลงใน `index.html`, `admin.html` หรือ GitHub
+ห้ามเขียน `API_TOKEN` รหัสผ่าน หรือค่า `ADMIN_PASSWORD_HASH` ลงใน `index.html`, `admin.html` หรือ GitHub ให้ตั้งค่าผ่าน Script Properties เท่านั้น รหัสผ่านที่เคยส่งผ่านแชตไม่ควรนำกลับมาใช้กับระบบจริง
 
 สร้าง Token บน PowerShell ได้ด้วยคำสั่ง
 
@@ -75,19 +81,9 @@ assets/
 [Convert]::ToHexString([Security.Cryptography.RandomNumberGenerator]::GetBytes(32))
 ```
 
-## 5. กำหนดอีเมลผู้ดูแล
+## 5. ตั้งบัญชีผู้ดูแลอย่างปลอดภัย
 
-1. กลับไปที่ Spreadsheet
-2. เปิด Sheet ชื่อ `Settings`
-3. ค้นหาแถวที่ `Key` เท่ากับ `AdminEmails`
-4. ใส่อีเมล Google Account ของผู้ดูแลในคอลัมน์ `Value`
-5. หากมีหลายบัญชี ให้คั่นด้วยเครื่องหมายจุลภาค
-
-ตัวอย่าง
-
-```text
-admin1@gmail.com,admin2@doae.go.th
-```
+ใน Apps Script editor เปิด console หรือสร้างฟังก์ชันชั่วคราวที่เรียก `setAdminCredentials_('Krit', 'รหัสผ่านใหม่ที่ไม่เคยเปิดเผย')` แล้ว Run หนึ่งครั้ง จากนั้นลบฟังก์ชันชั่วคราว รหัสผ่านจะถูกเก็บเฉพาะค่า hash ใน Script Properties หน้า Admin และ Inline Edit ใช้บัญชีเดียวกันและตรวจสอบฝั่ง Apps Script
 
 ## 6. Deploy Google Apps Script เป็น API
 
@@ -105,29 +101,9 @@ https://script.google.com/macros/s/DEPLOYMENT_ID/exec
 
 เมื่อแก้ `Code.gs` ในอนาคต ให้เลือก `Deploy` > `Manage deployments` > Edit > `New version` > Deploy เพื่อคง URL เดิม
 
-## 7. สร้าง Google OAuth Client ID
+## 7. ตั้งค่าเว็บไซต์ก่อนอัปโหลด
 
-1. เปิด [Google Cloud Console](https://console.cloud.google.com/)
-2. เลือกหรือสร้าง Project ที่ใช้กับระบบ
-3. เปิด `APIs & Services` > `OAuth consent screen`
-4. กรอกชื่อแอป อีเมลสนับสนุน และข้อมูลที่ Google กำหนด
-5. เปิด `Credentials` > `Create credentials` > `OAuth client ID`
-6. Application type เลือก `Web application`
-7. เพิ่ม Authorized JavaScript origins ดังนี้
-
-```text
-https://GITHUB_USERNAME.github.io
-http://127.0.0.1:8765
-```
-
-Origin ต้องไม่มี path ต่อท้าย สำหรับ GitHub Pages ให้ใส่เฉพาะโดเมน `github.io`
-
-8. คัดลอก Client ID รูปแบบ `xxxxx.apps.googleusercontent.com`
-9. นำ Client ID เดียวกันไปใส่ใน Script Property `GOOGLE_CLIENT_ID`
-
-## 8. ตั้งค่าเว็บไซต์ก่อนอัปโหลด
-
-### 8.1 แก้ `index.html`
+### 7.1 แก้ `index.html`
 
 ค้นหา `const CONFIG` แล้วแทนที่ `API_URL`
 
@@ -138,18 +114,15 @@ const CONFIG = {
 };
 ```
 
-Production ต้องให้ `EDIT_PASSWORD` เป็นค่าว่างเสมอ รหัสจริงอยู่ใน Script Property `INLINE_EDIT_PASSWORD`
+Production ต้องให้ `EDIT_PASSWORD` เป็นค่าว่างเสมอ บัญชีจริงตรวจด้วย `ADMIN_USERNAME` และ `ADMIN_PASSWORD_HASH` ที่ Apps Script
 
-### 8.2 แก้ `admin.html`
+### 7.2 แก้ `admin.html`
 
 ```js
-const CONFIG = {
-  API_URL: 'https://script.google.com/macros/s/DEPLOYMENT_ID/exec',
-  GOOGLE_CLIENT_ID: 'xxxxx.apps.googleusercontent.com'
-};
+const CONFIG = { API_URL: 'https://script.google.com/macros/s/DEPLOYMENT_ID/exec' };
 ```
 
-## 9. เผยแพร่ด้วย GitHub Pages ผ่านหน้าเว็บ
+## 8. เผยแพร่ด้วย GitHub Pages ผ่านหน้าเว็บ
 
 1. Login [GitHub](https://github.com)
 2. กด `New repository`
@@ -175,9 +148,9 @@ https://GITHUB_USERNAME.github.io/eportfolio-kitti/
 https://GITHUB_USERNAME.github.io/eportfolio-kitti/admin.html
 ```
 
-โค้ดหน้า Admin สามารถอยู่ใน Repository สาธารณะได้ เพราะสิทธิ์เขียนข้อมูลตรวจซ้ำที่ Apps Script ด้วย Google Login, รายชื่อ AdminEmails, OAuth Client ID และ API Token อย่างไรก็ตามห้ามใส่รหัสผ่านหรือ Token ลงในไฟล์ HTML
+โค้ดหน้า Admin สามารถอยู่ใน Repository สาธารณะได้ เพราะสิทธิ์เขียนข้อมูลตรวจที่ Apps Script ด้วยชื่อผู้ใช้, password hash ใน Script Properties และ API Token ระบบพักบัญชี 10 นาทีเมื่อกรอกรหัสผิดครบ 5 ครั้งเพื่อลดการเดารหัสแบบอัตโนมัติ อย่างไรก็ตามห้ามใส่รหัสผ่าน ค่า hash หรือ Token ลงในไฟล์ HTML
 
-## 10. เผยแพร่ด้วย Git command
+## 9. เผยแพร่ด้วย Git command
 
 ใช้วิธีนี้เมื่อเครื่องติดตั้ง Git แล้ว
 
@@ -192,7 +165,7 @@ git push -u origin main
 
 จากนั้นเปิด GitHub Settings > Pages และเลือก branch `main` ตามหัวข้อ 9
 
-## 11. ฝังลง Google Sites
+## 10. ฝังลง Google Sites
 
 1. เปิด Google Sites ที่ต้องการ
 2. เลือก `Insert` > `Embed`
@@ -205,10 +178,10 @@ git push -u origin main
 
 ไม่ควรฝัง `admin.html` ใน Google Sites ให้ผู้ดูแลเปิด URL ของ Admin โดยตรง
 
-## 12. การใช้งานระบบ Admin
+## 11. การใช้งานระบบ Admin
 
 1. เปิด URL `admin.html`
-2. Login ด้วย Google Account ที่อยู่ใน `Settings.AdminEmails`
+2. Login ด้วยบัญชีผู้ดูแลที่ตั้งผ่าน `setAdminCredentials_`
 3. เลือกหมวดข้อมูลจาก Sidebar
 4. ใช้ `เพิ่มข้อมูล` สำหรับเพิ่มรายการทีละรายการ
 5. ใช้ `Template` และ `Import CSV` สำหรับข้อมูลจำนวนมาก
@@ -225,7 +198,7 @@ git push -u origin main
 
 Facebook อนุญาตให้ดึง Metadata ได้เฉพาะโพสต์สาธารณะ หากโพสต์ต้อง Login หรือจำกัดผู้ชม ระบบจะแจ้งให้ผู้ดูแลกรอกข้อมูลที่ขาดเอง
 
-## 13. การเชื่อมโยงข้อมูล
+## 12. การเชื่อมโยงข้อมูล
 
 - `DashboardStatistics.LinkTarget` กำหนดหน้าที่เปิดเมื่อกดการ์ดสถิติ
 - `Expertise.ParentID` กำหนดลำดับชั้นความเชี่ยวชาญ
@@ -235,7 +208,7 @@ Facebook อนุญาตให้ดึง Metadata ได้เฉพาะ�
 
 ค่า LinkTarget ที่ใช้ได้คือ `about`, `dashboards`, `innovation`, `research`, `publications`, `projects`, `training`, `blog`, `gallery` และ `contact`
 
-## 14. การอัปเดตระบบ
+## 13. การอัปเดตระบบ
 
 ### อัปเดตหน้าเว็บไซต์
 
@@ -252,13 +225,12 @@ Facebook อนุญาตให้ดึง Metadata ได้เฉพาะ�
 4. เลือก Deployment เดิม
 5. เลือก New version แล้ว Deploy
 
-## 15. Checklist ก่อนเปิดใช้งาน
+## 14. Checklist ก่อนเปิดใช้งาน
 
-- [ ] ตั้งค่า `API_TOKEN`, `INLINE_EDIT_PASSWORD` และ `GOOGLE_CLIENT_ID`
-- [ ] `Settings.AdminEmails` ถูกต้อง
+- [ ] ตั้งค่า `API_TOKEN`, `ADMIN_USERNAME` และ `ADMIN_PASSWORD_HASH`
+- [ ] รัน `migrateStoryEvidenceImages()` แล้ว
 - [ ] Apps Script Web App ใช้ Execute as Me และ Anyone
 - [ ] `API_URL` ใน HTML ทั้งสองไฟล์ตรงกับ Deployment ล่าสุด
-- [ ] OAuth Authorized JavaScript origins มี GitHub Pages origin
 - [ ] Login Admin สำเร็จ
 - [ ] เพิ่ม แก้ไข และลบข้อมูลได้
 - [ ] Import URL และ Facebook สาธารณะได้
@@ -268,7 +240,7 @@ Facebook อนุญาตให้ดึง Metadata ได้เฉพาะ�
 - [ ] ทดสอบบนมือถือและเดสก์ท็อป
 - [ ] Google Sites Embed แสดงเต็มความกว้าง
 
-## 16. การแก้ปัญหาที่พบบ่อย
+## 15. การแก้ปัญหาที่พบบ่อย
 
 ### หน้าเว็บแสดงข้อมูลตัวอย่างแทน Google Sheets
 
@@ -276,7 +248,7 @@ Facebook อนุญาตให้ดึง Metadata ได้เฉพาะ�
 
 ### Login Admin ไม่สำเร็จ
 
-ตรวจ 4 จุด ได้แก่ OAuth origin, Client ID ใน `admin.html`, Script Property `GOOGLE_CLIENT_ID` และอีเมลใน `Settings.AdminEmails`
+ตรวจว่า `ADMIN_USERNAME` และ `ADMIN_PASSWORD_HASH` อยู่ใน Script Properties, `API_TOKEN` ถูกตั้งค่า และ Web App deployment เป็นเวอร์ชันล่าสุด
 
 ### แก้ Code.gs แล้วเว็บไซต์ยังใช้โค้ดเก่า
 

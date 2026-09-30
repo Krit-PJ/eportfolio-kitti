@@ -16,17 +16,13 @@
  */
 
 const LIST_SHEETS = ['Profile','Hero','DashboardStatistics','Education','Mindmap','Expertise','ExpertiseRelations','ExpertiseLinks',
-  'Dashboards','Research','Publications','Projects','Training','Blog','Gallery',
-  'Contact','References','Settings'];
+  'Dashboards','Research','Publications','Projects','Training','Blog','Gallery','EvidenceImages',
+  'Career','Contact','References','Settings'];
 
 function doGet(e) {
   try {
     const params = e.parameter;
     const action = params.action || 'list';
-    if (action === 'verifyAdmin') {
-      return jsonOutput(handleVerifyAdmin(params.idToken));
-    }
-
     const sheetName = params.sheet;
     if (!LIST_SHEETS.includes(sheetName)) return jsonOutput({ status: 'error', message: 'Unknown sheet: ' + sheetName });
     if (sheetName === 'Settings' && !checkToken(params.token)) return jsonOutput({ status:'error', message:'Unauthorized' });
@@ -35,11 +31,14 @@ function doGet(e) {
     if (action === 'get') {
       const row = findRowById(sheet, params.id);
       if (!row) return jsonOutput({ status: 'error', message: 'Not found' });
+      if (isDraftRow_(row)) return jsonOutput({ status: 'error', message: 'Not found' });
       return jsonOutput({ status: 'ok', data: row });
     }
 
     // action === 'list'
     let rows = sheetToObjects(sheet);
+    // Public endpoint never returns a draft, while legacy blank Status remains public.
+    rows = rows.filter(function (row) { return !isDraftRow_(row); });
 
     if (params.q) {
       const q = params.q.toLowerCase();
@@ -77,8 +76,8 @@ function doPost(e) {
       return jsonOutput(handleUploadFile(body));
     }
 
-    if (action === 'verifyEditPassword') {
-      return jsonOutput(handleVerifyEditPassword(body.password));
+    if (action === 'verifyAdminCredentials') {
+      return jsonOutput(handleVerifyAdminCredentials(body.username, body.password));
     }
 
     if (!checkToken(body.token)) return jsonOutput({ status: 'error', message: 'Unauthorized' });
@@ -97,7 +96,11 @@ function doPost(e) {
     const sheet = getSheet(sheetName);
 
     if (action === 'create' || action === 'update') {
-      const validationError = validateRelationalWrite(sheetName, body.data || {}, body.id || '');
+      // Updates may contain only changed fields; validate the resulting record, not an incomplete patch.
+      const existing = action === 'update' ? findRowById(sheet, body.id) : null;
+      if (action === 'update' && !existing) return jsonOutput({ status:'error', message:'Not found' });
+      const candidate = Object.assign({}, existing || {}, body.data || {});
+      const validationError = validateRelationalWrite(sheetName, candidate, body.id || '');
       if (validationError) return jsonOutput({ status:'error', message:validationError });
     }
     if (action === 'delete') {
@@ -174,15 +177,65 @@ function handleUploadFile(body) {
   return { status: 'ok', fileId: file.getId(), url: 'https://drive.google.com/uc?export=view&id=' + file.getId() };
 }
 
-function handleVerifyEditPassword(password) {
+function secureEquals_(left, right) {
+  left = String(left || ''); right = String(right || '');
+  if (left.length !== right.length) return false;
+  let diff = 0;
+  for (let i = 0; i < left.length; i++) diff |= left.charCodeAt(i) ^ right.charCodeAt(i);
+  return diff === 0;
+}
+
+function isDraftRow_(row) {
+  return Object.prototype.hasOwnProperty.call(row, 'Status') && String(row.Status || '').toLowerCase() === 'draft';
+}
+
+/** ADMIN_USERNAME/ADMIN_PASSWORD_HASH อยู่ใน Script Properties เท่านั้น */
+function handleVerifyAdminCredentials(username, password) {
   const properties = PropertiesService.getScriptProperties();
-  const expected = properties.getProperty('INLINE_EDIT_PASSWORD');
-  if (!expected || !password || String(password) !== expected) {
-    return { status: 'error', message: 'รหัสผ่านไม่ถูกต้อง' };
+  const expectedUser = properties.getProperty('ADMIN_USERNAME');
+  const expectedHash = properties.getProperty('ADMIN_PASSWORD_HASH');
+  if (!expectedUser || !expectedHash) return { status:'error', message:'ยังไม่ได้ตั้งค่าบัญชีผู้ดูแลใน Script Properties' };
+  const normalizedUser = String(username || '').trim();
+  const cache = CacheService.getScriptCache();
+  const keyDigest = Utilities.base64EncodeWebSafe(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, normalizedUser || 'anonymous', Utilities.Charset.UTF_8)).slice(0, 36);
+  const attemptKey = 'admin_auth_' + keyDigest;
+  const lock = LockService.getScriptLock();
+  lock.waitLock(5000);
+  try {
+    const now = Date.now();
+    let attempts;
+    try { attempts = JSON.parse(cache.get(attemptKey) || '{}'); } catch (error) { attempts = {}; }
+    const failed = Number(attempts.failed || 0);
+    const lockedUntil = Number(attempts.lockedUntil || 0);
+    if (lockedUntil > now) return { status:'error', message:'บัญชีถูกพักชั่วคราว กรุณาลองใหม่ภายหลัง' };
+
+    const actualHash = Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, String(password || ''), Utilities.Charset.UTF_8));
+    const valid = secureEquals_(normalizedUser, expectedUser) && secureEquals_(actualHash, expectedHash);
+    if (!valid) {
+      const nextFailed = failed + 1;
+      const nextState = nextFailed >= 5 ? { failed:nextFailed, lockedUntil:now + 10 * 60 * 1000 } : { failed:nextFailed, lockedUntil:0 };
+      cache.put(attemptKey, JSON.stringify(nextState), nextFailed >= 5 ? 600 : 300);
+      Utilities.sleep(350);
+      return { status:'error', message:nextFailed >= 5 ? 'บัญชีถูกพักชั่วคราว กรุณาลองใหม่ภายหลัง' : 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง' };
+    }
+    cache.remove(attemptKey);
+    const token = properties.getProperty('API_TOKEN');
+    if (!token) return { status:'error', message:'ยังไม่ได้ตั้งค่า API_TOKEN' };
+    return { status:'ok', username:expectedUser, token:token };
+  } finally {
+    lock.releaseLock();
   }
-  const token = properties.getProperty('API_TOKEN');
-  if (!token) return { status: 'error', message: 'ยังไม่ได้ตั้งค่า API_TOKEN' };
-  return { status: 'ok', token: token };
+}
+
+/** รันจาก Apps Script editor แล้วเปลี่ยนค่าตัวอย่างก่อนรัน; ไม่ commit รหัสจริงลง repository */
+function setAdminCredentialsExample() {
+  throw new Error('คัดลอกฟังก์ชันนี้ไปแก้ใน Apps Script editor และใช้ setAdminCredentials_(username, password) แทนการฝังรหัสในไฟล์');
+}
+
+function setAdminCredentials_(username, password) {
+  if (!username || !password || String(password).length < 10) throw new Error('รหัสผ่านต้องยาวอย่างน้อย 10 ตัวอักษร');
+  const hash = Utilities.base64Encode(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, String(password), Utilities.Charset.UTF_8));
+  PropertiesService.getScriptProperties().setProperties({ ADMIN_USERNAME:String(username), ADMIN_PASSWORD_HASH:hash });
 }
 
 /* ---------- Referential integrity ---------- */
@@ -190,6 +243,17 @@ function handleVerifyEditPassword(password) {
 const RELATION_WORK_TYPES = ['Dashboards','Research','Publications','Projects','Training','Blog','References'];
 
 function validateRelationalWrite(sheetName, data, currentId) {
+  const titleSheets = ['Dashboards','Research','Publications','Projects','Training','Blog','Career','References'];
+  if (titleSheets.indexOf(sheetName) !== -1 && !String(data.Title || '').trim()) return 'กรุณาระบุชื่อเรื่อง/ชื่อรายการ';
+  if (sheetName === 'Career') {
+    if (!String(data.Organization || '').trim()) return 'กรุณาระบุหน่วยงาน';
+    if (!String(data.StartDate || '').trim()) return 'กรุณาระบุวันเริ่มงาน';
+  }
+  if (sheetName === 'Projects' && String(data.IsInnovation || '') === 'true') {
+    const innovationFields = ['Problem','Hypothesis','Prototype','TestMethod','Results','NextStep'];
+    const missing = innovationFields.filter(function (key) { return !String(data[key] || '').trim(); });
+    if (missing.length) return 'โครงการนวัตกรรมต้องระบุ: ' + missing.join(', ');
+  }
   if (sheetName === 'Expertise') {
     if (!String(data.Name || '').trim()) return 'กรุณาระบุชื่อความเชี่ยวชาญ';
     if (data.ParentID) {
@@ -229,6 +293,10 @@ function validateRelationalWrite(sheetName, data, currentId) {
     const workError = validateWorkReference_(data.WorkType, data.WorkID, false);
     if (workError) return workError;
   }
+  if (sheetName === 'EvidenceImages') {
+    if (!sheetHasId_('Blog', data.BlogID)) return 'ไม่พบเรื่องเล่าที่ต้องการเชื่อมภาพหลักฐาน';
+    if (!data.ImageFileID && !data.ImageURL) return 'กรุณาเลือกรูปภาพหรือระบุ URL รูปภาพ';
+  }
   return '';
 }
 
@@ -248,6 +316,14 @@ function validateRelationalDelete(sheetName, id) {
       return String(row.WorkType) === String(sheetName) && String(row.WorkID) === String(id);
     });
     if (isLinked) return 'ลบไม่ได้: ผลงานนี้ยังเชื่อมโยงกับทะเบียนความเชี่ยวชาญ';
+    const hasReferences = sheetToObjects(getSheet('References')).some(function (row) {
+      return String(row.WorkType) === String(sheetName) && String(row.WorkID) === String(id);
+    });
+    if (hasReferences) return 'ลบไม่ได้: ผลงานนี้ยังมีหลักฐานอ้างอิงเชื่อมโยงอยู่';
+  }
+  if (sheetName === 'Blog') {
+    const hasEvidenceImages = sheetToObjects(getSheet('EvidenceImages')).some(function (row) { return String(row.BlogID) === String(id); });
+    if (hasEvidenceImages) return 'ลบไม่ได้: เรื่องเล่านี้ยังมีภาพหลักฐานเชื่อมโยงอยู่ กรุณาลบภาพหลักฐานก่อน';
   }
   return '';
 }
@@ -402,10 +478,18 @@ function buildWebCitation(siteName, publishedAt, title, contentType, url) {
     ' [' + contentType + ']. สืบค้นจาก ' + url;
 }
 
-/* ---------- Sheet utilities ---------- */
+/* ---------- Spreadsheet configuration / utilities ---------- */
+
+// IDs ของฐานข้อมูลและโฟลเดอร์หลัก (ไม่ใช่ข้อมูลลับ)
+const PORTFOLIO_SPREADSHEET_ID = '1Xbi_gW-f4zLSVLr1aOpzDxVU9DEqs5sM2eCbKG54mNs';
+const PORTFOLIO_PARENT_FOLDER_ID = '1n-0v-Jg3PLouqgb6JZ5c7kaAl7i0Yyob';
+
+function getPortfolioSpreadsheet_() {
+  return SpreadsheetApp.openById(PORTFOLIO_SPREADSHEET_ID);
+}
 
 function getSheet(name) {
-  return SpreadsheetApp.getActiveSpreadsheet().getSheetByName(name);
+  return getPortfolioSpreadsheet_().getSheetByName(name);
 }
 
 function getHeaders(sheet) {
@@ -462,34 +546,6 @@ function getDriveFolderId(folderKey) {
 function checkToken(token) {
   const expected = PropertiesService.getScriptProperties().getProperty('API_TOKEN');
   return !!expected && token === expected;
-}
-
-/**
- * ตรวจสอบ Google ID Token จากหน้า admin.html (Google Identity Services)
- * เทียบ email กับ Settings.AdminEmails ถ้าผ่าน คืน API_TOKEN ให้ใช้เรียก CRUD ต่อ
- */
-function handleVerifyAdmin(idToken) {
-  if (!idToken) return { status: 'error', message: 'Missing idToken' };
-  try {
-    const resp = UrlFetchApp.fetch('https://oauth2.googleapis.com/tokeninfo?id_token=' + encodeURIComponent(idToken));
-    const payload = JSON.parse(resp.getContentText());
-    if (!payload.email || payload.email_verified !== 'true' && payload.email_verified !== true) {
-      return { status: 'error', message: 'Invalid token' };
-    }
-    const expectedClientId = PropertiesService.getScriptProperties().getProperty('GOOGLE_CLIENT_ID');
-    if (!expectedClientId) return { status: 'error', message: 'ยังไม่ได้ตั้งค่า GOOGLE_CLIENT_ID' };
-    if (String(payload.aud || '') !== expectedClientId) {
-      return { status: 'error', message: 'OAuth Client ไม่ตรงกับระบบนี้' };
-    }
-    const adminEmails = (getSettingValue('AdminEmails') || '').split(',').map(function (s) { return s.trim().toLowerCase(); });
-    if (adminEmails.indexOf(payload.email.toLowerCase()) === -1) {
-      return { status: 'error', message: 'ไม่มีสิทธิ์เข้าระบบหลังบ้าน' };
-    }
-    const apiToken = PropertiesService.getScriptProperties().getProperty('API_TOKEN');
-    return { status: 'ok', email: payload.email, token: apiToken };
-  } catch (err) {
-    return { status: 'error', message: 'Verify failed: ' + err.message };
-  }
 }
 
 /* ---------- Output ---------- */

@@ -1,145 +1,156 @@
-# PART 7 — คู่มือ Deploy ทั้งระบบ (Step by Step)
+# คู่มือนำ E-Portfolio ไปใช้งานจริงทีละขั้นตอน
 
-## ขั้นตอนที่ 1 — สร้าง Google Sheet ฐานข้อมูล
+คู่มือนี้ใช้กับชุดโค้ดปัจจุบัน โดยแยกเว็บไซต์สาธารณะ (`index.html`), ระบบหลังบ้าน (`admin.html`) และ Google Apps Script API (`apps_script/`) ออกจากกัน ห้ามนำรหัสผ่านหรือ Token ไปใส่ในไฟล์ HTML
 
-1. ไปที่ [sheets.google.com](https://sheets.google.com) → สร้างไฟล์ใหม่
-   ตั้งชื่อ `EPortfolio_Database`
-2. เปิด **Extensions → Apps Script**
-3. ลบโค้ดเดิมใน `Code.gs` ทั้งหมด แล้ว copy เนื้อหาจาก
-   [`apps_script/SheetSetup.gs`](../apps_script/SheetSetup.gs) วางแทน
-4. กด **Run** เลือกฟังก์ชัน `setupAllSheets` → ครั้งแรกจะขอ Authorize
-   (เลือกบัญชี Google ของหน่วยงาน → Advanced → Go to project (unsafe) →
-   Allow) — ทำตามได้เพราะเป็นสคริปต์ของเราเอง
-5. รันอีกฟังก์ชัน `setupDriveFolders` (เลือกจาก dropdown ข้าง Run → Run)
-   จะได้โฟลเดอร์ Drive `EPortfolio_Media` พร้อม subfolder อัตโนมัติ
-6. กลับไปดู Spreadsheet จะเห็น Sheet ตามโครงสร้างล่าสุดพร้อม header ครบ
+## 1. สำรองและเตรียมไฟล์
 
-> **กรณีอัปเกรดจากเวอร์ชันเดิม:** ห้ามรัน `setupAllSheets()` เพราะฟังก์ชันนี้
-> ใช้สำหรับติดตั้งใหม่และล้างข้อมูลเดิม ให้เพิ่มโค้ด `SheetSetup.gs` เวอร์ชันล่าสุด
-> แล้วรัน `migrateRelationalPortfolioSchema()` เพื่อเพิ่ม `Expertise`,
-> `ExpertiseRelations`, `ExpertiseLinks` และคอลัมน์ใหม่ของระบบ Import
-> จากนั้นรัน `migrateDashboardStatisticLinks()` เพื่อเพิ่มคอลัมน์ `LinkTarget`
-> ให้การ์ดผลกระทบและประสบการณ์วิชาชีพ
-> และรัน `migrateBlogKnowledgeHub()` เพื่อเพิ่มคอลัมน์เรื่องเล่า ประเภทเนื้อหา
-> แหล่งที่มา URL ต้นฉบับ ผู้เขียน รูปปก เวลาอ่าน และสถานะบทความเด่น
+1. แตก ZIP ไปยังโฟลเดอร์ใหม่และเก็บ ZIP ต้นฉบับไว้สำหรับย้อนกลับ
+2. ตรวจว่ามี `index.html`, `admin.html`, `3. Kitti.png`, `LOGO-DOAE.png`, `field-impact-story.mp4`, `field-impact-story-poster.jpg`, โฟลเดอร์ `assets/` และ `apps_script/`
+3. เปิด `index.html` ผ่าน local web server เพื่อตรวจรูปแบบก่อนเชื่อมฐานข้อมูล ห้ามใช้การดับเบิลคลิกไฟล์เป็นวิธีทดสอบสุดท้าย เพราะนโยบายเบราว์เซอร์บางตัวต่างจากเว็บจริง
+4. ถ้าอัปเกรดระบบเดิม ให้ทำสำเนา Google Sheet และดาวน์โหลดข้อมูลสำคัญเป็น XLSX ก่อนทุกครั้ง
 
-> **จุดที่ต้องจดไว้**: เปิดแถบ URL ของ Spreadsheet
-> `https://docs.google.com/spreadsheets/d/`**`SPREADSHEET_ID`**`/edit`
-> คัดลอกค่า `SPREADSHEET_ID` ไว้ใช้อ้างอิง (จริงๆ Code.gs ใช้
-> `SpreadsheetApp.getActiveSpreadsheet()` จึงไม่ต้องฝัง ID ตรงๆ
-> ตราบใดที่ฝัง Apps Script ไว้ในไฟล์ Sheet นี้โดยตรง)
+## 2. สร้างฐานข้อมูล Google Sheets
 
-## ขั้นตอนที่ 2 — ติดตั้ง REST API (Code.gs)
+### ติดตั้งใหม่
 
-1. ใน Apps Script Editor (โปรเจกต์เดียวกับขั้นตอนที่ 1) สร้างไฟล์ใหม่
-   ชื่อ `API` (หรือเพิ่มต่อใน `Code.gs` เดิมก็ได้ เพราะแชร์ Sheet เดียวกัน)
-2. Copy เนื้อหาทั้งหมดจาก [`apps_script/Code.gs`](../apps_script/Code.gs)
-   วางลงไป
-3. ตั้งค่า **Token สำหรับเขียนข้อมูล**: ไปที่ ⚙️ **Project Settings** →
-   เลื่อนลงหา **Script Properties** → Add script property
-   - Property: `API_TOKEN`
-   - Value: สุ่มค่าความปลอดภัยสูง เช่น `openssl rand -hex 16` หรือพิมพ์
-     อะไรก็ได้ที่คาดเดายาก (เก็บไว้ที่นี่เท่านั้น **ห้ามฝังในโค้ด Frontend**
-     โดยตรง — ค่านี้จะถูกส่งกลับให้ Frontend หลัง login สำเร็จเท่านั้น
-     ผ่าน `verifyAdmin`)
-   - Property: `INLINE_EDIT_PASSWORD`
-   - Value: รหัสผ่านสำหรับปุ่มเข้าสู่ระบบแก้ไขบนหน้า Portfolio
-     (ระบบจริงตรวจรหัสที่ Apps Script และไม่ฝังรหัสจริงในหน้าเว็บ)
-   - Property: `GOOGLE_CLIENT_ID`
-   - Value: OAuth Client ID เดียวกับที่กำหนดใน `admin.html` ระบบใช้ตรวจ
-     audience ของ Google ID Token ก่อนอนุญาตให้เข้าสู่ระบบ
-4. แก้ `AdminEmails` ใน Sheet `Settings` ให้เป็นอีเมลแอดมินจริง
-   (คั่นด้วย `,` ถ้ามีหลายคน)
-5. **Deploy → New deployment**
-   - Select type: **Web app**
-   - Description: `EPortfolio API v1`
-   - Execute as: **Me**
-   - Who has access: **Anyone**
-   - กด Deploy → Authorize อีกครั้งถ้าถูกขอ
-6. คัดลอก **Web app URL** ที่ได้ รูปแบบ
-   `https://script.google.com/macros/s/`**`DEPLOYMENT_ID`**`/exec`
-   → นี่คือค่า **`API_URL`** ที่ต้องเอาไปแก้ในไฟล์ Frontend/Admin
+1. สร้าง Google Sheet ใหม่ชื่อ `EPortfolio_Database`
+2. เปิด `ส่วนขยาย` > `Apps Script`
+3. สร้างไฟล์ `SheetSetup.gs` และคัดลอกโค้ดจาก `apps_script/SheetSetup.gs`
+4. สร้างไฟล์ `Code.gs` และคัดลอกโค้ดจาก `apps_script/Code.gs`
+5. กด Save แล้วเลือก `setupAllSheets` > Run > อนุญาตสิทธิ์
+6. เลือก `setupDriveFolders` > Run หนึ่งครั้ง
+7. กลับไปที่ Sheet และตรวจว่ามีทุกแท็บ รวมถึง `Blog` และ `EvidenceImages`
 
-> **ทุกครั้งที่แก้โค้ด `Code.gs`** ต้องไปที่ Deploy → Manage deployments →
-> เลือก deployment เดิม → ไอคอนดินสอ → Version: **New version** → Deploy
-> (ถ้าใช้ "Test deployments" URL จะเปลี่ยนทุกครั้ง ไม่ควรใช้ของจริง)
+หาก `setupDriveFolders()` ถูกหยุดด้วยข้อความ `Exceeded maximum execution time` ให้วาง
+`SheetSetup.gs` เวอร์ชันล่าสุดแล้วรันฟังก์ชันเดิมซ้ำตามข้อความแจ้งเตือน ฟังก์ชันเวอร์ชันนี้
+สร้างครั้งละหนึ่งโฟลเดอร์และบันทึก Folder ID ทันที ใช้ทั้งหมดไม่เกิน 6 รอบ และทำงานต่อจาก
+รายการที่บันทึกสำเร็จแล้วโดยไม่สร้างรายการนั้นซ้ำ
 
-การใช้งานเมนู **Import URL** ครั้งแรก Apps Script อาจขอสิทธิ์เชื่อมต่อ
-เว็บไซต์ภายนอก (`UrlFetchApp`) ให้ Authorize ด้วยบัญชีเจ้าของระบบ จากนั้นระบบจะ
-อ่าน Open Graph Metadata, ชื่อแหล่งข้อมูล, วันที่เผยแพร่ และสร้างข้อความอ้างอิง
-เพื่อให้ Admin ตรวจสอบก่อนบันทึก ระบบสามารถสร้างทั้งรายการปลายทางและแถว
-`References` ที่เชื่อมกลับไปยังรายการนั้นโดยอัตโนมัติ
+`setupAllSheets()` รุ่นล่าสุดเป็นแบบ additive: เติมเฉพาะ Sheet/หัวคอลัมน์/ค่าตั้งต้นที่ขาด
+และไม่ล้างข้อมูลเดิม ทั้งนี้ยังควรสำรอง Google Sheet ก่อนอัปเกรดทุกครั้ง
 
-## ขั้นตอนที่ 3 — ตั้งค่า Google OAuth Client ID (สำหรับ Login หน้า Admin)
+### อัปเกรดฐานข้อมูลเดิม
 
-1. ไปที่ [Google Cloud Console](https://console.cloud.google.com/)
-   → สร้างโปรเจกต์ใหม่ (หรือใช้โปรเจกต์เดียวกับ Apps Script ก็ได้ —
-   ดูได้จาก Apps Script → Project Settings → Google Cloud Platform (GCP) Project)
-2. ไปที่ **APIs & Services → OAuth consent screen** → ตั้งค่า App name,
-   support email → Save
-3. ไปที่ **Credentials → Create Credentials → OAuth client ID**
-   - Application type: **Web application**
-   - Authorized JavaScript origins: ใส่ URL ที่จะ host `admin.html`
-     เช่น `https://yourname.github.io`
-4. คัดลอก **Client ID** (รูปแบบ `xxxxx.apps.googleusercontent.com`)
+1. สำรอง Google Sheet เดิม
+2. แทนที่ `SheetSetup.gs` และ `Code.gs` ด้วยเวอร์ชันล่าสุด
+3. รัน `setupAllSheets()` รุ่นล่าสุดได้เพื่อเติมโครงสร้างที่ขาดโดยไม่ล้างข้อมูล
+4. รันตามลำดับ: `migrateRelationalPortfolioSchema()`, `migrateDashboardStatisticLinks()`, `migrateBlogKnowledgeHub()`, `migrateStoryEvidenceImages()`
+5. ตรวจว่าข้อมูลเดิมยังอยู่และมีแท็บ `EvidenceImages` ซึ่งเชื่อมภาพหลายภาพกับเรื่องเล่าผ่าน `BlogID`
 
-## ขั้นตอนที่ 4 — แก้ค่า Config ในไฟล์ Frontend
+## 3. ตั้งค่าความปลอดภัยใน Script Properties
 
-### ไฟล์ [`index.html`](../index.html)
-ค้นหาคำว่า `CONFIG` ใกล้ปลายไฟล์ (ก่อน `</body>`) แก้บรรทัด:
+1. ใน Apps Script เปิด `Project Settings` > `Script Properties`
+2. เพิ่ม `API_TOKEN` เป็นค่าสุ่มอย่างน้อย 32 ตัวอักษร
+3. ไม่ต้องพิมพ์รหัสผ่านจริงหรือค่า hash เอง ให้ตั้งบัญชีด้วยฟังก์ชันในขั้นตอนถัดไป
+4. สร้างฟังก์ชันชั่วคราวใน Apps Script เช่น
+
 ```js
-const CONFIG = {
-  API_URL: 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec', // <-- แก้ตรงนี้
-  EDIT_PASSWORD: '' // Production ต้องเว้นว่าง
-};
-```
-แทนที่ด้วย Web app URL จากขั้นตอนที่ 2
-
-### ไฟล์ [`admin.html`](../admin.html)
-ค้นหาคำว่า `CONFIG` แก้ทั้ง 2 ค่า:
-```js
-const CONFIG = {
-  API_URL: 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec', // <-- แก้ตรงนี้
-  GOOGLE_CLIENT_ID: 'YOUR_GOOGLE_OAUTH_CLIENT_ID.apps.googleusercontent.com' // <-- แก้ตรงนี้
-};
+function configureAdminOnce() {
+  setAdminCredentials_('ชื่อผู้ใช้ที่ต้องการ', 'รหัสผ่านใหม่ที่ไม่เคยเปิดเผย');
+}
 ```
 
-## ขั้นตอนที่ 5 — Host ไฟล์ และฝังลง Google Sites
+5. Run `configureAdminOnce` หนึ่งครั้ง แล้วลบฟังก์ชันชั่วคราวและ Save
+6. ตรวจใน Script Properties ว่ามี `ADMIN_USERNAME` และ `ADMIN_PASSWORD_HASH` ห้ามมีรหัสผ่านจริง
 
-ดูรายละเอียดที่ [`06_google_sites_embed_guide.md`](06_google_sites_embed_guide.md)
+หน้า Login จะไม่แสดงชื่อบัญชีล่วงหน้า ผู้ดูแลต้องกรอกชื่อผู้ใช้และรหัสผ่านเอง
 
-## ขั้นตอนที่ 6 — กรอกข้อมูลจริงผ่านระบบหลังบ้าน
+## 4. Deploy Google Apps Script API
 
-1. เปิด `admin.html` ที่ host ไว้ → Login ด้วย Gmail ที่อยู่ใน `AdminEmails`
-2. กรอกข้อมูล **Profile** และ **Hero** ก่อน (เป็น singleton ต้องมี 1 แถว)
-3. ใส่ **DashboardStatistics** 5 รายการ, **Education**, **Mindmap**
-4. ทยอยเพิ่ม Dashboards / Research / Publications / Projects / Training /
-   Blog / Gallery / Contact ตามจริง
-5. ทุกเมนูใช้ปุ่ม **Template** เพื่อดาวน์โหลดหัวคอลัมน์ และ **Import CSV** เพื่อเพิ่มข้อมูลเป็นชุด
-6. ใช้ **Import URL** สำหรับ Dashboards, Research, Publications, Projects, Training,
-   Blog, Gallery และ References แล้วตรวจ Metadata ก่อนกดนำเข้า
-   - หากเลือก `Blog` ระบบจะจำแนก Facebook เป็น `ข่าวและกิจกรรม` และเว็บไซต์ทั่วไปเป็น `องค์ความรู้` เบื้องต้น
-   - หลังนำเข้าให้เปิดรายการในเมนู `เรื่องเล่า / องค์ความรู้` เพื่อตรวจแก้เนื้อหา ผู้เขียน ประเภท เวลาอ่าน และสถานะบทความเด่นก่อนเผยแพร่
-7. เพิ่มรายการใน `Expertise` แล้วใช้ `ExpertiseRelations` เลือกความเชี่ยวชาญและ
-   ผลงานที่ต้องการเชื่อม ระบบจะตรวจสอบ ID และป้องกันความสัมพันธ์ซ้ำอัตโนมัติ
-8. ใช้ `ExpertiseLinks` เชื่อมโหนดต้นทางและปลายทาง พร้อมระบุประเภทและน้ำหนัก
-9. กลับไปเปิด `index.html` รีเฟรชหน้า ตรวจสอบว่าข้อมูลแสดงถูกต้อง
+1. เลือก `Deploy` > `New deployment` > `Web app`
+2. Description ใช้ชื่อที่ระบุเวอร์ชัน เช่น `E-Portfolio API 2026-09`
+3. Execute as เลือก `Me`
+4. Who has access เลือก `Anyone`
+5. กด Deploy และอนุญาตสิทธิ์
+6. คัดลอก URL รูปแบบ `https://script.google.com/macros/s/DEPLOYMENT_ID/exec`
+7. เปิด URL ในหน้าต่างใหม่เพื่อยืนยันว่า endpoint ตอบกลับ ไม่ใช่หน้า 404 หรือ permission denied
 
-## Checklist ก่อนเผยแพร่จริง
+เมื่อแก้ Apps Script ภายหลัง ต้องใช้ `Deploy` > `Manage deployments` > Edit > `New version` > Deploy การกด Save อย่างเดียวไม่เปลี่ยน Web App ที่ใช้งานจริง
 
-- [ ] `setupAllSheets()` และ `setupDriveFolders()` รันสำเร็จ
-- [ ] ระบบเดิมรัน `migrateRelationalPortfolioSchema()` และมี Sheet ความสัมพันธ์ครบ
-- [ ] Script Property `API_TOKEN` ตั้งค่าแล้ว
-- [ ] Script Property `INLINE_EDIT_PASSWORD` ตั้งค่าแล้ว
-- [ ] Script Property `GOOGLE_CLIENT_ID` ตรงกับ `admin.html`
-- [ ] `Settings.AdminEmails` มีอีเมลแอดมินถูกต้อง
-- [ ] Apps Script deploy เป็น Web app, Execute as Me, Anyone เข้าถึงได้
-- [ ] แก้ `CONFIG.API_URL` ใน `index.html` และ `admin.html` แล้ว
-- [ ] แก้ `CONFIG.GOOGLE_CLIENT_ID` ใน `admin.html` แล้ว
-- [ ] ทดสอบ Login เข้า Admin สำเร็จ และ CRUD ได้จริงทุกเมนู
-- [ ] ทดสอบวาง URL, ตรวจ Metadata/การอ้างอิง และบันทึกลง Timeline สำเร็จ
-- [ ] ทดสอบเลือก Node แล้วพบผลงานที่เชื่อมโยง และระบบปฏิเสธ WorkID ที่ไม่มีจริง
-- [ ] ทดสอบ Knowledge Links เน้นโหนดเพื่อนบ้านและแสดงคำอธิบายในแผงรายละเอียด
-- [ ] ทดสอบเปิด `index.html` ตรงๆ ในเบราว์เซอร์ ข้อมูลขึ้นครบ
-- [ ] ฝัง Embed ใน Google Sites แล้วแสดงผลถูกต้องบนมือถือ/เดสก์ท็อป
-- [ ] ทดสอบสลับ Theme กลางวัน/กลางคืน/ไว้ทุกข์ ค่าจำได้หลัง reload
+## 5. ใส่ API URL ในเว็บไซต์
+
+1. เปิด `index.html` ค้นหา `const CONFIG` แล้วแทน `YOUR_DEPLOYMENT_ID` ด้วย URL จากขั้นตอน 4 โดยคง `EDIT_PASSWORD: ''`
+2. เปิด `admin.html` และแทน `CONFIG.API_URL` ด้วย URL เดียวกัน
+3. ตรวจว่าไม่มี `YOUR_DEPLOYMENT_ID` เหลืออยู่ และไม่มี `API_TOKEN`, รหัสผ่าน หรือ password hash อยู่ใน HTML
+
+## 6. ทดสอบก่อนเผยแพร่
+
+1. เปิดเว็บไซต์ผ่าน local web server บนเดสก์ท็อปและมือถือ
+2. ตรวจ Hero ว่าภาพฉากหลังจางแต่ยังเห็นบริบท ข้อความอ่านง่าย และรูปบุคคลหลักเด่นกว่า
+3. เปิดหน้าอื่น ตรวจว่าปุ่ม `หน้าแรก` ยังอยู่และใช้ hover/active แบบเดียวกับเมนูอื่น
+4. เปิด Inline Edit และ `admin.html` ตรวจว่าช่องชื่อผู้ใช้ว่าง
+5. Login แล้วทดสอบเพิ่ม แก้ไข และลบรายการทดสอบหนึ่งรายการ
+6. เพิ่ม Blog หนึ่งเรื่องและเพิ่ม `EvidenceImages` อย่างน้อยสองภาพโดยใช้ `BlogID` เดียวกัน ตรวจ Slider และภาพเต็ม
+7. ตรวจใบประกาศในหน้าวิทยากร/R2R และ Snapshot ของผลงานดิจิทัล
+8. ตรวจ console ของเบราว์เซอร์ว่าไม่มี error และทดสอบ Theme สว่าง มืด และไว้ทุกข์
+
+### อัปเกรดฐานข้อมูลเดิมเป็น V4 (ไม่ล้างข้อมูล)
+
+1. สำรอง Google Sheet ก่อนเสมอ แล้ววาง `SheetSetup.gs` เวอร์ชันใหม่ใน Apps Script
+2. จาก Apps Script editor เลือกและรัน `migratePortfolioV4()` หนึ่งครั้ง อนุญาตสิทธิ์เมื่อระบบถาม
+3. ฟังก์ชันจะเพิ่มหัวคอลัมน์ที่ขาดเท่านั้น และสร้าง `Career` หากยังไม่มี จึงไม่ลบหรือเขียนทับแถวเดิม
+4. ค่า `Status` ว่างของ Publications และ Training เดิมจะกลายเป็น `published` เพื่อรักษาการแสดงผลเดิม
+5. วาง `Code.gs` และ deploy **New version** จากนั้นทดสอบว่า `draft` ไม่แสดงผ่าน public API ทั้ง `list` และ `get` แต่ยังเห็นได้หลังเข้าสู่ Admin
+
+การลบข้อมูลที่ยังถูกอ้างอิงจะถูกป้องกัน เช่น Blog ที่มี EvidenceImages, ผลงานที่ยังเชื่อม ExpertiseRelations หรือ References. ลบ/ย้ายความสัมพันธ์เหล่านั้นก่อนจึงจะลบรายการหลักได้.
+
+## 7. เผยแพร่ GitHub Pages
+
+1. สร้างหรือเปิด repository `eportfolio-kitti`
+2. อัปโหลดไฟล์เว็บไซต์ทั้งหมดโดยรักษาชื่อ ตัวพิมพ์เล็ก/ใหญ่ และโครงสร้าง `assets/`
+3. ไม่จำเป็นต้องเผยแพร่ `apps_script/` บน GitHub Pages
+4. Commit ไปยัง branch `main`
+5. เปิด `Settings` > `Pages` > Source: `Deploy from a branch` > Branch: `main` > Folder: `/ (root)` > Save
+6. รอ workflow สำเร็จ แล้วเปิด `https://USERNAME.github.io/eportfolio-kitti/`
+7. เปิด `https://USERNAME.github.io/eportfolio-kitti/admin.html` และทดสอบ Login/CRUD อีกครั้ง
+8. กด `Ctrl+F5` หรือเปิดหน้าต่างไม่ระบุตัวตน เพื่อป้องกัน cache เก่าในการตรวจรอบสุดท้าย
+
+## 8. ฝังใน Google Sites (ถ้าต้องการ)
+
+1. ใน Google Sites เลือก `Insert` > `Embed` > `By URL`
+2. วาง URL หน้าเว็บไซต์สาธารณะจาก GitHub Pages
+3. ขยายกรอบเต็มความกว้างและสูงประมาณ 900–1,200 px
+4. Publish และทดสอบทั้งมือถือ/เดสก์ท็อป
+5. ไม่ฝัง `admin.html`; ให้ผู้ดูแลเปิด URL Admin โดยตรง
+
+## 9. Checklist เปิดใช้งานจริง
+
+- [ ] สำรอง Sheet และ ZIP เวอร์ชันก่อนหน้าแล้ว
+- [ ] Sheet และ migrations ครบโดยไม่สูญเสียข้อมูลเดิม
+- [ ] `API_TOKEN`, `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH` อยู่ใน Script Properties เท่านั้น
+- [ ] Apps Script deploy เป็น Web app / Execute as Me / Anyone
+- [ ] `API_URL` ใน HTML สองไฟล์ตรงกับ deployment ปัจจุบัน
+- [ ] ไม่มี placeholder, token, รหัสผ่าน หรือ hash ในไฟล์สาธารณะ
+- [ ] Login, CRUD, Upload, Blog และ Evidence Slider ทำงาน
+- [ ] หน้าแรก เมนู Hero ใบประกาศ และผลงานดิจิทัลผ่านการตรวจ
+- [ ] GitHub Pages และ Google Sites (ถ้ามี) แสดงผลบนมือถือ/เดสก์ท็อป
+
+## 10. Rollback
+
+### เว็บไซต์มีปัญหา
+
+1. อย่าลบ repository หรือข้อมูลใน Sheet
+2. ใน GitHub เปิด commit เวอร์ชันที่ใช้งานได้ล่าสุด แล้ว revert commit ที่มีปัญหา หรืออัปโหลดไฟล์จาก ZIP สำรอง
+3. รอ Pages deploy แล้วตรวจด้วยหน้าต่างไม่ระบุตัวตน
+
+### API มีปัญหา
+
+1. เปิด Apps Script > `Deploy` > `Manage deployments`
+2. เลือก deployment เดิม แล้วเลือกเวอร์ชันโค้ดที่ใช้งานได้ล่าสุดและ Deploy
+3. คง deployment เดิมเพื่อไม่ต้องเปลี่ยน `API_URL`
+
+### Migration หรือข้อมูลมีปัญหา
+
+1. หยุดการแก้ข้อมูลผ่าน Admin
+2. ใช้ `File` > `Version history` ใน Google Sheets หรือสำเนาที่ทำไว้ก่อน migration เพื่อกู้คืน
+3. ตรวจหัวคอลัมน์กับ `docs/02_sheet_structure.md` ก่อนเปิดระบบอีกครั้ง
+
+## 11. แก้ปัญหาที่พบบ่อย
+
+- ขึ้นข้อมูลตัวอย่าง: ตรวจ `CONFIG.API_URL`, สิทธิ์ `Anyone` และ Web App เวอร์ชันล่าสุด
+- Login ไม่ผ่าน: ตรวจ `API_TOKEN`, `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`; ตั้งบัญชีใหม่ด้วย `setAdminCredentials_` และ deploy New version
+- แก้ Apps Script แล้วผลไม่เปลี่ยน: Save ไม่พอ ต้อง deploy New version
+- รูป/วิดีโอหายบน GitHub Pages: ตรวจชื่อไฟล์ ตัวพิมพ์เล็ก/ใหญ่ path และว่าไฟล์ถูก commit จริง
+- หน้าเว็บยังเป็นเวอร์ชันเก่า: ใช้ `Ctrl+F5`, หน้าต่างไม่ระบุตัวตน หรือรอ Pages workflow ให้จบ
+- Slider ไม่มีภาพ: ตรวจ `EvidenceImages.BlogID`, `Status=published`, File ID/URL และลำดับ `SortOrder`
+- Google Sites มีพื้นที่ไม่พอ: เพิ่มความสูง Embed; ไม่ต้องสร้างหน้า Sites แยกสำหรับแต่ละหน้า SPA

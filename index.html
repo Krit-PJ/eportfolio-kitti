@@ -81,6 +81,7 @@ body.edit-mode .edit-add-btn{display:inline-flex;align-items:center;gap:6px}
 nav.main-nav{display:flex;overflow-x:auto;background:var(--secondary);padding:0 16px}
 nav.main-nav a{color:#e3edf7;font-size:12.8px;font-weight:500;padding:13px 14px;white-space:nowrap;border-bottom:3px solid transparent;cursor:pointer;transition:all var(--transition)}
 nav.main-nav a:hover,nav.main-nav a.active{color:#fff;border-bottom-color:var(--accent)}
+nav.main-nav a[data-page="home"]{position:sticky;left:0;z-index:3;font-weight:700}
 
 /* PAGES */
 .page{display:none;animation:fadeIn .4s ease}
@@ -265,6 +266,10 @@ nav.main-nav a{font-size:12.5px;padding:12px 13px;letter-spacing:0}
 .hero-left .subtitle{display:inline-flex;align-items:center;margin-top:20px;padding:7px 12px;border-left:3px solid var(--accent);background:rgba(255,255,255,.08);font-size:15px;color:#fff}
 .hero-left .typing{font-size:18px;margin-top:16px;color:#a9d9ff;font-weight:600}
 .hero-left .reflection{margin-top:18px;font-size:14px;line-height:1.85;max-width:620px;color:#d9ece0;opacity:1}
+.hero-outcome{font-size:clamp(34px,4.3vw,60px);font-weight:650;line-height:1.14;max-width:720px;color:#fff;letter-spacing:-.02em}
+.hero-identity{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-top:14px}
+.hero-identity .title-th{font-size:18px;margin:0}.hero-identity .title-en{font-size:13px;margin:0;color:#ffe082}
+.hero-proof{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.hero-proof span{display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid rgba(255,255,255,.22);background:rgba(5,28,19,.2);color:#e8f5e9;font-size:11px}.hero-proof i{color:#ffe082}
 .hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
 .hero-btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:10px 16px;border:1.5px solid rgba(255,255,255,.5);border-radius:7px;background:transparent;color:#fff;font:600 13px 'Prompt',sans-serif;cursor:pointer;transition:all var(--transition)}
 .hero-btn.primary{background:var(--accent);border-color:var(--accent);color:#18220f}
@@ -322,12 +327,6 @@ nav.main-nav a{font-size:12.5px;padding:12px 13px;letter-spacing:0}
 .research-story p{font-size:13px;line-height:1.75;color:var(--text-muted)}
 .research-story .story-arrow{position:absolute;right:22px;top:25px;color:var(--story-accent,var(--primary))}
 
-.explore-section .quick-grid{grid-template-columns:repeat(5,1fr);gap:12px}
-.explore-section .quick-card{min-height:118px;border-radius:9px;border:1.5px solid var(--border);padding:20px 12px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;text-align:left;box-shadow:none}
-.explore-section .quick-card:hover{transform:translateY(-4px);background:var(--primary);border-color:var(--primary);color:#fff;box-shadow:0 14px 30px rgba(27,94,32,.18)}
-.explore-section .quick-card:hover i{color:#ffe082}
-.explore-section .quick-card i{font-size:21px;margin:0;color:var(--secondary)}
-.explore-section .quick-card span{font-size:12.5px;line-height:1.45}
 
 .contact-cta{margin:20px auto 58px;max-width:1140px;position:relative;overflow:hidden;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;padding:34px 40px;border-radius:10px;background:linear-gradient(125deg,#123f28,#0f4c51 58%,#0f4c81);color:#fff;box-shadow:0 18px 45px rgba(15,76,129,.2)}
 .contact-cta::after{content:'05';position:absolute;right:155px;top:-28px;font:700 130px/1 'Poppins',sans-serif;color:rgba(255,255,255,.055)}
@@ -397,7 +396,13 @@ nav.main-nav a{font-size:12.5px;padding:12px 13px;letter-spacing:0}
 .blog-reader-cover[hidden]{display:none}
 .blog-reader-content{padding:34px 42px 42px}.blog-reader-content h2{font-size:27px;line-height:1.45;margin:9px 0 12px;color:var(--text)}
 .blog-reader-body{margin-top:24px;font-size:14px;line-height:1.9;color:var(--text)}.blog-reader-body p{margin-bottom:14px}
+.story-evidence{margin-top:28px;padding-top:22px;border-top:1px solid var(--border)}.story-evidence h3{font-size:18px;color:var(--primary)}.story-evidence>p{color:var(--text-muted);font-size:13px;margin:6px 0 14px}.evidence-slider{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}.evidence-slide{min-width:min(100%,560px);scroll-snap-align:start}.evidence-slide img{width:100%;height:320px;object-fit:contain;background:#edf3ed;border-radius:10px;cursor:zoom-in}.evidence-slide figcaption{font-size:12px;color:var(--text-muted);margin-top:6px}
 .blog-source-link{display:inline-flex;align-items:center;gap:8px;margin-top:20px;padding:10px 14px;border:1.5px solid var(--secondary);border-radius:7px;color:var(--secondary);font-size:12.5px;font-weight:700}.blog-source-link:hover{background:var(--secondary);color:#fff}
+
+/* “เรื่องเล่า ย้อนรอย”: chronological bridge between outcomes and the evidence archive. */
+.footprint-band{background:#13291d;color:#fff;padding:82px 0}.footprint-band .section-title{color:#fff}.footprint-band .section-sub{color:#b9cbbf}.footprint-list{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.18)}
+.footprint-card{position:relative;min-height:260px;padding:26px;background:#13291d;border:0;color:#fff;text-align:left;cursor:pointer;transition:background .25s ease}.footprint-card:hover{background:#1c3a29}.footprint-card time{font:600 11px 'Poppins','Prompt',sans-serif;color:#ffe082}.footprint-card .footprint-type{display:block;margin:34px 0 8px;color:#8fc99d;font-size:11px;font-weight:700}.footprint-card h3{font-size:18px;line-height:1.5}.footprint-card p{margin-top:10px;color:#b9cbbf;font-size:12.5px;line-height:1.75}.footprint-card::after{content:'\2197';position:absolute;right:22px;top:22px;color:#ffe082;font-size:18px}
+.visual-purpose{display:flex;align-items:center;gap:10px;margin-top:12px;color:#c8d9cd;font-size:11px}.visual-purpose i{color:#ffe082}
 
 .reveal-block{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
 .reveal-block.is-visible{opacity:1;transform:none}
@@ -406,7 +411,6 @@ nav.main-nav a{font-size:12.5px;padding:12px 13px;letter-spacing:0}
   .hero-left{flex-basis:56%}.hero-right img{width:min(390px,100%)}
   .expertise-band .edu-mindmap-grid{grid-template-columns:1fr}
   .expertise-band .mindmap{transform:scale(1);margin-bottom:0}
-  .explore-section .quick-grid{grid-template-columns:repeat(3,1fr)}
 }
 @media(max-width:760px){
   .hero{height:620px;min-height:620px;padding:0 20px}
@@ -419,8 +423,8 @@ nav.main-nav a{font-size:12.5px;padding:12px 13px;letter-spacing:0}
   .impact-shell{margin-top:-22px}.impact-label{color:#fff}
   .editorial-heading{grid-template-columns:60px 1fr}.editorial-heading>*:last-child{grid-column:2}.section-index{font-size:31px}
   .research-story-grid{grid-template-columns:1fr}
-  .explore-section .quick-grid{grid-template-columns:repeat(2,1fr)}
   .contact-cta{margin:12px 20px 40px;grid-template-columns:1fr;padding:28px}.contact-cta::after{right:-6px}
+  .footprint-list{grid-template-columns:1fr}.footprint-card{min-height:0}
   .evidence-intro{grid-template-columns:1fr}.evidence-timeline{padding-left:28px}.evidence-timeline::before{left:7px}
   .evidence-dot{left:-27px}.evidence-date{position:static;width:auto;text-align:left;margin-bottom:9px}.evidence-date strong{font-size:14px}.evidence-date span{margin-left:5px}
   .evidence-item{padding:20px}
@@ -431,7 +435,6 @@ nav.main-nav a{font-size:12.5px;padding:12px 13px;letter-spacing:0}
   .stats-grid{grid-template-columns:1fr 1fr}.stat-card{padding:17px 12px}
   .blog-intro .section-title{font-size:24px}.blog-toolbar,.blog-grid{grid-template-columns:1fr}.blog-toolbar input{grid-column:auto}.blog-featured-media{min-height:210px}.blog-featured-copy,.blog-reader-content{padding:24px}.blog-featured-copy h3,.blog-reader-content h2{font-size:21px}
   .editorial-heading{grid-template-columns:44px 1fr;gap:12px}.editorial-heading .section-title{font-size:22px}
-  .explore-section .quick-grid{grid-template-columns:1fr 1fr}
 }
 @media(prefers-reduced-motion:reduce){.network-line,.network-node{animation:none}.reveal-block{opacity:1;transform:none;transition:none}}
 
@@ -447,14 +450,25 @@ nav.main-nav a{position:relative;color:#143c27;padding:13px 14px;font-size:12px}
 nav.main-nav a::after{content:'';position:absolute;left:14px;right:14px;bottom:7px;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
 nav.main-nav a:hover::after,nav.main-nav a.active::after{transform:scaleX(1)}
 nav.main-nav a:hover,nav.main-nav a.active{color:#0b3d2e;background:rgba(102,187,106,.12)}
+/* Keep Home visible while the menu scrolls, but give it exactly the same
+   visual states as every other navigation item. The opaque nav-coloured
+   backdrop only prevents links underneath from showing through. */
+nav.main-nav a[data-page="home"]{background:rgba(255,255,255,.96)}
+nav.main-nav a[data-page="home"]:hover,
+nav.main-nav a[data-page="home"].active{background:#eaf5eb}
 
-.hero{height:clamp(640px,calc(100vh - 109px),860px);min-height:640px;padding:0;background:#9ea7a0;color:#fff}
-.hero::before{background:linear-gradient(90deg,rgba(7,45,24,.28),transparent 45%,rgba(11,61,46,.12)),linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:auto,80px 80px,80px 80px;mask-image:none}
-.hero::after{height:48%;background:linear-gradient(to top,rgba(7,35,23,.5),transparent)}
+.hero{height:clamp(640px,calc(100vh - 109px),860px);min-height:640px;padding:0;background:#dce7df;color:#fff}
+.hero::before{background:linear-gradient(rgba(255,255,255,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.16) 1px,transparent 1px);background-size:80px 80px;mask-image:none}
+/* The photograph is intentionally translucent on a pale green base.  The
+   dark colour is local to the copy area instead of covering the whole scene. */
+.hero::after{z-index:1;height:100%;background:linear-gradient(90deg,rgba(5,43,24,.84) 0%,rgba(5,43,24,.62) 30%,rgba(5,43,24,.18) 52%,rgba(5,43,24,0) 72%)}
+.hero-scene{position:absolute;inset:-3px;width:calc(100% + 6px);height:calc(100% + 6px);object-fit:cover;object-position:center;z-index:0;opacity:.38;filter:saturate(.78) contrast(.94) blur(2px)}
 .hero-inner{max-width:1440px;margin:0 auto;padding:0 48px;display:grid;grid-template-columns:1fr minmax(500px,.95fr) 1fr;gap:0}
 .hero-left{grid-column:1;align-self:center;flex:none;padding:0 0 90px;z-index:5}
 .hero-eyebrow{margin-bottom:18px;color:#fff;font-size:11px}.hero-eyebrow::before{background:#f2ca52}
 .hero-left .title-th{font-family:'Prompt',sans-serif;font-size:clamp(30px,2.55vw,42px);font-weight:600;line-height:1.2;max-width:none;white-space:nowrap}.hero-left .title-en{font-family:'Poppins',sans-serif;font-size:15px;font-weight:400;color:#f7d66c;-webkit-text-fill-color:#f7d66c}
+.hero-outcome{font-size:clamp(30px,3.2vw,48px);text-shadow:0 3px 18px rgba(0,0,0,.24)}
+.hero-identity .title-th{font-size:18px;white-space:normal}.hero-identity .title-en{font-size:12px}
 .hero-left .subtitle{max-width:340px;padding:0;border:0;background:none;font-size:16px;line-height:1.7}
 .hero-left .typing{font-size:14px;color:#fff;min-height:22px}.hero-left .reflection{display:none}
 .hero-actions{margin-top:24px}.hero-btn{border-radius:999px;padding:11px 18px}.hero-btn.primary{background:#f0c84b;border-color:#f0c84b}
@@ -501,14 +515,13 @@ nav.main-nav a:hover,nav.main-nav a.active{color:#0b3d2e;background:rgba(102,187
 
 .expertise-band .vertical-timeline{gap:0;border-top:1px solid var(--border)}.expertise-band .vt-item{border:0;border-bottom:1px solid var(--border);border-radius:0;background:transparent;box-shadow:none;padding:20px 12px}
 .research-story-grid{gap:0;border-top:1px solid var(--border)}.research-story{min-height:210px;border:0;border-right:1px solid var(--border);border-radius:0;box-shadow:none;background:transparent;padding:30px}.research-story:last-child{border-right:0}.research-story:hover{transform:none;background:#edf4ee}
-.explore-section .quick-grid{display:block}.explore-section .quick-card{min-height:92px;border:0;border-bottom:1px solid var(--border);border-radius:0;padding:20px 8px;display:grid;grid-template-columns:60px 1fr auto;align-items:center}.explore-section .quick-card::after{content:'\2197';font-size:20px}.explore-section .quick-card:hover{transform:none;box-shadow:none;padding-left:20px;background:#173d28}
-.explore-section .quick-card i{margin:0}.explore-section .quick-card span{font-size:clamp(18px,2vw,28px)}
 .contact-cta{max-width:none;margin:0;padding:100px max(7vw,40px);border-radius:0;box-shadow:none;background:#14201a}.contact-cta h2{font-size:clamp(36px,5vw,72px);font-weight:500;max-width:900px}.contact-cta button{width:150px;height:150px;border-radius:50%;background:#f0c84b}.contact-cta::after{display:none}
 
 .page:not(#page-home)>.container{padding-top:72px;padding-bottom:90px}.page:not(#page-home)>.container>.section-title{font-size:clamp(36px,5vw,68px);font-weight:500;padding-bottom:30px;margin-bottom:30px;border-bottom:1px solid var(--border)}
 .page:not(#page-home) .item-card{border-radius:0;border-width:0 0 1px;background:transparent;box-shadow:none}
-[data-theme="dark"] nav.main-nav{background:rgba(12,26,20,.97)}[data-theme="dark"] nav.main-nav a{color:#e8f5e9}
+[data-theme="dark"] nav.main-nav{background:rgba(12,26,20,.97)}[data-theme="dark"] nav.main-nav a{color:#e8f5e9}[data-theme="dark"] nav.main-nav a[data-page="home"]{background:rgba(12,26,20,.97)}
 [data-theme="dark"] nav.main-nav a:hover,[data-theme="dark"] nav.main-nav a.active{color:#fff;background:rgba(102,187,106,.2)}
+[data-theme="dark"] nav.main-nav a[data-page="home"]:hover,[data-theme="dark"] nav.main-nav a[data-page="home"].active{background:rgba(102,187,106,.2)}
 [data-theme="dark"] .home-band.alt{background:#102019}[data-theme="dark"] .work-card:hover,[data-theme="dark"] .research-story:hover{background:#173226}
 
 /* Accessibility controls and field-video story */
@@ -525,15 +538,31 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
 .subpage-video-copy .kicker{font:600 11px 'Poppins','Prompt',sans-serif;color:var(--accent);text-transform:uppercase}.subpage-video-copy h3{margin:9px 0 10px;font-size:clamp(21px,2.2vw,30px);font-weight:500;line-height:1.35;color:var(--text)}.subpage-video-copy p{color:var(--text-muted);line-height:1.75}.subpage-video video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#08130d}
 [data-theme="dark"] .subpage-video{border-color:#315642;border-left-color:var(--accent)}
 
+/* Verified-data states, compact field video and focus explorer */
+.preview-notice{display:none;padding:9px 18px;background:#fff6d8;border-bottom:1px solid #ead28a;color:#604b0a;font-size:12px;text-align:center}.preview-notice.show{display:block}
+.hero-role{position:static!important;display:block!important;width:auto!important;max-width:340px;margin:9px 0 0!important;justify-self:start!important;text-align:left;color:#f7d66c;font:500 13px/1.65 'Poppins','Prompt',sans-serif;letter-spacing:.01em}.hero-role::before{display:none!important}
+.stats-grid{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}.impact-label{align-items:flex-start}.source-note{display:block;margin-top:7px;color:var(--text-muted);font-size:11px;font-weight:400}
+.data-unavailable{grid-column:1/-1;padding:28px;border:1px dashed var(--border);background:var(--card-bg);color:var(--text-muted);text-align:center}
+.metric-reader{width:min(760px,100%);max-height:min(82vh,760px);overflow:auto;background:var(--card-bg);border-radius:10px;box-shadow:0 24px 70px rgba(0,0,0,.32)}
+.metric-reader-head{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 24px;background:var(--card-bg);border-bottom:1px solid var(--border)}.metric-reader-head h2{font-size:21px;color:var(--primary)}
+.metric-list{display:grid;padding:8px 24px 26px}.metric-item{display:grid;grid-template-columns:38px minmax(0,1fr);gap:12px;padding:15px 0;border-bottom:1px solid var(--border)}.metric-item:last-child{border-bottom:0}.metric-item .metric-no{font:600 11px 'Poppins',sans-serif;color:var(--accent)}.metric-item strong{font-size:13px;line-height:1.55}.metric-item p{margin-top:4px;color:var(--text-muted);font-size:11px;line-height:1.55}
+.field-video-invite{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:28px;margin:0;padding:38px max(7vw,40px);background:#173d28;color:#fff}.field-video-invite .section-index{color:#9fc6a8}.field-video-invite h2{margin:7px 0 6px;font-size:clamp(24px,3vw,40px);font-weight:500;line-height:1.32}.field-video-invite p{max-width:760px;color:#c8d9cd;line-height:1.75}
+.field-video-launcher{border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:13px 18px;background:#f0c84b;color:#173d28;font:600 12px 'Prompt',sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.22);cursor:pointer;white-space:nowrap}.field-video-launcher i{margin-right:7px;color:#173d28}
+.field-video-dock{position:fixed;right:18px;bottom:18px;z-index:120;width:min(360px,calc(100vw - 28px));overflow:hidden;border:1px solid rgba(255,255,255,.25);border-radius:10px;background:#08130d;box-shadow:0 20px 55px rgba(0,0,0,.42)}.field-video-dock[hidden]{display:none}.field-video-dock video{display:block;width:100%;aspect-ratio:16/9;background:#000}.field-video-dock-head{display:flex;align-items:center;justify-content:space-between;padding:9px 11px;color:#fff;font-size:11px}.field-video-close{width:30px;height:30px;border:0;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;cursor:pointer}
+.innovation-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}.innovation-card{border:1px solid var(--border);border-top:4px solid var(--primary);background:var(--card-bg);box-shadow:var(--shadow);padding:22px}.innovation-card h3{font-size:18px;line-height:1.5;color:var(--primary)}.innovation-card .innovation-meta{margin:8px 0 16px;color:var(--text-muted);font-size:11px}.innovation-card details{border-top:1px solid var(--border);padding-top:12px}.innovation-card summary{cursor:pointer;color:var(--secondary);font-size:12px;font-weight:600}.innovation-fields{display:grid;gap:12px;margin-top:14px}.innovation-field dt{font-size:10px;font-weight:700;color:var(--accent);text-transform:uppercase}.innovation-field dd{margin-top:3px;font-size:12px;line-height:1.7;color:var(--text)}
+.knowledge-graph-shell{grid-template-columns:minmax(260px,.75fr) minmax(0,1.25fr);min-height:0}.mindmap-wrap{display:block;padding:16px;overflow:visible;background:linear-gradient(145deg,rgba(46,125,50,.055),rgba(15,76,129,.035))}.mindmap-wrap::after{display:none}.mindmap{width:auto;height:auto;display:grid;gap:9px;transform:none}.focus-card{position:relative!important;left:auto!important;top:auto!important;transform:none!important;width:100%;display:grid;grid-template-columns:38px minmax(0,1fr) auto;align-items:center;gap:10px;padding:12px;border:1px solid var(--border);border-left:4px solid var(--node-color,var(--primary));border-radius:8px;background:var(--card-bg);color:var(--text);font-family:inherit;text-align:left;cursor:pointer;transition:transform .2s ease,border-color .2s ease,background .2s ease}.focus-card:hover{transform:translateX(3px)!important}.focus-card.active{background:color-mix(in srgb,var(--node-color) 9%,var(--card-bg));border-color:var(--node-color)}.focus-card>i{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:color-mix(in srgb,var(--node-color) 13%,transparent);color:var(--node-color)}.focus-card strong{display:block;font-size:12px;line-height:1.4}.focus-card small{display:block;margin-top:3px;color:var(--text-muted);font-size:9.5px}.focus-card .evidence-snapshot{min-width:28px;padding:4px 7px;border-radius:999px;background:color-mix(in srgb,var(--node-color) 12%,transparent);color:var(--node-color);font-size:10px;font-weight:700;text-align:center}
+.expertise-work{width:100%;grid-template-columns:68px minmax(0,1fr) auto;text-align:left;cursor:pointer;font-family:inherit}.expertise-work .work-thumb{grid-row:1/3;width:68px;height:52px;object-fit:cover;border-radius:5px;background:#e8f0e9}.expertise-work .work-type{font-size:10px}.expertise-work strong{font-size:13px}.expertise-work p{font-size:11px}.expertise-work button{pointer-events:none}.knowledge-relation span{display:none}.work-detail{width:min(720px,100%);max-height:86vh;overflow:auto;padding:28px;background:var(--card-bg);border-radius:10px;box-shadow:0 24px 70px rgba(0,0,0,.34)}.work-detail h2{padding-right:38px;color:var(--primary);font-size:23px;line-height:1.45}.work-detail-grid{display:grid;gap:15px;margin-top:20px}.work-detail-row{padding-top:12px;border-top:1px solid var(--border)}.work-detail-row strong{display:block;margin-bottom:4px;color:var(--accent);font-size:10px;text-transform:uppercase}.work-detail-row p{font-size:13px;line-height:1.75}.work-detail-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.career-list{grid-column:1/-1;margin-top:24px}.career-list h3{margin-bottom:12px;color:var(--primary)}.career-items{display:grid;gap:10px}.career-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:5px 18px;padding:16px;border-left:4px solid var(--secondary);background:var(--card-bg);box-shadow:var(--shadow)}.career-item h4{font-size:14px}.career-item p{color:var(--text-muted);font-size:12px}.career-item time{grid-column:2;grid-row:1/3;color:var(--secondary);font-size:11px}
+
 @media(max-width:980px){
-  .hero-inner{grid-template-columns:1fr 1fr;padding:0 28px}.hero-left{grid-column:1}.hero-right{grid-column:2}.hero-right img{width:min(440px,100%)}.hero-role{position:absolute;right:28px;top:26%;width:200px;font-size:20px}
+  .hero-inner{grid-template-columns:1fr 1fr;padding:0 28px}.hero-left{grid-column:1}.hero-right{grid-column:2}.hero-right img{width:min(440px,100%)}.hero-role{max-width:280px}
   .home-intro-grid{grid-template-columns:1fr;gap:30px}.home-intro-side{max-width:620px}.round-link{width:116px;height:116px}
   .field-video-grid,.subpage-video{grid-template-columns:1fr;gap:34px}
   .work-card{grid-template-columns:48px minmax(0,1fr) 58px}.work-meta{grid-column:2}.work-visual{grid-column:3;grid-row:1/3}.research-story-grid{grid-template-columns:1fr}.research-story{border-right:0;border-bottom:1px solid var(--border)}
 }
 @media(max-width:760px){
   .header-top{padding:8px 14px}.header-top .org-text{max-width:210px}.theme-switch button{padding:6px 8px;font-size:10px}
-  .hero{height:690px;min-height:690px}.hero-inner{display:block;padding:0 20px}.hero-left{width:100%;padding:38px 0 0}.hero-left .title-th{font-size:32px;white-space:normal}.hero-left .subtitle{max-width:250px}.hero-left .typing{max-width:230px}.hero-actions{width:auto;max-width:190px}.hero-role{display:none}
+  .hero{height:760px;min-height:760px}.hero-scene{object-position:62% center;opacity:.34}.hero::after{background:linear-gradient(180deg,rgba(5,43,24,.82) 0%,rgba(5,43,24,.58) 36%,rgba(5,43,24,.14) 62%,rgba(5,43,24,0) 78%)}.hero-inner{display:block;padding:0 20px}.hero-left{width:100%;padding:38px 0 0}.hero-outcome{font-size:32px;max-width:620px}.hero-left .title-th{font-size:16px;white-space:normal}.hero-left .subtitle{max-width:300px}.hero-role{max-width:190px}.hero-actions{width:auto;max-width:190px}
   .hero-right{right:-18px;bottom:0;width:260px;height:390px}.hero-right::before{width:270px;height:270px;bottom:45px}.hero-right img{width:255px;max-height:390px}
   .hero-marquee{bottom:14px}.hero-marquee-track{font-size:15px;animation-duration:24s}.hero-marquee-set{gap:20px;padding-right:20px}
   .impact-shell{padding-top:26px}.home-intro{padding:72px 0 80px}.home-intro-lead{font-size:30px}.home-band,.featured-works{padding-top:65px;padding-bottom:72px}
@@ -542,6 +571,7 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
   .contact-cta{margin:0;padding:72px 22px;grid-template-columns:1fr}.contact-cta button{width:120px;height:120px}
 }
 @media(max-width:480px){.hero-left .title-th{font-size:28px}.hero-left .title-en{font-size:13px}.hero-left .subtitle{font-size:13px}.hero-marquee-track{font-size:13px}.home-intro-lead{font-size:26px}.work-card{grid-template-columns:30px 1fr}.work-visual{display:none}.work-meta{grid-column:2}.editorial-heading .section-title{font-size:24px}.impact-label{font-size:22px}.field-video{padding:66px 0 72px}}
+@media(max-width:680px){.knowledge-graph-shell{display:block}.mindmap-wrap{padding:10px}.mindmap{display:grid;width:auto}.focus-card{display:grid!important;flex:none!important}.expertise-detail{border-top:1px solid var(--border)}.field-video-invite{grid-template-columns:1fr;padding:30px 22px}.field-video-launcher{justify-self:start}.field-video-dock{right:7px;bottom:7px;width:min(300px,calc(100vw - 14px))}.innovation-grid{grid-template-columns:1fr}.career-item{grid-template-columns:1fr}.career-item time{grid-column:1;grid-row:auto}.metric-list{padding:8px 16px 20px}}
 @media(prefers-reduced-motion:reduce){.hero-marquee-track,.hero-data-network *{animation:none!important}.hero-marquee-track{transform:translateX(-35%)}.hero-data-network .network-particle{display:none}}
 </style>
 </head>
@@ -549,8 +579,8 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
 
 <header class="site-header">
   <div class="header-top">
-    <img class="logo" id="orgLogo" src="LOGO-DOAE.png" alt="โลโก้กรมส่งเสริมการเกษตร">
-    <div class="org-text" id="orgText">
+    <img class="logo" id="orgLogo" src="LOGO-DOAE.png" alt="โลโก้กรมส่งเสริมการเกษตร — กลับหน้าแรก" role="button" tabindex="0" onclick="App.goPage('home')" onkeydown="if(event.key==='Enter'||event.key===' '){App.goPage('home')}">
+    <div class="org-text" id="orgText" role="button" tabindex="0" onclick="App.goPage('home')" onkeydown="if(event.key==='Enter'||event.key===' '){App.goPage('home')}">
       <strong>สำนักงานเกษตรจังหวัดกำแพงเพชร</strong>
       กรมส่งเสริมการเกษตร · กระทรวงเกษตรและสหกรณ์
     </div>
@@ -568,21 +598,26 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
   <nav class="main-nav" id="mainNav">
     <a data-page="home" onclick="App.goPage('home')">หน้าแรก</a>
     <a data-page="about" onclick="App.goPage('about')">ประวัติ</a>
-    <a data-page="dashboards" onclick="App.goPage('dashboards')">ผลงานดิจิทัล</a>
+    <a data-page="dashboards" onclick="App.goPage('dashboards')">ระบบดิจิทัล</a>
     <a data-page="innovation" onclick="App.goPage('innovation')">ห้องปฏิบัติการนวัตกรรม</a>
     <a data-page="research" onclick="App.goPage('research')">งานวิจัย</a>
     <a data-page="publications" onclick="App.goPage('publications')">ผลงานตีพิมพ์</a>
     <a data-page="projects" onclick="App.goPage('projects')">โครงการ</a>
     <a data-page="training" onclick="App.goPage('training')">วิทยากร / R2R</a>
-    <a data-page="blog" onclick="App.goPage('blog')">เรื่องเล่า / ความรู้</a>
-    <a data-page="gallery" onclick="App.goPage('gallery')">คลังภาพ</a>
+    <a data-page="blog" onclick="App.goPage('blog')">เรื่องเล่า ย้อนรอย</a>
     <a data-page="contact" onclick="App.goPage('contact')">ติดต่อ</a>
   </nav>
 </header>
+<div class="preview-notice" id="previewNotice" role="status"><i class="fa-solid fa-circle-info"></i> โหมดตัวอย่างในเครื่อง — ข้อมูลชุดนี้ใช้เพื่อแสดงรูปแบบหน้าเว็บ ไม่ใช่ข้อมูลจากระบบเผยแพร่จริง</div>
 
 <!-- ============ HOME ============ -->
 <section class="page active" id="page-home">
   <div class="hero">
+    <picture>
+      <source media="(max-width: 700px)" srcset="assets/hero-field-impact-v2-mobile.webp" type="image/webp">
+      <source srcset="assets/hero-field-impact-v2.webp" type="image/webp">
+      <img class="hero-scene" src="assets/hero-field-impact-v2.png" alt="การทำงานภาคสนามร่วมกับเกษตรกร โดยใช้แท็บเล็ตและ Dashboard เชื่อมข้อมูลสู่การตัดสินใจ" fetchpriority="high">
+    </picture>
     <div class="hero-data-network" aria-hidden="true">
       <svg viewBox="0 0 1440 760" preserveAspectRatio="xMidYMid slice">
         <ellipse class="network-orbit" cx="920" cy="350" rx="360" ry="225"/>
@@ -606,20 +641,19 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
     </div>
     <div class="hero-inner">
       <div class="hero-left edit-host">
-        <button class="edit-fab" style="top:-6px;right:-6px" onclick="App.editProfile()"><i class="fa-solid fa-pen"></i></button>
+        <button class="edit-fab" aria-label="แก้ไขข้อมูลโปรไฟล์" style="top:-6px;right:-6px" onclick="App.editProfile()"><i class="fa-solid fa-pen"></i></button>
         <div class="hero-eyebrow">Executive Agri-Tech Research Portfolio</div>
-        <h1 class="title-th" id="heroTitleTH">ดร.กิตติ โพธิ์จวง</h1>
-        <div class="title-en" id="heroTitleEN">Dr. Kitti Phojuang</div>
+        <h1 class="hero-outcome">เปลี่ยนข้อมูลและงานวิจัย ให้เป็นการตัดสินใจที่ใช้ได้จริงในพื้นที่เกษตร</h1>
+        <div class="hero-identity"><div class="title-th" id="heroTitleTH">ดร.กิตติ โพธิ์จวง</div><div class="title-en" id="heroTitleEN">Dr. Kitti Phojuang</div></div>
+        <div class="hero-role" id="heroRole">Agricultural Data Scientist · Agri-Tech Researcher</div>
         <div class="subtitle" id="heroSubtitle">นักวิชาการส่งเสริมการเกษตรชำนาญการ</div>
-        <div class="typing" id="heroTyping"></div>
         <div class="reflection" id="heroReflection"></div>
         <div class="hero-actions">
           <button class="hero-btn primary" onclick="App.goPage('dashboards')"><i class="fa-solid fa-chart-line"></i> ดูผลงานดิจิทัล</button>
           <button class="hero-btn" onclick="App.goPage('research')"><i class="fa-solid fa-flask"></i> งานวิจัยและนวัตกรรม</button>
         </div>
       </div>
-      <div class="hero-right edit-host"><img id="heroImage" src="3. Kitti.png?v=portrait-3-3-20260925" alt="รูปโปรไฟล์ ดร.กิตติ โพธิ์จวง"><button class="edit-fab" onclick="App.editProfile()"><i class="fa-solid fa-pen"></i></button></div>
-      <div class="hero-role">Agricultural Data Scientist<br>Agri-Tech Researcher</div>
+      <div class="hero-right edit-host"><img id="heroImage" src="3. Kitti.png?v=portrait-3-3-20260925" alt="รูปโปรไฟล์ ดร.กิตติ โพธิ์จวง"><button class="edit-fab" aria-label="แก้ไขรูปโปรไฟล์" onclick="App.editProfile()"><i class="fa-solid fa-pen"></i></button></div>
     </div>
     <div class="hero-marquee" aria-hidden="true">
       <div class="hero-marquee-track">
@@ -630,36 +664,9 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
   </div>
 
   <div class="container impact-shell reveal-block">
-    <div class="impact-label"><span>00</span> ผลกระทบและประสบการณ์วิชาชีพ</div>
+    <div class="impact-label"><span>00</span><span style="color:inherit;font:inherit;padding:0"> ผลงานที่ตรวจสอบได้และประสบการณ์วิชาชีพ <small class="source-note">นับจากรายการสถานะเผยแพร่ทั้งหมดในแหล่งข้อมูลเดียวกับรายการด้านใน</small></span></div>
     <div class="stats-grid edit-host" id="statsGrid"></div>
-    <button class="edit-add-btn" onclick="App.editStat()"><i class="fa-solid fa-plus"></i> เพิ่มสถิติ</button>
   </div>
-
-  <div class="home-intro reveal-block">
-    <div class="container home-intro-grid">
-      <div class="home-intro-lead">เปลี่ยนข้อมูลภาคการเกษตรให้เป็นเครื่องมือที่คนในพื้นที่เข้าใจ ใช้ตัดสินใจ และต่อยอดได้จริง</div>
-      <div class="home-intro-side">การผสานงานวิจัย ข้อมูลเชิงพื้นที่ เทคโนโลยี IoT และกระบวนการส่งเสริมการเกษตร ทำให้ผลงานทุกชิ้นเชื่อมจากโจทย์พื้นที่ไปสู่การใช้งานจริงอย่างเป็นระบบ
-        <br><button class="round-link" onclick="App.goPage('about')">รู้จักแนวคิดการทำงาน</button>
-      </div>
-    </div>
-  </div>
-
-  <section class="field-video reveal-block" aria-labelledby="fieldVideoTitle">
-    <div class="container field-video-grid">
-      <div class="field-video-copy">
-        <div class="section-index">FIELD NOTE · 01</div>
-        <h2 id="fieldVideoTitle">ข้อมูลที่ดี เริ่มจากการเข้าใจพื้นที่จริง</h2>
-        <p>ภาพสำรวจพื้นที่เกษตรสะท้อนกระบวนการทำงานตั้งแต่การมองเห็นบริบทเชิงพื้นที่ การเก็บข้อมูล ไปจนถึงการออกแบบระบบสนับสนุนการตัดสินใจที่เหมาะกับเกษตรกรและเจ้าหน้าที่</p>
-      </div>
-      <figure class="field-video-frame">
-        <video controls playsinline preload="metadata" poster="assets/field-impact-story-poster.jpg">
-          <source src="assets/field-impact-story.mp4" type="video/mp4">
-          เบราว์เซอร์นี้ไม่รองรับการเล่นวิดีโอ
-        </video>
-        <figcaption class="field-video-caption"><span>จากพื้นที่จริง สู่การตัดสินใจด้วยข้อมูล</span><span>วิดีโอเรื่องเล่า · 01:09 นาที</span></figcaption>
-      </figure>
-    </div>
-  </section>
 
   <div class="container featured-works reveal-block">
     <div class="editorial-heading">
@@ -731,21 +738,28 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
     </div>
   </div>
 
-  <div class="home-band alt explore-section reveal-block">
+  <section class="field-video-invite reveal-block" aria-labelledby="fieldVideoTitle">
+    <div>
+      <div class="section-index">04 · FIELD STORY</div>
+      <h2 id="fieldVideoTitle">ข้อมูลที่ดี เริ่มจากการเข้าใจพื้นที่จริง</h2>
+      <p>ชมคลิปสั้นจากการทำงานภาคสนาม เมื่อเปิดแล้ววิดีโอจะย่ออยู่มุมหน้าจอ จึงสำรวจผลงานส่วนอื่นต่อได้โดยไม่สะดุด</p>
+    </div>
+    <button class="field-video-launcher" id="fieldVideoLauncher" type="button" onclick="App.openFieldVideo()"><i class="fa-solid fa-circle-play"></i> เปิดวิดีโอจากพื้นที่</button>
+  </section>
+
+  <section class="footprint-band reveal-block" aria-labelledby="footprintTitle">
     <div class="container">
       <div class="editorial-heading">
-        <div class="section-index">04</div>
-        <div>
-          <h2 class="section-title"><i class="fa-solid fa-compass"></i> สำรวจแฟ้มผลงาน</h2>
-          <p class="section-sub">เข้าถึงข้อมูลตามหัวข้อที่สนใจ ทั้งผลงานวิชาการ โครงการ การถ่ายทอดความรู้ และเครือข่ายวิชาชีพ</p>
-        </div>
+        <div class="section-index">05</div>
+        <div><h2 class="section-title" id="footprintTitle"><i class="fa-solid fa-route"></i> เรื่องเล่า ย้อนรอย</h2><p class="section-sub">บันทึกและหลักฐานการทำงาน เพื่อให้เห็นว่าประสบการณ์ภาคสนาม งานวิจัย และเครื่องมือดิจิทัลต่อยอดกันอย่างไร</p></div>
+        <button class="text-link" onclick="App.goPage('blog')">เปิดคลังเรื่องราวทั้งหมด <i class="fa-solid fa-arrow-right"></i></button>
       </div>
-    <div class="quick-grid" id="quickGrid"></div>
+      <div class="footprint-list" id="homeFootprintList" aria-live="polite"></div>
     </div>
-  </div>
+  </section>
 
   <div class="contact-cta reveal-block">
-    <div><div class="cta-label">05 · PROFESSIONAL CONNECTION</div><h2>ร่วมแลกเปลี่ยนและพัฒนานวัตกรรมการเกษตร</h2><p>งานวิจัย ข้อมูล และเทคโนโลยีที่ดี ควรนำไปสู่การใช้ประโยชน์ในพื้นที่จริง</p></div>
+    <div><div class="cta-label">06 · PROFESSIONAL CONNECTION</div><h2>ร่วมแลกเปลี่ยนและพัฒนานวัตกรรมการเกษตร</h2><p>งานวิจัย ข้อมูล และเทคโนโลยีที่ดี ควรนำไปสู่การใช้ประโยชน์ในพื้นที่จริง</p></div>
     <button onclick="App.goPage('contact')"><i class="fa-solid fa-paper-plane"></i> ติดต่อและเครือข่ายวิชาการ</button>
   </div>
 </section>
@@ -761,8 +775,8 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
 <!-- ============ DASHBOARDS ============ -->
 <section class="page" id="page-dashboards">
   <div class="container">
-    <h2 class="section-title"><i class="fa-solid fa-chart-line"></i> ผลงานดิจิทัล (Dashboard Portfolio)</h2>
-    <p class="section-sub" id="dashSub">ระบบ Dashboard ด้านการเกษตร</p>
+    <h2 class="section-title"><i class="fa-solid fa-chart-line"></i> ผลงานดิจิทัลและระบบสนับสนุนการตัดสินใจ</h2>
+    <p class="section-sub" id="dashSub">ผลิตภัณฑ์ดิจิทัลที่พัฒนาจากโจทย์จริง พร้อมภาพ Snapshot ของระบบ</p>
     <div class="toolbar">
       <input type="text" id="dashSearch" placeholder="ค้นหา Dashboard...">
       <select id="dashCategory"><option value="">ทุกหมวดหมู่</option></select>
@@ -776,8 +790,8 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
 <section class="page" id="page-innovation">
   <div class="container">
     <h2 class="section-title"><i class="fa-solid fa-lightbulb"></i> ห้องปฏิบัติการนวัตกรรม</h2>
-    <p class="section-sub">Timeline นวัตกรรมและเทคโนโลยีที่พัฒนา</p>
-    <div class="timeline-scroll" id="innovationTimeline"></div>
+    <p class="section-sub">โครงการนวัตกรรมที่เผยแพร่ พร้อมโจทย์ สมมติฐาน วิธีทดสอบ ผลลัพธ์ และหลักฐานที่ตรวจสอบได้</p>
+    <div class="innovation-grid" id="innovationTimeline"></div>
   </div>
 </section>
 
@@ -816,10 +830,6 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
 <section class="page" id="page-projects">
   <div class="container">
     <h2 class="section-title"><i class="fa-solid fa-diagram-successor"></i> โครงการ</h2>
-    <section class="subpage-video" aria-label="วิดีโอภาพรวมโครงการภาคสนาม">
-      <div class="subpage-video-copy"><div class="kicker">Field to Solution</div><h3>เห็นพื้นที่ เชื่อมข้อมูล ออกแบบทางเลือก</h3><p>ภาพรวมกระบวนการทำงานที่เชื่อมการสำรวจพื้นที่ ผู้ใช้งาน และข้อมูล เพื่อพัฒนาโครงการเกษตรอัจฉริยะที่ตอบโจทย์บริบทจริง</p></div>
-      <video controls playsinline preload="none" poster="assets/field-impact-story-poster.jpg"><source src="assets/field-impact-story.mp4" type="video/mp4"></video>
-    </section>
     <div class="toolbar">
       <select id="projCategory">
         <option value="">ทุกประเภท</option>
@@ -859,10 +869,9 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
     <div class="blog-intro">
       <div>
         <div class="kicker">Knowledge & Story Hub</div>
-        <h2 class="section-title"><i class="fa-solid fa-book-open-reader"></i> เรื่องเล่าและคลังองค์ความรู้</h2>
+        <h2 class="section-title"><i class="fa-solid fa-route"></i> เรื่องเล่า ย้อนรอย</h2>
         <p>รวบรวมบทเรียนจากพื้นที่ องค์ความรู้ด้านข้อมูลและเทคโนโลยีการเกษตร ข่าวกิจกรรม และบทความจากแหล่งอ้างอิงที่ตรวจสอบได้</p>
       </div>
-      <div class="blog-intro-note"><strong>จัดการจากศูนย์กลาง</strong><br>เขียนบทความเองหรือนำเข้าจากเว็บไซต์ ข่าว และ Facebook ผ่านหน้า Admin แล้วเผยแพร่สู่หน้านี้ได้ทันที</div>
     </div>
     <div class="blog-toolbar">
       <input type="search" id="blogSearch" placeholder="ค้นหาเรื่องเล่า องค์ความรู้ หรือคำสำคัญ...">
@@ -871,16 +880,6 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
     </div>
     <div class="blog-featured" id="blogFeatured"></div>
     <div class="blog-grid" id="blogGrid"></div>
-  </div>
-</section>
-
-<!-- ============ GALLERY ============ -->
-<section class="page" id="page-gallery">
-  <div class="container">
-    <h2 class="section-title"><i class="fa-solid fa-images"></i> คลังภาพ</h2>
-    <div class="toolbar"><select id="albumFilter"><option value="">ทุกอัลบั้ม</option></select></div>
-    <div class="masonry" id="galleryGrid"></div>
-    <button class="load-more" id="galleryLoadMore">โหลดเพิ่ม</button>
   </div>
 </section>
 
@@ -897,6 +896,25 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
 
 <div class="lightbox" id="lightbox"><span class="close" onclick="document.getElementById('lightbox').classList.remove('show')">&times;</span><img id="lightboxImg"></div>
 
+<aside class="field-video-dock" id="fieldVideoDock" aria-label="วิดีโอเรื่องเล่าจากพื้นที่" hidden>
+  <div class="field-video-dock-head"><span>จากพื้นที่จริง สู่การตัดสินใจด้วยข้อมูล</span><button class="field-video-close" type="button" onclick="App.closeFieldVideo()" aria-label="ปิดวิดีโอ"><i class="fa-solid fa-xmark"></i></button></div>
+  <video id="fieldVideoPlayer" controls playsinline preload="metadata" poster="assets/field-impact-story-poster.jpg"><source src="assets/field-impact-story.mp4" type="video/mp4"></video>
+</aside>
+
+<div class="modal-overlay" id="metricOverlay" onclick="App.closeMetricDataset()">
+  <section class="metric-reader" onclick="event.stopPropagation()" aria-modal="true" role="dialog" aria-labelledby="metricTitle">
+    <div class="metric-reader-head"><h2 id="metricTitle"></h2><button class="blog-reader-close" onclick="App.closeMetricDataset()" aria-label="ปิดรายการ"><i class="fa-solid fa-xmark"></i></button></div>
+    <div class="metric-list" id="metricList"></div>
+  </section>
+</div>
+
+<div class="modal-overlay" id="workDetailOverlay" onclick="App.closeWorkDetail()">
+  <article class="work-detail" onclick="event.stopPropagation()" aria-modal="true" role="dialog" aria-labelledby="workDetailTitle">
+    <button class="blog-reader-close" style="position:sticky;top:0;float:right" onclick="App.closeWorkDetail()" aria-label="ปิดรายละเอียด"><i class="fa-solid fa-xmark"></i></button>
+    <div id="workDetailContent"></div>
+  </article>
+</div>
+
 <!-- BLOG READER -->
 <div class="modal-overlay" id="blogReaderOverlay" onclick="App.closeBlog()">
   <article class="blog-reader" onclick="event.stopPropagation()">
@@ -907,6 +925,7 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
       <h2 id="blogReaderTitle"></h2>
       <div class="blog-meta" id="blogReaderMeta"></div>
       <div class="blog-reader-body" id="blogReaderBody"></div>
+      <section class="story-evidence" id="blogReaderEvidence" hidden></section>
       <a class="blog-source-link" id="blogReaderSource" target="_blank" rel="noopener noreferrer" hidden><i class="fa-solid fa-arrow-up-right-from-square"></i> อ่านจากแหล่งต้นฉบับ</a>
     </div>
   </article>
@@ -916,7 +935,8 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
 <div class="modal-overlay" id="loginModalOverlay">
   <div class="modal">
     <h3><i class="fa-solid fa-lock"></i> เข้าสู่ระบบเพื่อแก้ไขข้อมูล</h3>
-    <p class="hint">กรอกรหัสผ่านสำหรับแก้ไขเนื้อหาหน้าเว็บ (Inline Edit Mode)</p>
+    <p class="hint">ใช้บัญชีผู้ดูแลเดียวกับระบบหลังบ้าน ระบบตรวจสอบข้อมูลที่ Apps Script เท่านั้น</p>
+    <div class="field"><label>ชื่อผู้ใช้</label><input type="text" id="loginUsername" value="" placeholder="กรอกชื่อผู้ใช้" autocomplete="username"></div>
     <div class="field"><label>รหัสผ่าน</label>
       <div style="display:flex;gap:8px">
         <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="off" style="flex:1" onkeydown="if(event.key==='Enter')App.submitLogin()">
@@ -950,8 +970,8 @@ nav.main-nav a{font-size:calc(12px * var(--reader-scale))}
 <script>
 /* ===================== CONFIG — แก้ค่านี้ก่อนใช้งานจริง (ดู docs/07_deployment_manual.md) ===================== */
 const CONFIG = {
-  API_URL: 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec', // <-- แก้ตรงนี้
-  EDIT_PASSWORD: '' // Production ต้องเว้นว่าง; ระบบจริงตรวจ INLINE_EDIT_PASSWORD ผ่าน Apps Script
+  API_URL: 'https://script.google.com/macros/s/AKfycbzH-bbhQo2n3tiuGqZnlkGyyfzSTN7-0q5qJTwuH7YoI2ufExxWJQ8aUUeKZ8V1dcD6/exec',
+  EDIT_PASSWORD: '' // คงไว้เพื่อ backward compatibility เท่านั้น; Production ตรวจบัญชีผ่าน Apps Script
 };
 
 /* ===================== ผลงานดิจิทัลเด่น — เพิ่มรายการใหม่ใน Array นี้ได้โดยไม่ต้องแก้ HTML ===================== */
@@ -963,6 +983,7 @@ const FEATURED_DIGITAL_WORKS = [
     Category:'Web GIS และระบบเตือนภัยเชิงพื้นที่',
     Description:'แผนที่เชิงโต้ตอบสำหรับติดตามจุดความร้อน ประเมินระดับความเสี่ยงรายพื้นที่ และเปรียบเทียบสถานการณ์ เพื่อสนับสนุนการวางแผนป้องกันการเผาในพื้นที่เกษตร',
     Tags:['Web GIS','Hotspot','Risk Analytics','Leaflet'],
+    CoverImageFileID:'assets/snapshot-agri-risk-map.webp',
     EmbedURL:'https://krit-pj.github.io/agri-risk-map-burning/',
     Icon:'fa-map-location-dot',
     Accent:'#C45122',
@@ -978,6 +999,7 @@ const FEATURED_DIGITAL_WORKS = [
     Category:'แพลตฟอร์มบริหารจัดการข้อมูลการเกษตร',
     Description:'แพลตฟอร์มสำหรับผู้ใช้งานที่ลงทะเบียน เพื่อบันทึกข้อมูลการผลิตและช่วงเก็บเกี่ยว เชื่อมโยงข้อมูลที่จำเป็น และสนับสนุนการเข้าถึงคู่ค้าที่เหมาะสมในระดับพื้นที่',
     Tags:['Web Application','Data Management','Smart Agriculture'],
+    CoverImageFileID:'assets/snapshot-green-gain-hub.webp',
     EmbedURL:'https://krit-pj.github.io/Green_Gain_Hub-KPP/',
     Icon:'fa-seedling',
     Accent:'#2E7D32',
@@ -1084,11 +1106,11 @@ const CV_PORTFOLIO_DATA = {
     {ID:'cv-patent-19843',Title:'ระบบตรวจวัดการเปลี่ยนแปลงทางเคมี',Type:'Petty Patent',Authors:'กิตติ โพธิ์จวง และคณะ',Source:'อนุสิทธิบัตรเลขที่ 19843',Year:'',DOI_URL:'',Tags:'Chemical Monitoring,Patent'}
   ],
   Projects: [
-    {ID:'cv-project-smart-farm-2565',Title:'การส่งเสริมการจัดการน้ำและธาตุอาหารพืชด้วยระบบ Smart Farm',Description:'แนวคิดพัฒนาระบบเพื่อสนับสนุนการจัดการน้ำและธาตุอาหารพืชอย่างมีประสิทธิภาพในจังหวัดกำแพงเพชร',Category:'Smart Farming',YearStart:2565,YearEnd:2565,CoverImageFileID:'',Status:'published'},
+    {ID:'cv-project-smart-farm-2565',Title:'การส่งเสริมการจัดการน้ำและธาตุอาหารพืชด้วยระบบ Smart Farm',Description:'แนวคิดพัฒนาระบบเพื่อสนับสนุนการจัดการน้ำและธาตุอาหารพืชอย่างมีประสิทธิภาพในจังหวัดกำแพงเพชร',Category:'Smart Farming',YearStart:2565,YearEnd:2565,CoverImageFileID:'',IsInnovation:'true',Status:'published'},
     {ID:'cv-project-banana-r2r-2565',Title:'พัฒนากระบวนการผลิตและยกระดับคุณภาพกล้วยไข่กำแพงเพชร',Description:'งาน R2R ที่เชื่อมโจทย์การผลิตในพื้นที่กับการพัฒนาคุณภาพผลผลิต',Category:'R2R',YearStart:2565,YearEnd:2565,CoverImageFileID:'',Status:'published'},
-    {ID:'cv-project-css-npk-2562',Title:'การศึกษาธาตุอาหารพืชหลักด้วยวิธี CSS-A และชุดทดสอบดิน',Description:'ศึกษาธาตุอาหาร N P K ความเป็นกรด-ด่าง และค่าการนำไฟฟ้า พร้อมพัฒนาระบบจัดเตรียมสารละลายปุ๋ยน้ำอัตโนมัติ',Category:'Precision Agriculture',YearStart:2562,YearEnd:2563,CoverImageFileID:'',Status:'published'},
+    {ID:'cv-project-css-npk-2562',Title:'การศึกษาธาตุอาหารพืชหลักด้วยวิธี CSS-A และชุดทดสอบดิน',Description:'ศึกษาธาตุอาหาร N P K ความเป็นกรด-ด่าง และค่าการนำไฟฟ้า พร้อมพัฒนาระบบจัดเตรียมสารละลายปุ๋ยน้ำอัตโนมัติ',Category:'Precision Agriculture',YearStart:2562,YearEnd:2563,CoverImageFileID:'',IsInnovation:'true',Status:'published'},
     {ID:'cv-project-rice-css-2562',Title:'ถ่ายทอดและทดสอบระบบเซ็นเซอร์ทางเคมีสำหรับเกษตรแม่นยำในแปลงนาข้าว',Description:'ถ่ายทอดองค์ความรู้และทดสอบระบบ CSS เพื่อวิเคราะห์ธาตุอาหารพืชในดินร่วมกับศูนย์วิจัยข้าวและกรมการข้าว',Category:'Precision Agriculture',YearStart:2562,YearEnd:2562,CoverImageFileID:'',Status:'published'},
-    {ID:'cv-project-chemical-sensor-2561',Title:'การพัฒนาและประยุกต์ระบบเซ็นเซอร์ทางเคมีสำหรับเกษตรแม่นยำ',Description:'โครงการวิจัยจากข้อมูลเชิงจุดสู่ข้อมูลเชิงพื้นที่ ตามสัญญา RDG6120019',Category:'Precision Agriculture',YearStart:2561,YearEnd:2562,CoverImageFileID:'',Status:'published'},
+    {ID:'cv-project-chemical-sensor-2561',Title:'การพัฒนาและประยุกต์ระบบเซ็นเซอร์ทางเคมีสำหรับเกษตรแม่นยำ',Description:'โครงการวิจัยจากข้อมูลเชิงจุดสู่ข้อมูลเชิงพื้นที่ ตามสัญญา RDG6120019',Category:'Precision Agriculture',YearStart:2561,YearEnd:2562,CoverImageFileID:'',IsInnovation:'true',Status:'published'},
     {ID:'cv-project-soil-sensor-2559',Title:'การพัฒนาเซ็นเซอร์ทางเคมีเพื่อวิเคราะห์ธาตุอาหารพืชในดิน',Description:'โครงการพัฒนาเซ็นเซอร์สำหรับเกษตรแบบแม่นยำ ตามสัญญา SRI5920209',Category:'Precision Agriculture',YearStart:2559,YearEnd:2560,CoverImageFileID:'',Status:'published'}
   ],
   Training: [
@@ -1162,7 +1184,7 @@ const FALLBACK_DATA = {
       Excerpt:'แนวคิดการพัฒนาแพลตฟอร์มที่จัดระเบียบข้อมูลการผลิต ช่วงเก็บเกี่ยว และข้อมูลที่จำเป็นต่อการเชื่อมโยงผู้เกี่ยวข้องในระดับพื้นที่',
       Content:'Green Gain Hub: กำแพงเพชร เริ่มจากความต้องการเห็นข้อมูลการผลิตที่กระจัดกระจายอยู่ในรูปแบบที่นำไปใช้ต่อได้\n\nระบบออกแบบให้ผู้ใช้งานที่ลงทะเบียนสามารถบันทึกข้อมูลสำคัญของการผลิตและช่วงเก็บเกี่ยว เพื่อสร้างฐานข้อมูลที่เป็นระบบมากขึ้น ข้อมูลเหล่านี้ช่วยให้เห็นภาพรวม วางแผน และสนับสนุนการเชื่อมโยงกับผู้เกี่ยวข้องที่เหมาะสม\n\nการพัฒนาแพลตฟอร์มลักษณะนี้ต้องให้ความสำคัญกับคุณภาพข้อมูล ความง่ายในการใช้งาน และสิทธิของผู้ใช้ควบคู่กันไป',
       CoverImageFileID:'', CoverImageURL:'', Category:'นวัตกรรมดิจิทัล', ContentType:'นวัตกรรมดิจิทัล', SourceType:'เขียนเอง', SourceURL:'https://krit-pj.github.io/Green_Gain_Hub-KPP/', Author:'ดร.กิตติ โพธิ์จวง', Tags:'Data Platform,Smart Agriculture,Digital Transformation', PublishDate:'2026-09-10', ReadTime:3, Featured:'false', Status:'published' }
-  ], Gallery: [], References: [], Dashboards: []
+  ], Gallery: [], References: PROFESSIONAL_EVIDENCE, Dashboards: FEATURED_DIGITAL_WORKS, Career: []
 };
 
 function driveImg(fileId, fallback) {
@@ -1171,7 +1193,7 @@ function driveImg(fileId, fallback) {
 /* รองรับทั้ง Drive File ID, URL ตรง, และ data: URI (กรณีอัปโหลดรูปโดยยังไม่เชื่อม Backend) */
 function resolveImg(value, fallback) {
   if (!value) return fallback || '';
-  if (value.startsWith('data:') || value.startsWith('http')) return value;
+  if (value.startsWith('data:') || value.startsWith('http') || value.startsWith('assets/')) return value;
   return driveImg(value, fallback);
 }
 const MINDMAP_SUBSKILLS = {
@@ -1184,29 +1206,49 @@ const MINDMAP_SUBSKILLS = {
   'Researcher / Civil Servant': ['Researcher','Civil Servant'],
   'Environmental Scientist': ['Field Survey','Lab Analysis']
 };
+function apiConfigured() {
+  return !!CONFIG.API_URL && CONFIG.API_URL.indexOf('YOUR_DEPLOYMENT_ID') === -1;
+}
+function isPublished(item) {
+  const status = String(item?.Status || 'published').trim().toLowerCase();
+  return status === 'published';
+}
+function truthyFlag(value) { return value === true || /^(true|1|yes|ใช่)$/i.test(String(value || '').trim()); }
+function previewRows(sheet, params) {
+  params = params || {};
+  let rows = (FALLBACK_DATA[sheet] || []).slice();
+  if (params.status) rows = rows.filter(item => String(item.Status || 'published').toLowerCase() === String(params.status).toLowerCase());
+  if (params.category) rows = rows.filter(item => String(item.Category || '') === String(params.category));
+  if (params.type) rows = rows.filter(item => String(item.Type || '') === String(params.type));
+  if (params.album) rows = rows.filter(item => String(item.Album || '') === String(params.album));
+  if (params.isInnovation !== undefined) rows = rows.filter(item => truthyFlag(item.IsInnovation) === truthyFlag(params.isInnovation));
+  const query = String(params.q || '').trim().toLowerCase();
+  if (query) rows = rows.filter(item => Object.values(item).flatMap(value => Array.isArray(value) ? value : [value]).join(' ').toLowerCase().includes(query));
+  const total = rows.length;
+  if (params.limit) {
+    const limit = Math.max(1, Number(params.limit) || 12), page = Math.max(1, Number(params.page) || 1);
+    rows = rows.slice((page - 1) * limit, page * limit);
+  }
+  return { status:'preview', source:'local-preview', preview:true, total, data:rows };
+}
 function api(sheet, params) {
   params = params || {};
+  if (!apiConfigured()) return Promise.resolve(previewRows(sheet, params));
   const qs = new URLSearchParams(Object.assign({ sheet, action:'list' }, params)).toString();
-  return fetch(`${CONFIG.API_URL}?${qs}`).then(r => r.json())
-    .catch(() => ({ status:'fallback', total:(FALLBACK_DATA[sheet]||[]).length, data: FALLBACK_DATA[sheet] || [] }))
+  return fetch(`${CONFIG.API_URL}?${qs}`)
+    .then(response => {
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.json();
+    })
     .then(res => {
-      const normalized = (res.status === 'ok' && res.data && res.data.length)
-        ? res
-        : { status:'fallback', total:(FALLBACK_DATA[sheet]||[]).length, data: FALLBACK_DATA[sheet] || [] };
-      if (sheet !== 'Dashboards') return normalized;
-
-      const query = String(params.q || '').toLowerCase();
-      const category = String(params.category || '');
-      const featured = FEATURED_DIGITAL_WORKS.filter(item => {
-        const haystack = `${item.Title} ${item.ShortTitle} ${item.Category} ${item.Description} ${(item.Tags||[]).join(' ')}`.toLowerCase();
-        return (!query || haystack.includes(query)) && (!category || item.Category === category);
-      });
-      const remote = normalized.data || [];
-      const remoteUrls = new Set(remote.map(item => item.EmbedURL).filter(Boolean));
-      const fallbackFeatured = featured.filter(item => !remoteUrls.has(item.EmbedURL));
-      const data = remote.concat(fallbackFeatured);
-      return Object.assign({}, normalized, { data, total:Math.max(Number(normalized.total)||0, data.length) });
-    });
+      if (!res || res.status !== 'ok') return { status:'unavailable', source:'api', unavailable:true, total:0, data:[], message:res?.message || 'ไม่สามารถอ่านข้อมูลได้' };
+      return { status:'ok', source:'api', total:Number(res.total) || 0, data:Array.isArray(res.data) ? res.data : [] };
+    })
+    .catch(error => ({ status:'unavailable', source:'api', unavailable:true, total:0, data:[], message:error?.message || 'ไม่สามารถเชื่อมต่อแหล่งข้อมูลได้' }));
+}
+function usableEvidenceUrl(value) {
+  const url = String(value || '').trim();
+  return /^(https?:\/\/|assets\/)/i.test(url) ? url : '';
 }
 function apiWrite(action, sheet, id, data) {
   const token = sessionStorage.getItem('edit_token') || '';
@@ -1216,19 +1258,31 @@ function esc(s){ return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','
 function showToast(msg){ const t=document.getElementById('appToast'); t.textContent=msg; t.style.display='block'; clearTimeout(t._timer); t._timer=setTimeout(()=>t.style.display='none', 2600); }
 
 const App = (function () {
-  const QUICK_LINKS = [
-    {label:'ประวัติ',page:'about',icon:'fa-id-card'},
-    {label:'ผลงานดิจิทัล',page:'dashboards',icon:'fa-chart-line'},
-    {label:'ห้องปฏิบัติการนวัตกรรม',page:'innovation',icon:'fa-lightbulb'},
-    {label:'งานวิจัย',page:'research',icon:'fa-flask'},
-    {label:'ผลงานตีพิมพ์',page:'publications',icon:'fa-book'},
-    {label:'โครงการ',page:'projects',icon:'fa-diagram-successor'},
-    {label:'วิทยากร / R2R',page:'training',icon:'fa-chalkboard-user'},
-    {label:'เรื่องเล่า / ความรู้',page:'blog',icon:'fa-book-open-reader'},
-    {label:'คลังภาพ',page:'gallery',icon:'fa-images'},
-    {label:'ติดต่อ',page:'contact',icon:'fa-address-book'},
-    {label:'หน้าแรก',page:'home',icon:'fa-house'}
-  ];
+  const canonicalCache = new Map();
+
+  async function fetchAllPublished(sheet) {
+    const rows = [], seen = new Set();
+    let page = 1, total = Infinity, source = apiConfigured() ? 'api' : 'local-preview';
+    while (page <= 250) {
+      const res = await api(sheet, { page, limit:100, status:'published' });
+      source = res.source || source;
+      if (res.unavailable) return { status:'unavailable', source, unavailable:true, data:[], total:0, message:res.message };
+      const rawBatch = res.data || [];
+      const batch = rawBatch.filter(isPublished);
+      batch.forEach(item => {
+        const key = String(item.ID || `${sheet}-${rows.length}`);
+        if (!seen.has(key)) { seen.add(key); rows.push(item); }
+      });
+      total = Number.isFinite(Number(res.total)) ? Number(res.total) : rows.length;
+      if (!rawBatch.length || page * 100 >= total) break;
+      page += 1;
+    }
+    return { status:apiConfigured() ? 'ok':'preview', source, data:rows, total:rows.length };
+  }
+  function getCanonicalData(sheet) {
+    if (!canonicalCache.has(sheet)) canonicalCache.set(sheet, fetchAllPublished(sheet));
+    return canonicalCache.get(sheet);
+  }
 
   function init() {
     const savedTheme = localStorage.getItem('eportfolio_theme') || 'light';
@@ -1236,11 +1290,12 @@ const App = (function () {
     setFontSize(localStorage.getItem('eportfolio_font_size') || 'large');
     loadProfile();
     loadHero();
+    document.getElementById('previewNotice')?.classList.toggle('show', !apiConfigured());
     loadStats();
     renderFeaturedWorks();
+    getCanonicalData('Blog').then(res => renderHomeFootprints(res.data, res.unavailable));
     loadEducation();
     loadMindmap();
-    renderQuickGrid();
     loadContact();
     bindToolbars();
     applyEditModeUI();
@@ -1263,6 +1318,15 @@ const App = (function () {
       });
     }, { threshold:0.08, rootMargin:'0px 0px -30px 0px' });
     blocks.forEach(block => observer.observe(block));
+  }
+
+  function renderHomeFootprints(items, unavailable) {
+    const host = document.getElementById('homeFootprintList');
+    if (!host) return;
+    const recent = (items || []).filter(item => item.Status !== 'draft').sort((a,b)=>String(b.PublishDate||'').localeCompare(String(a.PublishDate||''))).slice(0,3);
+    if (unavailable) { host.innerHTML = '<div class="data-unavailable">ข้อมูลเรื่องเล่ายังไม่พร้อมใช้งาน กรุณาลองใหม่ภายหลัง</div>'; return; }
+    host.innerHTML = recent.map(item => `<button type="button" class="footprint-card" data-blog-id="${esc(item.ID)}" onclick="App.goPage('blog');setTimeout(()=>App.openBlog(this.dataset.blogId),0)">
+      <time datetime="${esc(item.PublishDate||'')}">${esc(formatThaiDate(item.PublishDate||''))}</time><span class="footprint-type">${esc(item.ContentType||item.Category||'บันทึกการทำงาน')}</span><h3>${esc(item.Title)}</h3><p>${esc(item.Excerpt||'')}</p></button>`).join('') || '<div class="blog-empty">กำลังรวบรวมร่องรอยการทำงาน</div>';
   }
 
   /* ---------- THEME: กลางวัน/กลางคืน รวมเป็นปุ่มเดียว สลับอัตโนมัติ, ไว้ทุกข์แยกปุ่ม ---------- */
@@ -1301,7 +1365,7 @@ const App = (function () {
   }
 
   /* ---------- LOGIN / EDIT MODE (รหัสผ่านสำหรับแก้ไขเนื้อหาหน้าเว็บ) ---------- */
-  function openLogin() { document.getElementById('loginModalOverlay').classList.add('show'); document.getElementById('loginPassword').value=''; document.getElementById('loginPassword').focus(); }
+  function openLogin() { document.getElementById('loginModalOverlay').classList.add('show'); document.getElementById('loginPassword').value=''; document.getElementById('loginUsername').focus(); }
   function closeLogin() { document.getElementById('loginModalOverlay').classList.remove('show'); }
   function toggleShowPassword() {
     const input = document.getElementById('loginPassword');
@@ -1311,9 +1375,10 @@ const App = (function () {
     icon.className = show ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
   }
   function submitLogin() {
+    const username = (document.getElementById('loginUsername').value || '').trim();
     const pwd = (document.getElementById('loginPassword').value || '').trim();
     if (isApiConfigured()) {
-      fetch(CONFIG.API_URL, { method:'POST', body:JSON.stringify({ action:'verifyEditPassword', password:pwd }) })
+      fetch(CONFIG.API_URL, { method:'POST', body:JSON.stringify({ action:'verifyAdminCredentials', username, password:pwd }) })
         .then(r=>r.json()).then(res => {
           if (res.status !== 'ok') throw new Error(res.message || 'เข้าสู่ระบบไม่สำเร็จ');
           sessionStorage.setItem('edit_mode','1'); sessionStorage.setItem('edit_token',res.token);
@@ -1321,19 +1386,7 @@ const App = (function () {
         }).catch(err=>showToast(err.message || 'เชื่อมต่อระบบยืนยันตัวตนไม่ได้'));
       return;
     }
-    if (!CONFIG.EDIT_PASSWORD) {
-      showToast('โหมดแก้ไขต้องเชื่อมต่อ Apps Script ก่อนใช้งาน');
-      return;
-    }
-    if (pwd === CONFIG.EDIT_PASSWORD) {
-      sessionStorage.setItem('edit_mode', '1');
-      sessionStorage.setItem('edit_token', 'local-preview');
-      closeLogin();
-      applyEditModeUI();
-      showToast('เข้าสู่ระบบแก้ไขสำเร็จ');
-    } else {
-      showToast('รหัสผ่านไม่ถูกต้อง');
-    }
+    showToast('โหมดแก้ไขต้องเชื่อมต่อ Apps Script ก่อนใช้งาน');
   }
   function logoutEdit() {
     sessionStorage.removeItem('edit_mode'); sessionStorage.removeItem('edit_token');
@@ -1364,7 +1417,7 @@ const App = (function () {
       about: loadAbout, dashboards: () => loadDashboards(true), innovation: loadInnovation,
       research: () => loadResearch(true), publications: () => loadPublications(true),
       projects: () => loadProjects(true), training: () => loadTraining(true),
-      blog: () => loadBlog(true), gallery: () => loadGallery(true)
+      blog: () => loadBlog(true)
     };
     if (map[pageId]) map[pageId]();
   }
@@ -1379,13 +1432,13 @@ const App = (function () {
       document.getElementById('orgLogo').src = resolveImg(p.LogoFileID, 'LOGO-DOAE.png');
       document.getElementById('orgText').innerHTML = `<strong>${esc(p.OrgLine1||'สำนักงานเกษตรจังหวัดกำแพงเพชร')}</strong>${esc(p.OrgLine2||'กรมส่งเสริมการเกษตร')} · ${esc(p.OrgLine3||'กระทรวงเกษตรและสหกรณ์')}`;
       document.getElementById('heroImage').src = resolveImg(p.ProfileImageFileID, '3. Kitti.png?v=portrait-3-3-20260925');
+      if (p.ProfessionalIdentity) document.getElementById('heroRole').textContent = String(p.ProfessionalIdentity).split(',').map(v=>v.trim()).filter(Boolean).join(' · ');
       window._profile = p;
       loadAbout();
       loadContact(p);
     });
   }
 
-  let typingTimer;
   function loadHero() {
     api('Hero').then(res => {
       let h = (res.data && res.data[0]) || {};
@@ -1397,36 +1450,65 @@ const App = (function () {
       document.getElementById('heroSubtitle').textContent = h.Subtitle || '';
       document.getElementById('heroReflection').textContent = h.ReflectionText || '';
       window._hero = h;
-      const phrases = (h.TypingPhrases || 'Agricultural Data Scientist|Agri-Tech Researcher|Digital Innovation Specialist').split('|');
-      typeLoop(document.getElementById('heroTyping'), phrases, 0, 0, true);
+      const roles = String(h.TypingPhrases || '').split('|').map(v=>v.trim()).filter(Boolean);
+      if (roles.length) document.getElementById('heroRole').textContent = roles.join(' · ');
     });
-  }
-  function typeLoop(el, phrases, pIndex, cIndex, typing) {
-    clearTimeout(typingTimer);
-    const phrase = phrases[pIndex % phrases.length];
-    if (typing) {
-      el.textContent = phrase.slice(0, cIndex);
-      if (cIndex <= phrase.length) typingTimer = setTimeout(() => typeLoop(el, phrases, pIndex, cIndex+1, true), 70);
-      else typingTimer = setTimeout(() => typeLoop(el, phrases, pIndex, cIndex, false), 1400);
-    } else {
-      el.textContent = phrase.slice(0, cIndex);
-      if (cIndex >= 0) typingTimer = setTimeout(() => typeLoop(el, phrases, pIndex, cIndex-1, false), 30);
-      else typingTimer = setTimeout(() => typeLoop(el, phrases, pIndex+1, 0, true), 200);
-    }
   }
 
-  function loadStats() {
-    api('DashboardStatistics').then(res => {
-      window._statsData = res.data || [];
-      const grid = document.getElementById('statsGrid');
-      const pageByLabel = label => /วิจัยตีพิมพ์|สิทธิบัตร/.test(label) ? 'publications' : /บทความ/.test(label) ? 'blog' : /ประสบการณ์ทำงาน|ความเชี่ยวชาญ/.test(label) ? 'about' : 'projects';
-      grid.innerHTML = (res.data||[]).map(s => `
-        <button type="button" class="stat-card edit-host" onclick="App.goPage('${esc(s.LinkTarget||pageByLabel(s.Label||''))}')" aria-label="เปิดข้อมูล ${esc(s.Label)}"><i class="fa-solid ${esc(s.Icon||'fa-circle-check')}"></i>
-          <div class="val">${esc(s.Value)}${esc(s.Suffix||'')}</div>
-          <div class="label">${esc(s.Label)}</div>
-          <span class="edit-fab" onclick="event.stopPropagation();App.editStat('${s.ID}')"><i class="fa-solid fa-pen"></i></span>
-        </button>`).join('') || emptyHTML('ยังไม่มีข้อมูลสถิติ');
-    });
+  const metricDefinitions = [
+    {key:'Research',label:'งานวิจัยเผยแพร่',icon:'fa-flask-vial'},
+    {key:'Publications',label:'ผลงานตีพิมพ์และทรัพย์สินทางปัญญา',icon:'fa-book-open'},
+    {key:'Projects',label:'โครงการเผยแพร่',icon:'fa-diagram-project'},
+    {key:'Dashboards',label:'ระบบดิจิทัลเผยแพร่',icon:'fa-display'},
+    {key:'Blog',label:'เรื่องเล่าและองค์ความรู้',icon:'fa-pen-nib'},
+    {key:'Career',label:'ประสบการณ์วิชาชีพที่มีหลักฐาน',icon:'fa-briefcase'}
+  ];
+  async function loadStats() {
+    const grid = document.getElementById('statsGrid');
+    grid.innerHTML = '<div class="data-unavailable">กำลังตรวจนับรายการเผยแพร่…</div>';
+    const results = await Promise.all(metricDefinitions.map(def => getCanonicalData(def.key)));
+    window._metricDatasets = {};
+    const metrics = metricDefinitions.map((def,index) => {
+      const result = results[index];
+      window._metricDatasets[def.key] = result;
+      return Object.assign({},def,{result});
+    }).filter(metric => metric.key !== 'Career' || metric.result.data.length > 0);
+    if (metrics.every(metric => metric.result.unavailable)) {
+      grid.innerHTML = '<div class="data-unavailable"><i class="fa-solid fa-triangle-exclamation"></i> ข้อมูลผลงานยังไม่พร้อมใช้งาน กรุณาลองใหม่ภายหลัง</div>';
+      return;
+    }
+    grid.innerHTML = metrics.map(metric => `<button type="button" class="stat-card" ${metric.result.unavailable?'disabled':''} onclick="App.openMetricDataset('${metric.key}')" aria-label="เปิดรายการ ${esc(metric.label)}"><i class="fa-solid ${metric.icon}"></i><div class="val">${metric.result.unavailable?'—':metric.result.data.length}</div><div class="label">${esc(metric.label)}${metric.result.unavailable?' · ไม่พร้อมใช้งาน':''}</div></button>`).join('');
+  }
+  function metricTitle(item) { return item.Title || item.Label || item.Position || item.NameTH || item.ID || 'ไม่ระบุชื่อ'; }
+  function metricMeta(key,item) {
+    if (key === 'Career') return [item.Organization,item.StartDate && item.EndDate ? `${item.StartDate} – ${item.EndDate}` : (item.StartDate||item.EndDate)].filter(Boolean).join(' · ');
+    if (key === 'Publications') return [item.Type,item.Source,item.Year].filter(Boolean).join(' · ');
+    if (key === 'Research') return [item.Field,item.Year].filter(Boolean).join(' · ');
+    if (key === 'Projects') return [item.Category,item.YearStart && item.YearEnd ? `${item.YearStart} – ${item.YearEnd}` : (item.YearStart||item.YearEnd)].filter(Boolean).join(' · ');
+    return item.Category || item.PublishDate || item.Description || '';
+  }
+  function openMetricDataset(key) {
+    const metric = metricDefinitions.find(item=>item.key===key), result = window._metricDatasets?.[key];
+    if (!metric || !result || result.unavailable) return;
+    document.getElementById('metricTitle').textContent = `${metric.label} (${result.data.length})`;
+    document.getElementById('metricList').innerHTML = result.data.map((item,index)=>`<div class="metric-item"><span class="metric-no">${String(index+1).padStart(2,'0')}</span><div><strong>${esc(metricTitle(item))}</strong>${metricMeta(key,item)?`<p>${esc(metricMeta(key,item))}</p>`:''}</div></div>`).join('') || '<div class="expertise-empty">ไม่มีรายการเผยแพร่</div>';
+    document.getElementById('metricOverlay').classList.add('show'); document.body.style.overflow='hidden';
+  }
+  function closeMetricDataset() { document.getElementById('metricOverlay').classList.remove('show'); document.body.style.overflow=''; }
+
+  function openFieldVideo() {
+    const dock = document.getElementById('fieldVideoDock');
+    const player = document.getElementById('fieldVideoPlayer');
+    if (!dock || !player) return;
+    dock.hidden = false;
+    const playResult = player.play();
+    if (playResult && typeof playResult.catch === 'function') playResult.catch(()=>{});
+  }
+  function closeFieldVideo() {
+    const dock = document.getElementById('fieldVideoDock');
+    const player = document.getElementById('fieldVideoPlayer');
+    if (player) player.pause();
+    if (dock) dock.hidden = true;
   }
 
   function loadEducation() {
@@ -1440,13 +1522,13 @@ const App = (function () {
           <div class="degree">${esc(e.Degree)}</div>
           <div class="field">${esc(e.FieldOfStudy)}</div>
           <div class="uni">${e.UniversityLogoFileID ? `<img src="${driveImg(e.UniversityLogoFileID)}" style="width:18px;height:18px;border-radius:50%;display:inline-block;vertical-align:middle;margin-right:6px">` : ''}${esc(e.UniversityName)}</div>
-          <button class="edit-fab" onclick="App.editEducation('${e.ID}')"><i class="fa-solid fa-pen"></i></button>
+          <button class="edit-fab" aria-label="แก้ไขข้อมูลการศึกษา ${esc(e.Degree)}" onclick="App.editEducation('${e.ID}')"><i class="fa-solid fa-pen"></i></button>
         </div>`).join('') || emptyHTML('ยังไม่มีข้อมูลการศึกษา');
     });
   }
 
   function loadMindmap() {
-    if (!isApiConfigured()) {
+    if (!apiConfigured()) {
       const model = buildFallbackExpertiseModel();
       window._expertiseData = model.nodes;
       window._expertiseRelations = model.relations;
@@ -1457,32 +1539,32 @@ const App = (function () {
     }
     const workTypes = ['Dashboards','Research','Publications','Projects','Training','Blog','References'];
     Promise.all([
-      api('Expertise',{limit:500}), api('ExpertiseRelations',{limit:500}), api('ExpertiseLinks',{limit:500}), api('Mindmap',{limit:500}),
-      ...workTypes.map(type => api(type,{limit:500}))
+      getCanonicalData('Expertise'), getCanonicalData('ExpertiseRelations'), getCanonicalData('ExpertiseLinks'),
+      ...workTypes.map(type => getCanonicalData(type))
     ]).then(results => {
-      let nodes = (results[0].data || []).filter(item => item.Status !== 'draft');
-      let relations = (results[1].data || []).filter(item => item.Status !== 'draft');
-      let links = (results[2].data || []).filter(item => item.Status !== 'draft');
-      if (!nodes.length) {
-        const model = buildFallbackExpertiseModel();
-        nodes = model.nodes; relations = model.relations; links = model.links;
+      if (results.some(result=>result.unavailable)) {
+        document.getElementById('mindmapArea').innerHTML = '<div class="data-unavailable">ข้อมูลความเชี่ยวชาญยังไม่พร้อมใช้งาน</div>';
+        document.getElementById('expertiseDetail').innerHTML = '<div class="expertise-empty">ไม่สามารถอ่านหลักฐานเชื่อมโยงได้ในขณะนี้</div>';
+        return;
       }
+      const nodes = results[0].data || [];
       const registry = {};
-      workTypes.forEach((type,index) => (results[index+4].data || []).forEach(item => {
+      workTypes.forEach((type,index) => (results[index+3].data || []).forEach(item => {
         registry[`${type}:${item.ID}`] = Object.assign({ WorkType:type },item);
       }));
-      PROFESSIONAL_EVIDENCE.forEach(item => { if (!registry[`References:${item.ID}`]) registry[`References:${item.ID}`] = Object.assign({WorkType:'References'},item); });
+      const nodeIds = new Set(nodes.map(node=>String(node.ID)));
+      const relations = (results[1].data || []).filter(rel => nodeIds.has(String(rel.ExpertiseID)) && !!registry[`${rel.WorkType}:${rel.WorkID}`]);
+      const links = (results[2].data || []).filter(link => nodeIds.has(String(link.SourceExpertiseID)) && nodeIds.has(String(link.TargetExpertiseID)) && String(link.SourceExpertiseID)!==String(link.TargetExpertiseID));
       window._expertiseData = nodes;
       window._expertiseRelations = relations;
       window._expertiseLinks = links;
-      window._workRegistry = Object.assign(buildFallbackWorkRegistry(),registry);
+      window._workRegistry = registry;
+      if (!nodes.length) {
+        document.getElementById('mindmapArea').innerHTML = '<div class="expertise-empty">ยังไม่มีหมวดความเชี่ยวชาญที่เผยแพร่</div>';
+        document.getElementById('expertiseDetail').innerHTML = '<div class="expertise-empty">เพิ่มหลักฐานเชื่อมโยงแล้วข้อมูลจะปรากฏที่นี่</div>';
+        return;
+      }
       renderExpertiseGraph(nodes, relations, links);
-    }).catch(() => {
-      const model = buildFallbackExpertiseModel();
-      window._expertiseData = model.nodes; window._expertiseRelations = model.relations;
-      window._expertiseLinks = model.links;
-      window._workRegistry = buildFallbackWorkRegistry();
-      renderExpertiseGraph(model.nodes, model.relations, model.links);
     });
   }
 
@@ -1548,172 +1630,83 @@ const App = (function () {
     return registry;
   }
 
-  /* 3 ระดับ: บุคคล -> ทะเบียนความเชี่ยวชาญ -> ทักษะย่อย เชื่อมผลงานด้วย ID ถาวร */
+  /* Focus explorer: compact categories first, verified work evidence second. */
+  function compactExpertiseLabel(node) {
+    const text = `${node.Name||''} ${node.Category||''}`.toLowerCase();
+    if (/data|visual|gis|ข้อมูล/.test(text)) return 'ข้อมูลและแผนที่';
+    if (/smart|iot|precision|อัจฉริยะ/.test(text)) return 'เกษตรอัจฉริยะ';
+    if (/extension|r2r|ส่งเสริม/.test(text)) return 'ส่งเสริมและ R2R';
+    if (/environment|risk|สิ่งแวดล้อม|ความเสี่ยง/.test(text)) return 'สิ่งแวดล้อมและความเสี่ยง';
+    if (/training|knowledge|mentor|ถ่ายทอด/.test(text)) return 'ถ่ายทอดความรู้';
+    if (/research|innovation|วิจัย|นวัตกรรม/.test(text)) return 'วิจัยและนวัตกรรม';
+    return node.Name || node.Category || 'ความเชี่ยวชาญ';
+  }
   function renderExpertiseGraph(nodes, relations, knowledgeLinks) {
     const area = document.getElementById('mindmapArea');
-    const cx = 340, cy = 280, rx = 235, ry = 185;
+    if (!area) return;
     const parents = nodes.filter(node => !node.ParentID && String(node.Level||'2') === '2').sort((a,b)=>(Number(a.SortOrder)||0)-(Number(b.SortOrder)||0));
-    const n = parents.length || 1;
-    let lines = '';
-    const positions = {};
-    parents.forEach((node,i) => {
-      const angle = (2 * Math.PI / n) * i - Math.PI / 2;
-      positions[node.ID] = {x:cx + Math.cos(angle) * rx,y:cy + Math.sin(angle) * ry,angle};
-    });
-    const nodeById = Object.fromEntries(nodes.map(node=>[String(node.ID),node]));
-    const rootID = id => { const node=nodeById[String(id)]; return node && node.ParentID ? String(node.ParentID) : String(id||''); };
-    (knowledgeLinks||[]).forEach((link,index) => {
-      const sourceID=rootID(link.SourceExpertiseID),targetID=rootID(link.TargetExpertiseID);
-      const source=positions[sourceID],target=positions[targetID];
-      if (!source || !target || sourceID===targetID) return;
-      const bend=(index%2?1:-1)*28, mx=(source.x+target.x)/2, my=(source.y+target.y)/2+bend;
-      lines += `<path class="knowledge-link" data-source-id="${esc(sourceID)}" data-target-id="${esc(targetID)}" d="M ${source.x} ${source.y} Q ${mx} ${my} ${target.x} ${target.y}" style="stroke-width:${1+Math.min(5,Number(link.Weight)||1)*.22}"/>`;
-    });
-    const portrait = resolveImg((window._profile||{}).ProfileImageFileID,'3. Kitti.png?v=portrait-3-3-20260925');
-    let html = `<button class="mindmap-center" style="left:${cx}px;top:${cy}px;border:0;cursor:pointer" onclick="App.resetExpertiseGraph()"><img src="${esc(portrait)}" alt=""><span>Dr. Kitti<br>Phojuang</span></button>`;
-
-    parents.forEach((node, i) => {
-      const {x:bx,y:by,angle} = positions[node.ID];
-      const children = nodes.filter(child => String(child.ParentID) === String(node.ID)).sort((a,b)=>(Number(a.SortOrder)||0)-(Number(b.SortOrder)||0));
-      const linkedIDs = new Set([node.ID,...children.map(child=>child.ID)]);
-      const relationCount = new Set(relations.filter(rel=>linkedIDs.has(rel.ExpertiseID)).map(rel=>`${rel.WorkType}:${rel.WorkID}`)).size;
-      const weight = Math.min(5,relationCount);
-      const bend = i%2===0 ? 18 : -18;
-      const mx = (cx+bx)/2 + Math.cos(angle+Math.PI/2)*bend, my = (cy+by)/2 + Math.sin(angle+Math.PI/2)*bend;
-      const path = `M ${cx} ${cy} Q ${mx} ${my} ${bx} ${by}`;
-      lines += `<path class="expertise-line" data-expertise-id="${esc(node.ID)}" d="${path}" style="--line-color:${esc(node.Color||'#2E7D32')};stroke-width:${1.5+weight*.25}"/><path class="expertise-line flow" data-expertise-id="${esc(node.ID)}" d="${path}" style="--line-color:${esc(node.Color||'#2E7D32')}"/>`;
-      html += `<button class="mindmap-node level2" data-expertise-id="${esc(node.ID)}" style="left:${bx}px;top:${by}px;--node-color:${esc(node.Color||'#2E7D32')}" onclick="App.focusExpertise('${esc(node.ID)}')">
-        <i class="fa-solid ${esc(node.Icon||'fa-circle')}"></i><span class="node-label">${esc(node.Name)}</span>${relationCount?`<span class="relation-count">${relationCount}</span>`:''}
-      </button>`;
-
-      const m = children.length;
-      children.forEach((child, j) => {
-        const spread = (22 * Math.PI / 180);
-        const childAngle = angle + (j - (m - 1) / 2) * spread;
-        const lx = bx + Math.cos(childAngle) * 92, ly = by + Math.sin(childAngle) * 72;
-        const childPath = `M ${bx} ${by} Q ${(bx+lx)/2} ${(by+ly)/2} ${lx} ${ly}`;
-        lines += `<path class="expertise-line child-line" data-parent-id="${esc(node.ID)}" d="${childPath}" style="--line-color:${esc(child.Color||node.Color||'#D4A017')}"/>`;
-        html += `<button class="mindmap-node level3" data-expertise-id="${esc(child.ID)}" data-parent-id="${esc(node.ID)}" style="left:${lx}px;top:${ly}px;--node-color:${esc(child.Color||node.Color||'#D4A017')}" onclick="App.focusExpertise('${esc(child.ID)}')">${esc(child.Name)}</button>`;
-      });
-    });
-
-    area.innerHTML = `<svg class="connections" viewBox="0 0 680 560">${lines}</svg>` + html;
-    resetExpertiseGraph();
+    area.innerHTML = parents.map(node => {
+      const ids = new Set([String(node.ID),...nodes.filter(child=>String(child.ParentID)===String(node.ID)).map(child=>String(child.ID))]);
+      const evidenceCount = new Set(relations.filter(rel=>ids.has(String(rel.ExpertiseID))).map(rel=>`${rel.WorkType}:${rel.WorkID}`)).size;
+      return `<button type="button" class="focus-card" data-expertise-id="${esc(node.ID)}" data-work-types="${esc(relations.filter(rel=>ids.has(String(rel.ExpertiseID))).map(rel=>rel.WorkType).join(' '))}" style="--node-color:${esc(node.Color||'#2E7D32')}" aria-expanded="false" onclick="App.focusExpertise('${esc(node.ID)}')"><i class="fa-solid ${esc(node.Icon||'fa-circle-nodes')}"></i><span><strong>${esc(compactExpertiseLabel(node))}</strong><small>${esc(node.Name||'')}</small></span><span class="evidence-snapshot" title="จำนวนผลงานอ้างอิง">${evidenceCount}</span></button>`;
+    }).join('') || '<div class="expertise-empty">ยังไม่มีหมวดความเชี่ยวชาญที่เผยแพร่</div>';
+    focusExpertise('');
   }
-
   function focusExpertise(id) {
-    const nodes = window._expertiseData || [];
-    const relations = window._expertiseRelations || [];
-    const knowledgeLinks = window._expertiseLinks || [];
-    const detail = document.getElementById('expertiseDetail');
-    const area = document.getElementById('mindmapArea');
-    if (!detail || !area) return;
-    const selected = nodes.find(node => String(node.ID) === String(id));
-    area.classList.toggle('has-focus',!!selected);
-    const selectedParentID = selected ? (selected.ParentID || selected.ID) : '';
-    const nodeById = Object.fromEntries(nodes.map(node=>[String(node.ID),node]));
-    const rootID = nodeID => { const node=nodeById[String(nodeID)]; return node && node.ParentID ? String(node.ParentID) : String(nodeID||''); };
-    const graphRelations = knowledgeLinks.map(link=>Object.assign({},link,{SourceRootID:rootID(link.SourceExpertiseID),TargetRootID:rootID(link.TargetExpertiseID)}));
-    const neighbors = new Set();
-    graphRelations.forEach(link => {
-      if (String(link.SourceRootID)===String(selectedParentID)) neighbors.add(String(link.TargetRootID));
-      if (String(link.TargetRootID)===String(selectedParentID)) neighbors.add(String(link.SourceRootID));
-    });
-    area.querySelectorAll('.mindmap-node[data-expertise-id]').forEach(el => {
-      const active = String(el.dataset.expertiseId) === String(id);
-      const elementRoot = String(el.dataset.parentId || el.dataset.expertiseId);
-      const graphNeighbor = !!selected && neighbors.has(elementRoot);
-      const related = selected && (String(el.dataset.parentId) === String(selectedParentID) || String(el.dataset.expertiseId) === String(selectedParentID) || graphNeighbor);
-      el.classList.toggle('active',active); el.classList.toggle('related',!!related);
-      el.classList.toggle('graph-neighbor',graphNeighbor && el.classList.contains('level2'));
-      if (el.classList.contains('level3')) el.classList.toggle('visible',!!selected && String(el.dataset.parentId) === String(selectedParentID));
-    });
-    area.querySelectorAll('.expertise-line').forEach(line => {
-      line.classList.toggle('active',!!selected && (String(line.dataset.expertiseId)===String(selectedParentID) || String(line.dataset.parentId)===String(selectedParentID)));
-      if (line.classList.contains('child-line')) line.classList.toggle('visible',!!selected && String(line.dataset.parentId)===String(selectedParentID));
-    });
-    area.querySelectorAll('.knowledge-link').forEach(line => {
-      line.classList.toggle('active',!!selected && (String(line.dataset.sourceId)===String(selectedParentID) || String(line.dataset.targetId)===String(selectedParentID)));
-    });
+    const nodes = window._expertiseData || [], relations = window._expertiseRelations || [], links = window._expertiseLinks || [];
+    const registry = window._workRegistry || {}, area = document.getElementById('mindmapArea'), detail = document.getElementById('expertiseDetail');
+    if (!area || !detail) return;
+    const selected = nodes.find(node=>String(node.ID)===String(id));
+    area.querySelectorAll('.focus-card').forEach(card=>{ const active=String(card.dataset.expertiseId)===String(id); card.classList.toggle('active',active); card.setAttribute('aria-expanded',String(active)); });
     if (!selected) {
+      const verified = new Set(relations.filter(rel=>registry[`${rel.WorkType}:${rel.WorkID}`]).map(rel=>`${rel.WorkType}:${rel.WorkID}`));
       detail.style.setProperty('--detail-color','#2E7D32');
-      const parents = nodes.filter(node=>!node.ParentID);
-      detail.innerHTML = `<div class="detail-eyebrow">Expertise Intelligence</div><h4>เครือข่ายความเชี่ยวชาญ</h4><p>เลือกกลุ่มความเชี่ยวชาญเพื่อเปิดทักษะย่อย ผลงานอ้างอิง และโหนดความรู้ที่เกี่ยวข้อง</p><div class="expertise-metrics"><div class="expertise-metric"><strong>${parents.length}</strong><span>กลุ่มเชิงกลยุทธ์</span></div><div class="expertise-metric"><strong>${relations.length}</strong><span>ความสัมพันธ์ผลงาน</span></div><div class="expertise-metric"><strong>${knowledgeLinks.length}</strong><span>ลิงก์องค์ความรู้</span></div></div>`;
+      detail.innerHTML = `<div class="detail-eyebrow">FOCUS EXPLORER</div><h4>เลือกประเด็นที่ต้องการสำรวจ</h4><p>แต่ละหมวดแสดงเฉพาะความสัมพันธ์ที่อ้างถึงรายการผลงานซึ่งมีอยู่จริงในชุดข้อมูลปัจจุบัน</p><div class="expertise-metrics"><div class="expertise-metric"><strong>${nodes.filter(node=>!node.ParentID).length}</strong><span>หมวดความเชี่ยวชาญ</span></div><div class="expertise-metric"><strong>${verified.size}</strong><span>หลักฐานผลงาน</span></div></div>`;
       return;
     }
-    const parentNode = selected.ParentID ? nodes.find(node=>String(node.ID)===String(selected.ParentID)) : selected;
-    const children = nodes.filter(node=>String(node.ParentID)===String(parentNode?.ID));
-    const childIDs = children.map(node=>node.ID);
-    const expertiseIDs = new Set([parentNode?.ID,...childIDs]);
-    const relationMap = new Map();
-    relations.filter(rel=>expertiseIDs.has(rel.ExpertiseID)).forEach(rel => {
-      const key = `${rel.WorkType}:${rel.WorkID}`, existing = relationMap.get(key);
-      if (!existing) relationMap.set(key,Object.assign({},rel));
-      else {
-        existing.Weight = Math.max(Number(existing.Weight)||0,Number(rel.Weight)||0);
-        if (rel.Note && !String(existing.Note||'').includes(rel.Note)) existing.Note = [existing.Note,rel.Note].filter(Boolean).join(' · ');
-      }
-    });
-    const linked = [...relationMap.values()].sort((a,b)=>(Number(b.Weight)||0)-(Number(a.Weight)||0));
-    const pageByType = {Dashboards:'dashboards',Research:'research',Publications:'publications',Projects:'projects',Training:'training',Blog:'blog',References:'training'};
-    const labels = {Dashboards:'ผลงานดิจิทัล',Research:'งานวิจัย',Publications:'ผลงานตีพิมพ์',Projects:'โครงการ',Training:'กิจกรรมพัฒนา',Blog:'เรื่องเล่า / ความรู้',References:'หลักฐานอ้างอิง'};
-    const works = linked.map(rel => {
-      const work = (window._workRegistry||{})[`${rel.WorkType}:${rel.WorkID}`];
-      if (!work) return '';
-      return `<div class="expertise-work"><span class="work-type">${esc(labels[rel.WorkType]||rel.WorkType)}</span><div><strong>${esc(work.Title||work.Label||rel.WorkID)}</strong>${rel.Note?`<p>${esc(rel.Note)}</p>`:''}</div><button title="เปิดหน้าที่เกี่ยวข้อง" onclick="App.goPage('${pageByType[rel.WorkType]||selected.LinkTarget||'home'}')"><i class="fa-solid fa-arrow-right"></i></button></div>`;
-    }).filter(Boolean).join('');
-    const chips = children.map(child=>`<button onclick="App.focusExpertise('${esc(child.ID)}')">${esc(child.Name)}</button>`).join('');
-    const relationTypeLabels = {supports:'สนับสนุน',applies:'ประยุกต์ใช้',extends:'ต่อยอด',evidence:'หลักฐานร่วม',related:'เกี่ยวข้อง'};
-    const graphMap = new Map();
-    graphRelations.filter(link=>String(link.SourceRootID)===String(parentNode?.ID)||String(link.TargetRootID)===String(parentNode?.ID)).forEach(link => {
-      const otherID=String(link.SourceRootID)===String(parentNode?.ID)?link.TargetRootID:link.SourceRootID;
-      const existing=graphMap.get(otherID);
-      if (!existing || Number(link.Weight)>Number(existing.Weight)) graphMap.set(otherID,Object.assign({},link,{OtherID:otherID}));
-    });
-    const graphItems=[...graphMap.values()].sort((a,b)=>(Number(b.Weight)||0)-(Number(a.Weight)||0));
-    const graphHTML=graphItems.map(link=>{const other=nodeById[String(link.OtherID)];return other?`<div class="knowledge-relation"><button onclick="App.focusExpertise('${esc(other.ID)}')">${esc(other.Name)}</button><span>${esc(relationTypeLabels[link.RelationType]||link.RelationType||'เกี่ยวข้อง')} · ${esc(link.Weight||1)}/5</span>${link.Note?`<p>${esc(link.Note)}</p>`:''}</div>`:''}).join('');
-    detail.style.setProperty('--detail-color',parentNode?.Color||selected.Color||'#2E7D32');
-    detail.innerHTML = `<div class="detail-eyebrow">Strategic Expertise</div><h4><i class="fa-solid ${esc(parentNode?.Icon||selected.Icon||'fa-circle-nodes')}"></i> ${esc(selected.Name)}</h4><p>${esc(selected.Description||`ความเชี่ยวชาญด้าน ${selected.Name}`)}</p><div class="expertise-metrics"><div class="expertise-metric"><strong>${children.length}</strong><span>ทักษะย่อย</span></div><div class="expertise-metric"><strong>${linked.length}</strong><span>ผลงานเชื่อมโยง</span></div><div class="expertise-metric"><strong>${graphItems.length}</strong><span>โหนดที่เกี่ยวข้อง</span></div></div>${chips?`<div class="skill-chips">${chips}</div>`:''}<div class="expertise-related-list">${works||'<div class="expertise-empty">ยังไม่มีผลงานที่เชื่อมโยงกับหัวข้อนี้</div>'}</div>${graphHTML?`<div class="knowledge-relations"><h5>Knowledge Links</h5>${graphHTML}</div>`:''}`;
+    const parent = selected.ParentID ? nodes.find(node=>String(node.ID)===String(selected.ParentID)) : selected;
+    const children = nodes.filter(node=>String(node.ParentID)===String(parent?.ID));
+    const ids = new Set([String(parent?.ID),...children.map(child=>String(child.ID))]);
+    const relMap = new Map();
+    relations.filter(rel=>ids.has(String(rel.ExpertiseID))).forEach(rel=>{ const key=`${rel.WorkType}:${rel.WorkID}`; if (registry[key] && !relMap.has(key)) relMap.set(key,rel); });
+    const linked = [...relMap.values()].sort((a,b)=>metricTitle(registry[`${a.WorkType}:${a.WorkID}`]).localeCompare(metricTitle(registry[`${b.WorkType}:${b.WorkID}`]),'th'));
+    const labels = {Dashboards:'ระบบดิจิทัล',Research:'งานวิจัย',Publications:'ผลงานตีพิมพ์',Projects:'โครงการ',Training:'กิจกรรมพัฒนา',Blog:'เรื่องเล่า',References:'หลักฐานอ้างอิง'};
+    const works = linked.map(rel=>{ const work=registry[`${rel.WorkType}:${rel.WorkID}`]; const image=resolveImg(work.CoverImageFileID||work.CoverImageURL||work.ImageURL,''); const thumb=image?`<img class="work-thumb" src="${esc(image)}" alt="">`:`<span class="work-thumb" style="display:grid;place-items:center" aria-hidden="true"><i class="fa-solid fa-file-lines"></i></span>`; return `<button type="button" class="expertise-work" onclick="App.openWorkDetail('${esc(rel.WorkType)}','${esc(rel.WorkID)}')">${thumb}<span class="work-type">${esc(labels[rel.WorkType]||rel.WorkType)}</span><div><strong>${esc(metricTitle(work))}</strong>${rel.Note?`<p>${esc(rel.Note)}</p>`:''}</div><span aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span></button>`; }).join('');
+    const neighborIds = new Set();
+    links.forEach(link=>{ if(String(link.SourceExpertiseID)===String(parent?.ID)) neighborIds.add(String(link.TargetExpertiseID)); if(String(link.TargetExpertiseID)===String(parent?.ID)) neighborIds.add(String(link.SourceExpertiseID)); });
+    const neighbors = [...neighborIds].map(otherId=>nodes.find(node=>String(node.ID)===otherId)).filter(Boolean).map(node=>`<div class="knowledge-relation"><button onclick="App.focusExpertise('${esc(node.ID)}')">${esc(compactExpertiseLabel(node))}</button></div>`).join('');
+    detail.style.setProperty('--detail-color',parent?.Color||'#2E7D32');
+    detail.innerHTML = `<div class="detail-eyebrow">${esc(compactExpertiseLabel(parent))}</div><h4><i class="fa-solid ${esc(parent?.Icon||'fa-circle-nodes')}"></i> ${esc(parent?.Name||'')}</h4><p>${esc(parent?.Description||'')}</p>${children.length?`<div class="skill-chips">${children.map(child=>`<button onclick="App.focusExpertise('${esc(child.ID)}')">${esc(child.Name)}</button>`).join('')}</div>`:''}<div class="expertise-related-list">${works||'<div class="expertise-empty">ยังไม่มีผลงานที่ตรวจสอบความเชื่อมโยงได้</div>'}</div>${neighbors?`<div class="knowledge-relations"><h5>ประเด็นที่เกี่ยวข้อง</h5>${neighbors}</div>`:''}`;
   }
-
-  function searchExpertise(value) {
-    const q = String(value||'').trim().toLowerCase();
-    const area = document.getElementById('mindmapArea');
-    const nodes = window._expertiseData || [];
-    if (!area) return;
-    area.querySelectorAll('.mindmap-node[data-expertise-id]').forEach(el => {
-      const item = nodes.find(node=>String(node.ID)===String(el.dataset.expertiseId));
-      const descendants = item && !item.ParentID ? nodes.filter(node=>String(node.ParentID)===String(item.ID)) : [];
-      const searchable = [item,...descendants].filter(Boolean).map(node=>`${node.Name||''} ${node.Category||''} ${node.Description||''}`).join(' ').toLowerCase();
-      const match = !q || searchable.includes(q);
-      el.classList.toggle('search-muted',!match); el.classList.toggle('search-match',!!q&&match);
+  function applyExpertiseFilters() {
+    const q=String(document.getElementById('expertiseSearch')?.value||'').trim().toLowerCase();
+    const workType=String(document.getElementById('expertiseWorkFilter')?.value||'');
+    const nodes=window._expertiseData||[], area=document.getElementById('mindmapArea');
+    if(!area) return;
+    area.querySelectorAll('.focus-card').forEach(card=>{
+      const node=nodes.find(item=>String(item.ID)===String(card.dataset.expertiseId));
+      const children=nodes.filter(item=>String(item.ParentID)===String(node?.ID));
+      const text=[node,...children].filter(Boolean).map(item=>`${item.Name||''} ${item.Category||''} ${item.Description||''}`).join(' ').toLowerCase();
+      const matchesText=!q||text.includes(q);
+      const matchesType=!workType||String(card.dataset.workTypes||'').split(' ').includes(workType);
+      card.hidden=!(matchesText&&matchesType);
     });
   }
-
+  function searchExpertise(value) { const input=document.getElementById('expertiseSearch'); if(input&&input.value!==String(value||''))input.value=String(value||''); applyExpertiseFilters(); }
   function filterExpertiseWorks(workType) {
-    const area = document.getElementById('mindmapArea');
-    const nodes = window._expertiseData || [], relations = window._expertiseRelations || [];
-    if (!area) return;
-    area.classList.toggle('is-filtered',!!workType);
-    area.querySelectorAll('.mindmap-node[data-expertise-id]').forEach(el => {
-      const id = el.dataset.expertiseId;
-      const descendants = nodes.filter(node=>String(node.ParentID)===String(id)).map(node=>node.ID);
-      const ids = new Set([id,...descendants]);
-      const match = !workType || relations.some(rel=>ids.has(rel.ExpertiseID)&&rel.WorkType===workType);
-      el.classList.toggle('filter-muted',!match);
-    });
+    const filter=document.getElementById('expertiseWorkFilter'); if(filter&&filter.value!==String(workType||''))filter.value=String(workType||''); applyExpertiseFilters();
   }
+  function resetExpertiseGraph() { const search=document.getElementById('expertiseSearch'),filter=document.getElementById('expertiseWorkFilter'); if(search)search.value='';if(filter)filter.value='';searchExpertise('');filterExpertiseWorks('');focusExpertise(''); }
 
-  function resetExpertiseGraph() {
-    const search = document.getElementById('expertiseSearch'), filter = document.getElementById('expertiseWorkFilter');
-    if (search) search.value=''; if (filter) filter.value='';
-    searchExpertise(''); filterExpertiseWorks(''); focusExpertise('');
+  function openWorkDetail(type,id) {
+    const work=(window._workRegistry||{})[`${type}:${id}`]; if(!work) return;
+    const fieldMap = {Problem:'โจทย์/ปัญหา',Hypothesis:'สมมติฐาน',Prototype:'ต้นแบบ',TestMethod:'วิธีทดสอบ',Results:'ผลลัพธ์',NextStep:'ขั้นตอนถัดไป',Role:'บทบาท',Area:'พื้นที่',Description:'รายละเอียด',Abstract:'บทคัดย่อ',Authors:'ผู้เขียน',Organization:'หน่วยงาน',StartDate:'วันที่เริ่ม',EndDate:'วันที่สิ้นสุด',Source:'แหล่งตีพิมพ์',Year:'ปี'};
+    const fields = Object.entries(fieldMap).filter(([key])=>work[key]).map(([key,label])=>`<div class="work-detail-row"><strong>${label}</strong><p>${esc(work[key])}</p></div>`).join('');
+    const url = [work.EvidenceURL,work.EmbedURL,work.DOI_URL,work.FileURL,work.SourceURL].map(usableEvidenceUrl).find(Boolean);
+    document.getElementById('workDetailContent').innerHTML = `<div class="detail-eyebrow">หลักฐานผลงาน</div><h2 id="workDetailTitle">${esc(metricTitle(work))}</h2><div class="work-detail-grid">${fields||'<div class="expertise-empty">ไม่มีรายละเอียดเพิ่มเติม</div>'}</div>${url?`<div class="work-detail-actions"><a class="visit-work" href="${esc(url)}" target="_blank" rel="noopener noreferrer">เปิดหลักฐานต้นฉบับ <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>`:''}`;
+    document.getElementById('workDetailOverlay').classList.add('show'); document.body.style.overflow='hidden';
   }
-
-  function renderQuickGrid() {
-    document.getElementById('quickGrid').innerHTML = QUICK_LINKS.map(q => `
-      <div class="quick-card" onclick="App.goPage('${q.page}')"><i class="fa-solid ${q.icon}"></i><span>${q.label}</span></div>`).join('');
-  }
+  function closeWorkDetail(){document.getElementById('workDetailOverlay').classList.remove('show');document.body.style.overflow='';}
 
   function renderFeaturedWorks() {
     const grid = document.getElementById('featuredWorksGrid');
@@ -1769,14 +1762,23 @@ const App = (function () {
       const params = Object.assign({ page, limit }, opts.getParams());
       api(opts.sheet, params).then(res => {
         const grid = document.getElementById(opts.gridId);
+        if (res.unavailable) {
+          if (page === 1) grid.innerHTML = '<div class="data-unavailable">ข้อมูลยังไม่พร้อมใช้งาน กรุณาลองใหม่ภายหลัง</div>';
+          const unavailableButton = opts.loadMoreId ? document.getElementById(opts.loadMoreId) : null;
+          if (unavailableButton) unavailableButton.style.display = 'none';
+          return;
+        }
         if (page === 1 && !(res.data||[]).length) { grid.innerHTML = emptyHTML('ยังไม่มีข้อมูล'); }
         grid.insertAdjacentHTML('beforeend', (res.data||[]).map(opts.renderItem).join(''));
-        const btn = document.getElementById(opts.loadMoreId);
+        const btn = opts.loadMoreId ? document.getElementById(opts.loadMoreId) : null;
         if (btn) btn.style.display = (page * limit < res.total) ? 'block' : 'none';
         page++;
       });
     }
-    if (opts.loadMoreId) document.getElementById(opts.loadMoreId).onclick = () => load(false);
+    if (opts.loadMoreId) {
+      const loadMore = document.getElementById(opts.loadMoreId);
+      if (loadMore) loadMore.onclick = () => load(false);
+    }
     return load;
   }
 
@@ -1803,15 +1805,30 @@ const App = (function () {
     loadDashboardsFn(reset);
   }
 
-  /* ---------- INNOVATION (reuse Projects: category Smart Farming/Precision Agriculture as timeline) ---------- */
+  /* ---------- INNOVATION LAB: only projects explicitly marked as innovations ---------- */
   function loadInnovation() {
-    api('Projects', { limit: 100 }).then(res => {
-      document.getElementById('innovationTimeline').innerHTML = (res.data||[]).map(p => `
-        <div class="timeline-card">
-          ${p.CoverImageFileID?`<img src="${driveImg(p.CoverImageFileID)}">`:''}
-          <div class="degree">${esc(p.Title)}</div><div class="field">${esc(p.Category)}</div>
-          <div class="year">${esc(p.YearStart)} - ${esc(p.YearEnd)}</div>
-        </div>`).join('') || emptyHTML('ยังไม่มีข้อมูลนวัตกรรม');
+    api('Projects', { limit: 100, status:'published', isInnovation:true }).then(res => {
+      const host = document.getElementById('innovationTimeline');
+      if (res.unavailable) {
+        host.innerHTML = '<div class="data-unavailable">ข้อมูลห้องปฏิบัติการนวัตกรรมยังไม่พร้อมใช้งาน กรุณาลองใหม่ภายหลัง</div>';
+        return;
+      }
+      host.innerHTML = (res.data||[]).filter(p=>isPublished(p)&&truthyFlag(p.IsInnovation)).map(p => {
+        const image = resolveImg(p.CoverImageFileID || p.CoverImageURL, '');
+        const fields = [
+          ['โจทย์/ปัญหา',p.Problem], ['สมมติฐาน',p.Hypothesis], ['ต้นแบบ',p.Prototype],
+          ['วิธีทดสอบ',p.TestMethod], ['ผลลัพธ์',p.Results], ['ขั้นตอนถัดไป',p.NextStep]
+        ].filter(([,value])=>value);
+        const evidenceURL = usableEvidenceUrl(p.EvidenceURL || p.EmbedURL || p.SourceURL);
+        return `<article class="innovation-card">
+          ${image?`<img class="cover" src="${esc(image)}" loading="lazy" alt="ภาพหลักฐาน ${esc(p.Title)}">`:''}
+          <span class="tag">${esc(p.Category||'Innovation Lab')}</span><h3>${esc(p.Title)}</h3>
+          <div class="innovation-meta">${esc([p.Role,p.Area,p.YearStart&&p.YearEnd?`${p.YearStart} – ${p.YearEnd}`:(p.YearStart||p.YearEnd)].filter(Boolean).join(' · '))}</div>
+          ${p.Description?`<p>${esc(p.Description)}</p>`:''}
+          <details><summary>ดูกระบวนการทดลองและผลลัพธ์</summary><dl class="innovation-fields">${fields.map(([label,value])=>`<div class="innovation-field"><dt>${label}</dt><dd>${esc(value)}</dd></div>`).join('')||'<div class="expertise-empty">ยังไม่มีรายละเอียดกระบวนการทดลอง</div>'}</dl></details>
+          ${evidenceURL?`<a class="visit-work" href="${esc(evidenceURL)}" target="_blank" rel="noopener noreferrer">เปิดหลักฐาน <i class="fa-solid fa-arrow-up-right-from-square"></i></a>`:''}
+        </article>`;
+      }).join('') || emptyHTML('ยังไม่มีโครงการนวัตกรรมที่เผยแพร่');
     });
   }
 
@@ -1882,8 +1899,9 @@ const App = (function () {
   }
 
   function allEvidence() {
-    // ให้ข้อมูลจากฐานจริงมีสิทธิ์ทับข้อมูลตั้งต้น เมื่อใช้ URL อ้างอิงเดียวกัน
-    const combined = (window._remoteEvidence || []).concat(loadLocalEvidence(), PROFESSIONAL_EVIDENCE, CV_TRAINING_EVIDENCE);
+    const combined = apiConfigured()
+      ? (window._remoteTrainingEvidence || []).concat(window._remoteEvidence || [])
+      : loadLocalEvidence().concat(PROFESSIONAL_EVIDENCE, CV_TRAINING_EVIDENCE);
     const seen = new Set();
     return combined.filter(item => {
       const key = normalizeReferenceUrl(item.SourceURL || '') || item.ID;
@@ -1918,6 +1936,14 @@ const App = (function () {
   }
 
   function renderEvidenceTimeline() {
+    const timeline = document.getElementById('evidenceTimeline');
+    if (!timeline) return;
+    if (window._evidenceUnavailable) {
+      const summary = document.getElementById('evidenceSummary');
+      if (summary) summary.innerHTML = '';
+      timeline.innerHTML = '<div class="data-unavailable">ข้อมูลหลักฐานวิชาชีพยังไม่พร้อมใช้งาน กรุณาลองใหม่ภายหลัง</div>';
+      return;
+    }
     const items = allEvidence();
     setupEvidenceFilters(items);
     const q = (document.getElementById('evidenceSearch')?.value || '').trim().toLowerCase();
@@ -1935,8 +1961,6 @@ const App = (function () {
       <div class="summary-box"><strong>${new Set(items.map(i=>String(i.EventDate).slice(0,4))).size}</strong><span>ปีที่มีผลงาน</span></div>
       <div class="summary-box"><strong>${items.filter(i=>/วิทยากร|ผู้ทรงคุณวุฒิ/.test(i.Role||'')).length}</strong><span>บทบาทวิทยากร/ผู้ทรงคุณวุฒิ</span></div>`;
 
-    const timeline = document.getElementById('evidenceTimeline');
-    if (!timeline) return;
     timeline.innerHTML = filtered.length ? filtered.map(item => {
       const color = item.Color || EVIDENCE_COLORS[item.Category] || '#1B5E20';
       const dateParts = formatThaiDate(item.EventDate).split(' ');
@@ -1948,22 +1972,31 @@ const App = (function () {
         <div class="evidence-role"><i class="fa-solid fa-user-tie"></i>${esc(item.Role)}</div>
         <p class="summary">${esc(item.Summary)}</p>
         <div class="citation-box"><strong>การอ้างอิง:</strong> ${esc(makeReferenceCitation(item))}</div>
-        <div class="evidence-actions"><span class="source-name">${esc(item.SourceName)}</span><a class="source-link" href="${esc(item.SourceURL)}" target="_blank" rel="noopener noreferrer">ดูหลักฐานต้นฉบับ <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
+        <div class="evidence-actions"><span class="source-name">${esc(item.SourceName)}</span>${item.SourceURL?`<a class="source-link" href="${esc(item.SourceURL)}" target="_blank" rel="noopener noreferrer">ดูหลักฐานต้นฉบับ <i class="fa-solid fa-arrow-up-right-from-square"></i></a>`:''}${item.CertificateFileID?`<button class="source-link" type="button" onclick="App.openLightbox('${esc(resolveImg(item.CertificateFileID))}')"><i class="fa-solid fa-certificate"></i> ดูใบประกาศ</button>`:''}</div>
       </article>`;
     }).join('') : `<div class="empty-evidence"><i class="fa-solid fa-magnifying-glass"></i><p>ไม่พบหลักฐานที่ตรงกับตัวกรอง</p></div>`;
   }
 
   function loadTraining() {
-    renderEvidenceTimeline();
-    if (isApiConfigured() && !window._referencesRequested) {
+    if (!isApiConfigured()) {
+      window._evidenceUnavailable = false;
+      renderEvidenceTimeline();
+      return;
+    }
+    if (!window._referencesRequested) {
       window._referencesRequested = true;
-      api('References', { limit:500 }).then(res => {
-        window._remoteEvidence = (res.data || []).filter(item => item.Status !== 'draft');
+      document.getElementById('evidenceTimeline').innerHTML = '<div class="data-unavailable">กำลังอ่านหลักฐานที่เผยแพร่…</div>';
+      Promise.all([fetchAllPublished('References'), fetchAllPublished('Training')]).then(([res,training]) => {
+        window._evidenceUnavailable = !!(res.unavailable || training.unavailable);
+        window._remoteEvidence = res.unavailable ? [] : res.data;
+        window._remoteTrainingEvidence = training.unavailable ? [] : training.data.map(item=>Object.assign({},item,{EventDate:item.EventDate||item.Date,Category:item.Category||item.Type||'การพัฒนาบุคลากร',Summary:item.Summary||item.Organizer,SourceName:item.SourceName||item.Organizer}));
         evidenceFiltersReady = false;
         document.getElementById('evidenceCategory').innerHTML = '<option value="">ทุกหมวดหมู่</option>';
         document.getElementById('evidenceYear').innerHTML = '<option value="">ทุกปี</option>';
         renderEvidenceTimeline();
-      }).catch(()=>{});
+      }).catch(()=>{ window._evidenceUnavailable = true; renderEvidenceTimeline(); });
+    } else {
+      renderEvidenceTimeline();
     }
   }
 
@@ -2010,13 +2043,18 @@ const App = (function () {
       ${renderBlogMedia(item,'blog-card-media')}<div class="blog-card-copy">${blogBadges(item)}<h3>${esc(item.Title)}</h3><p>${esc(item.Excerpt)}</p>${blogMeta(item,false)}</div></article>`).join('') : (featured ? '' : '<div class="blog-empty"><i class="fa-solid fa-magnifying-glass"></i><p>ไม่พบเนื้อหาที่ตรงกับตัวกรอง</p></div>');
   }
   function loadBlog() {
-    api('Blog',{limit:500,status:'published'}).then(res => {
-      window._blogData = res.data || [];
+    getCanonicalData('Blog').then(res => {
+      window._blogData = res.unavailable ? [] : res.data;
       blogFiltersReady = false;
       document.getElementById('blogContentType').innerHTML = '<option value="">ทุกประเภทเนื้อหา</option>';
       document.getElementById('blogSourceType').innerHTML = '<option value="">ทุกแหล่งที่มา</option>';
+      if (res.unavailable) {
+        document.getElementById('blogFeatured').innerHTML = '';
+        document.getElementById('blogGrid').innerHTML = '<div class="data-unavailable">ข้อมูลเรื่องเล่ายังไม่พร้อมใช้งาน กรุณาลองใหม่ภายหลัง</div>';
+        return;
+      }
       renderBlogCollection();
-    }).catch(()=>{ window._blogData = FALLBACK_DATA.Blog; renderBlogCollection(); });
+    });
   }
   function openBlog(id) {
     const item = (window._blogData || []).find(entry=>String(entry.ID)===String(id));
@@ -2027,12 +2065,22 @@ const App = (function () {
     document.getElementById('blogReaderTitle').textContent = item.Title || '';
     document.getElementById('blogReaderMeta').innerHTML = `<span><i class="fa-solid fa-user-pen"></i>${esc(item.Author || 'ดร.กิตติ โพธิ์จวง')}</span>${blogMeta(item,false).replace(/^<div class="blog-meta">|<\/div>$/g,'')}`;
     document.getElementById('blogReaderBody').innerHTML = String(item.Content || item.Excerpt || '').split(/\n\s*\n/).filter(Boolean).map(p=>`<p>${esc(p).replace(/\n/g,'<br>')}</p>`).join('');
+    window._activeBlogId = String(id);
+    const evidenceHost = document.getElementById('blogReaderEvidence');
+    evidenceHost.hidden = true; evidenceHost.innerHTML = '';
+    api('EvidenceImages',{limit:500}).then(res=>{
+      const images = (res.data||[]).filter(image=>String(image.BlogID)===String(id) && image.Status!=='draft').sort((a,b)=>(Number(a.SortOrder)||0)-(Number(b.SortOrder)||0));
+      if (!images.length || window._activeBlogId !== String(id) || !document.getElementById('blogReaderOverlay').classList.contains('show')) return;
+      const first = images[0];
+      evidenceHost.innerHTML = `<h3>${esc(first.Header||'หลักฐานจากการทำงาน')}</h3>${first.Body?`<p>${esc(first.Body)}</p>`:''}<div class="evidence-slider">${images.map(image=>{const imageSrc=resolveImg(image.ImageFileID||image.ImageURL,'');return imageSrc?`<figure class="evidence-slide"><img src="${esc(imageSrc)}" loading="lazy" alt="${esc(image.Caption||image.Header||item.Title)}" onclick="App.openLightbox('${esc(imageSrc)}')"><figcaption>${esc(image.Caption||'')}</figcaption></figure>`:''}).join('')}</div>`;
+      evidenceHost.hidden = false;
+    }).catch(()=>{});
     const sourceLink = document.getElementById('blogReaderSource');
     sourceLink.hidden = !item.SourceURL; sourceLink.href = item.SourceURL || '#';
     document.getElementById('blogReaderOverlay').classList.add('show');
     document.body.style.overflow = 'hidden';
   }
-  function closeBlog() { document.getElementById('blogReaderOverlay').classList.remove('show'); document.body.style.overflow = ''; }
+  function closeBlog() { window._activeBlogId = ''; document.getElementById('blogReaderOverlay').classList.remove('show'); document.body.style.overflow = ''; }
 
   /* ---------- GALLERY ---------- */
   let loadGalleryFn;
@@ -2082,8 +2130,7 @@ const App = (function () {
       ['evidenceSearch','input',renderEvidenceTimeline],
       ['evidenceCategory','change',renderEvidenceTimeline],
       ['evidenceYear','change',renderEvidenceTimeline],
-      ['blogSearch','input',renderBlogCollection], ['blogContentType','change',renderBlogCollection], ['blogSourceType','change',renderBlogCollection],
-      ['albumFilter','change',()=>loadGallery(true)]
+      ['blogSearch','input',renderBlogCollection], ['blogContentType','change',renderBlogCollection], ['blogSourceType','change',renderBlogCollection]
     ];
     let t;
     bindings.forEach(([id, evt, fn]) => {
@@ -2178,7 +2225,8 @@ const App = (function () {
   return { init, setTheme, toggleDayNight, toggleMourning, setFontSize, goPage, openLightbox,
     openLogin, closeLogin, submitLogin, logoutEdit, toggleShowPassword,
     editProfile, editStat, editEducation, editMindmapNode,
-    openBlog, closeBlog,
+    openBlog, closeBlog, openMetricDataset, closeMetricDataset,
+    openWorkDetail, closeWorkDetail, openFieldVideo, closeFieldVideo,
     focusExpertise, searchExpertise, filterExpertiseWorks, resetExpertiseGraph };
 })();
 

@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ระบบหลังบ้าน | E-Portfolio Admin</title>
-<script src="https://accounts.google.com/gsi/client" async defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
@@ -25,7 +24,9 @@ a{color:inherit}
 .login-box{background:#fff;border-radius:var(--radius);padding:48px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3);max-width:380px}
 .login-box h1{font-size:18px;color:var(--primary);margin-bottom:6px}
 .login-box p{font-size:13px;color:var(--muted);margin-bottom:24px}
-#googleBtnContainer{display:flex;justify-content:center}
+.login-form{display:grid;gap:12px;text-align:left}.login-form label{font-size:12px;color:var(--muted)}
+.login-form input{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font:inherit}
+.login-form .btn{justify-content:center;margin-top:4px}
 .login-error{color:#c62828;font-size:13px;margin-top:14px;display:none}
 
 /* LAYOUT */
@@ -48,6 +49,7 @@ a{color:inherit}
 .btn.danger{background:#c62828}
 .btn.ghost{background:transparent;color:var(--primary);border:1.5px solid var(--primary)}
 .toolbar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+.page-note{font-size:12.5px;color:var(--muted);margin:-6px 0 14px}
 .toolbar input[type=text]{padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:inherit;font-size:13px;min-width:220px}
 
 .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:0 2px 10px rgba(0,0,0,0.04)}
@@ -55,13 +57,15 @@ table{width:100%;border-collapse:collapse;font-size:13px}
 th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--border);white-space:nowrap;max-width:280px;overflow:hidden;text-overflow:ellipsis}
 th{color:var(--muted);font-weight:600;font-size:12px}
 tr:hover td{background:#f4faf4}
-.row-actions{display:flex;gap:6px}
+.row-actions{display:flex;gap:6px;flex-wrap:wrap}
+.row-actions .sr-only{position:static;width:auto;height:auto;padding:0;margin-left:5px;overflow:visible;clip:auto;white-space:nowrap}
 .row-actions button{border:none;background:#eef3ee;border-radius:6px;padding:6px 9px;cursor:pointer;font-size:12px}
 .row-actions button.del{color:#c62828}
 .row-actions button.edit{color:var(--secondary)}
 .pagination{display:flex;gap:8px;align-items:center;margin-top:14px;font-size:13px}
 .pagination button{border:1px solid var(--border);background:#fff;border-radius:6px;padding:6px 10px;cursor:pointer}
 .empty{padding:40px;text-align:center;color:var(--muted);font-size:13px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
 /* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;z-index:1000;padding:20px}
@@ -90,8 +94,12 @@ tr:hover td{background:#f4faf4}
 <div id="loginScreen">
   <div class="login-box">
     <h1><i class="fa-solid fa-leaf" style="color:#1B5E20"></i> ระบบหลังบ้าน E-Portfolio</h1>
-    <p>สำนักงานเกษตรจังหวัดกำแพงเพชร — เข้าสู่ระบบด้วย Google Account ที่ได้รับสิทธิ์แอดมิน</p>
-    <div id="googleBtnContainer"></div>
+    <p>สำนักงานเกษตรจังหวัดกำแพงเพชร — ระบบตรวจสอบบัญชีผ่านเซิร์ฟเวอร์</p>
+    <form class="login-form" onsubmit="Admin.login(event)">
+      <label>ชื่อผู้ใช้<input id="adminUsername" name="username" value="" placeholder="กรอกชื่อผู้ใช้" autocomplete="username" required></label>
+      <label>รหัสผ่าน<input id="adminPassword" name="password" type="password" autocomplete="current-password" required></label>
+      <button class="btn" type="submit"><i class="fa-solid fa-right-to-bracket"></i> เข้าสู่ระบบ</button>
+    </form>
     <div class="login-error" id="loginError"></div>
   </div>
 </div>
@@ -126,6 +134,7 @@ tr:hover td{background:#f4faf4}
         </label>
         <button class="btn ghost" onclick="Admin.openUrlImport()"><i class="fa-brands fa-facebook"></i> นำเข้า Facebook / URL</button>
       </div>
+      <p class="page-note" id="pageNote" hidden></p>
 
       <div class="card">
         <div style="overflow-x:auto">
@@ -174,11 +183,10 @@ tr:hover td{background:#f4faf4}
 
 <script>
 /* ============================================================
- * CONFIG — แก้ 2 ค่านี้ให้ตรงกับของจริงก่อนใช้งาน (ดู PART 7)
+ * CONFIG — แก้ API URL ให้ตรงกับของจริงก่อนใช้งาน (ดู PART 7)
  * ============================================================ */
 const CONFIG = {
-  API_URL: 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec', // <-- แก้ตรงนี้
-  GOOGLE_CLIENT_ID: 'YOUR_GOOGLE_OAUTH_CLIENT_ID.apps.googleusercontent.com' // <-- แก้ตรงนี้
+  API_URL: 'https://script.google.com/macros/s/AKfycbzH-bbhQo2n3tiuGqZnlkGyyfzSTN7-0q5qJTwuH7YoI2ufExxWJQ8aUUeKZ8V1dcD6/exec'
 };
 
 /* ============================================================
@@ -201,7 +209,7 @@ const SCHEMAS = {
     {key:'Subtitle',label:'ตำแหน่ง/Subtitle',type:'text'},{key:'TypingPhrases',label:'ข้อความ Typing (คั่นด้วย |)',type:'text'},
     {key:'ReflectionText',label:'ข้อความสะท้อนตัวตน',type:'longtext'}
   ]},
-  DashboardStatistics: { label:'สถิติหน้าแรก', icon:'fa-chart-simple', fields:[
+  DashboardStatistics: { label:'สถิติหน้าแรก (คำนวณอัตโนมัติ)', icon:'fa-chart-simple', fields:[
     {key:'Label',label:'หัวข้อ',type:'text'},{key:'Value',label:'จำนวน',type:'number'},
     {key:'Suffix',label:'หน่วย',type:'text'},{key:'Icon',label:'FontAwesome class',type:'text'},
     {key:'LinkTarget',label:'หน้าปลายทาง',type:'select',options:['about','dashboards','innovation','research','publications','projects','training','blog','gallery','contact']},
@@ -213,7 +221,7 @@ const SCHEMAS = {
     {key:'YearStart',label:'ปีเริ่ม',type:'number'},{key:'YearEnd',label:'ปีจบ',type:'number'},
     {key:'SortOrder',label:'ลำดับ',type:'number'}
   ]},
-  Mindmap: { label:'Mindmap', icon:'fa-diagram-project', fields:[
+  Mindmap: { label:'Mindmap (ข้อมูลเดิม)', icon:'fa-diagram-project', fields:[
     {key:'NodeLabel',label:'ชื่อ Node',type:'text'},{key:'LinkTarget',label:'ลิงก์ไปหน้า (page id)',type:'text'},
     {key:'Icon',label:'Icon',type:'text'},{key:'Color',label:'สี (hex)',type:'text'},{key:'SortOrder',label:'ลำดับ',type:'number'}
   ]},
@@ -242,7 +250,7 @@ const SCHEMAS = {
     {key:'Note',label:'คำอธิบายความเชื่อมโยง',type:'longtext'},
     {key:'Status',label:'สถานะ',type:'select',options:['published','draft']}
   ]},
-  Dashboards: { label:'ผลงานดิจิทัล', icon:'fa-chart-line', folderKey:'Dashboards', fields:[
+  Dashboards: { label:'ผลงานดิจิทัลและระบบสนับสนุนการตัดสินใจ', icon:'fa-chart-line', folderKey:'Dashboards', fields:[
     {key:'Title',label:'ชื่อ Dashboard',type:'text'},{key:'Description',label:'คำอธิบาย',type:'longtext'},
     {key:'CoverImageFileID',label:'รูปปก',type:'image'},{key:'EmbedURL',label:'Embed URL',type:'url'},
     {key:'Category',label:'หมวดหมู่',type:'text'},{key:'Tags',label:'Tags (คั่นด้วย ,)',type:'text'},
@@ -261,13 +269,20 @@ const SCHEMAS = {
     {key:'Title',label:'ชื่อผลงาน',type:'text'},
     {key:'Type',label:'ประเภท',type:'select',options:['Journal','Conference','Patent','Petty Patent','Other']},
     {key:'Authors',label:'ผู้แต่ง',type:'text'},{key:'Source',label:'แหล่งตีพิมพ์',type:'text'},
-    {key:'Year',label:'ปี',type:'number'},{key:'DOI_URL',label:'DOI/URL',type:'url'},{key:'Tags',label:'Tags',type:'text'}
+    {key:'Year',label:'ปี',type:'number'},{key:'DOI_URL',label:'DOI/URL',type:'url'},{key:'Tags',label:'Tags',type:'text'},
+    {key:'Status',label:'สถานะ',type:'select',options:['published','draft']}
   ]},
   Projects: { label:'โครงการ', icon:'fa-diagram-successor', folderKey:'Dashboards', fields:[
     {key:'Title',label:'ชื่อโครงการ',type:'text'},{key:'Description',label:'รายละเอียด',type:'longtext'},
     {key:'Category',label:'ประเภท',type:'select',options:['Smart Farming','Precision Agriculture','Agricultural Extension','R2R']},
     {key:'YearStart',label:'ปีเริ่ม',type:'number'},{key:'YearEnd',label:'ปีสิ้นสุด',type:'number'},
     {key:'CoverImageFileID',label:'รูปปก',type:'image'},
+    {key:'IsInnovation',label:'เป็นนวัตกรรมหรือไม่',type:'select',options:['false','true']},
+    {key:'Problem',label:'ปัญหา',type:'longtext'},{key:'Hypothesis',label:'สมมติฐาน',type:'longtext'},
+    {key:'Prototype',label:'ต้นแบบ',type:'longtext'},{key:'TestMethod',label:'วิธีทดสอบ',type:'longtext'},
+    {key:'Results',label:'ผลลัพธ์',type:'longtext'},{key:'NextStep',label:'ขั้นตอนถัดไป',type:'longtext'},
+    {key:'Role',label:'บทบาท',type:'text'},{key:'Area',label:'พื้นที่ดำเนินงาน',type:'text'},
+    {key:'EvidenceURL',label:'URL หลักฐาน',type:'url'},
     {key:'Status',label:'สถานะ',type:'select',options:['published','draft']}
   ]},
   Training: { label:'การพัฒนาบุคลากร', icon:'fa-chalkboard-user', fields:[
@@ -275,9 +290,9 @@ const SCHEMAS = {
     {key:'Type',label:'ประเภท',type:'select',options:['Training','Workshop','Mentoring','Coaching']},
     {key:'Role',label:'บทบาท',type:'text'},{key:'Date',label:'วันที่',type:'date'},
     {key:'Organizer',label:'ผู้จัด',type:'text'},{key:'CertificateFileID',label:'ใบประกาศ',type:'image'},
-    {key:'SourceURL',label:'URL ต้นฉบับ',type:'url'}
+    {key:'SourceURL',label:'URL ต้นฉบับ',type:'url'},{key:'Status',label:'สถานะ',type:'select',options:['published','draft']}
   ]},
-  Blog: { label:'เรื่องเล่า / องค์ความรู้', icon:'fa-book-open-reader', folderKey:'Gallery', fields:[
+  Blog: { label:'เรื่องเล่า ย้อนรอย', icon:'fa-book-open-reader', folderKey:'Gallery', fields:[
     {key:'Title',label:'หัวข้อ',type:'text'},{key:'Slug',label:'Slug (URL)',type:'text'},
     {key:'Excerpt',label:'สรุปย่อ',type:'longtext'},{key:'Content',label:'เนื้อหา',type:'longtext'},
     {key:'ContentType',label:'ประเภทเนื้อหา',type:'select',options:['เรื่องเล่าจากพื้นที่','องค์ความรู้','ข่าวและกิจกรรม','บทความวิชาการ','นวัตกรรมดิจิทัล']},
@@ -288,12 +303,24 @@ const SCHEMAS = {
     {key:'Featured',label:'บทความเด่น',type:'select',options:['false','true']},
     {key:'Status',label:'สถานะ',type:'select',options:['published','draft']}
   ]},
+  EvidenceImages: { label:'ภาพหลักฐานในเรื่องเล่า', icon:'fa-images', folderKey:'Gallery', fields:[
+    {key:'BlogID',label:'เรื่องเล่าที่เชื่อมโยง',type:'lookupBlog'},
+    {key:'Header',label:'หัวข้อชุดภาพ',type:'text'},{key:'Body',label:'ข้อความอธิบายหลักฐาน',type:'longtext'},
+    {key:'ImageFileID',label:'ภาพหลักฐาน',type:'image'},{key:'ImageURL',label:'URL รูปภาพ',type:'url'},
+    {key:'Caption',label:'คำบรรยายภาพ',type:'text'},{key:'SortOrder',label:'ลำดับภาพ',type:'number'},
+    {key:'Status',label:'สถานะ',type:'select',options:['published','draft']}
+  ]},
+  Career: { label:'ประสบการณ์ทำงาน', icon:'fa-briefcase', fields:[
+    {key:'Title',label:'ตำแหน่ง',type:'text'},{key:'Organization',label:'หน่วยงาน',type:'text'},
+    {key:'StartDate',label:'วันเริ่มงาน',type:'date'},{key:'EndDate',label:'วันสิ้นสุด',type:'date'},
+    {key:'EvidenceURL',label:'URL หลักฐาน',type:'url'},{key:'Status',label:'สถานะ',type:'select',options:['published','draft']}
+  ]},
   Gallery: { label:'คลังภาพ', icon:'fa-images', folderKey:'Gallery', fields:[
     {key:'ImageFileID',label:'รูปภาพ',type:'image'},{key:'ImageURL',label:'URL รูปภาพ',type:'url'},{key:'Caption',label:'คำอธิบาย',type:'text'},
     {key:'Album',label:'อัลบั้ม',type:'text'},{key:'EventDate',label:'วันที่จัดกิจกรรม',type:'date'},
     {key:'SortOrder',label:'ลำดับ',type:'number'}
   ]},
-  Contact: { label:'ติดต่อ', icon:'fa-address-book', fields:[
+  Contact: { label:'ติดต่อ (ย้ายไป Profile)', icon:'fa-address-book', fields:[
     {key:'Label',label:'หัวข้อ',type:'text'},{key:'Value',label:'ค่า',type:'text'},
     {key:'Icon',label:'Icon',type:'text'},{key:'LinkURL',label:'ลิงก์',type:'url'},{key:'SortOrder',label:'ลำดับ',type:'number'}
   ]},
@@ -313,30 +340,31 @@ const SCHEMAS = {
 };
 
 const Admin = (function () {
-  let state = { sheet:'Profile', rows:[], page:1, limit:20, total:0, q:'', token:'', email:'', editingId:null, urlPreview:null };
+  let state = { sheet:'Profile', rows:[], page:1, limit:20, total:0, q:'', token:'', username:'', editingId:null, urlPreview:null };
   const lookupCache = { expertise:null, works:null };
-  const URL_IMPORT_TARGETS = ['Dashboards','Research','Publications','Projects','Training','Blog','Gallery','References'];
+  const URL_IMPORT_TARGETS = ['Dashboards','Research','Publications','Projects','Training','Blog','References'];
 
   function init() {
-    google.accounts.id.initialize({ client_id: CONFIG.GOOGLE_CLIENT_ID, callback: onGoogleSignIn });
-    google.accounts.id.renderButton(document.getElementById('googleBtnContainer'), { theme:'outline', size:'large', text:'signin_with' });
-
     const saved = sessionStorage.getItem('admin_session');
     if (saved) {
       const s = JSON.parse(saved);
-      state.token = s.token; state.email = s.email;
+      state.token = s.token; state.username = s.username;
       showApp();
     }
     buildMenu();
   }
 
-  function onGoogleSignIn(response) {
-    fetch(CONFIG.API_URL + '?action=verifyAdmin&idToken=' + encodeURIComponent(response.credential))
+  function login(event) {
+    event.preventDefault();
+    const username = document.getElementById('adminUsername').value.trim();
+    const password = document.getElementById('adminPassword').value;
+    fetch(CONFIG.API_URL, {method:'POST', body:JSON.stringify({action:'verifyAdminCredentials', username, password})})
       .then(r => r.json())
       .then(res => {
         if (res.status === 'ok') {
-          state.token = res.token; state.email = res.email;
-          sessionStorage.setItem('admin_session', JSON.stringify({ token: res.token, email: res.email }));
+          state.token = res.token; state.username = res.username;
+          sessionStorage.setItem('admin_session', JSON.stringify({ token: res.token, username: res.username }));
+          document.getElementById('adminPassword').value = '';
           showApp();
         } else {
           showLoginError(res.message || 'เข้าสู่ระบบไม่สำเร็จ');
@@ -353,7 +381,7 @@ const Admin = (function () {
   function showApp() {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('appScreen').style.display = 'block';
-    document.getElementById('userEmail').textContent = state.email;
+    document.getElementById('userEmail').textContent = state.username;
     selectSheet('Profile');
   }
 
@@ -364,7 +392,9 @@ const Admin = (function () {
 
   function buildMenu() {
     const nav = document.getElementById('navMenu');
-    nav.innerHTML = Object.keys(SCHEMAS).map(key => {
+    // Contact อยู่ใน Profile แล้ว; เก็บชีตเดิมไว้เพื่อไม่ให้ข้อมูลเก่าสูญหาย. Mindmap/Gallery และสถิติแบบกรอกมือไม่แสดงในเมนู.
+    const hiddenSheets = ['Gallery','Contact','Mindmap','DashboardStatistics'];
+    nav.innerHTML = Object.keys(SCHEMAS).filter(key => !hiddenSheets.includes(key)).map(key => {
       const s = SCHEMAS[key];
       return `<a data-sheet="${key}" onclick="Admin.selectSheet('${key}')"><i class="${s.iconSet||'fa-solid'} ${s.icon}"></i> ${s.label}</a>`;
     }).join('');
@@ -374,15 +404,23 @@ const Admin = (function () {
     state.sheet = sheetName; state.page = 1; state.q = '';
     document.getElementById('searchBox').value = '';
     document.getElementById('pageTitle').textContent = SCHEMAS[sheetName].label;
+    const note = document.getElementById('pageNote');
+    const notes = {
+      Blog:'จัดการจากศูนย์กลาง: บันทึกเรื่องก่อน แล้วใช้ปุ่ม “หลักฐาน” ของเรื่องนั้นเพื่อเพิ่มภาพ หัวข้อ คำบรรยาย และลำดับภาพ',
+      Projects:'จัดการโครงการและห้องปฏิบัติการนวัตกรรมที่นี่ เลือก “เป็นนวัตกรรม” แล้วกรอกโจทย์ วิธีทดสอบ และผลที่พบในโครงการเดียวกัน',
+      Profile:'ข้อมูลติดต่อหน้าเว็บไซต์ใช้ข้อมูลส่วนตัวชุดนี้ กรอกโทรศัพท์ อีเมล และช่องทางวิชาการได้ด้านล่าง',
+      Career:'เพิ่มประสบการณ์ทีละตำแหน่งพร้อมช่วงเวลา จำนวนหน้าแรกคำนวณจากรายการที่เผยแพร่',
+      EvidenceImages:'เลือกเรื่องเล่าที่เกี่ยวข้อง ใส่หัวข้อชุดภาพและคำบรรยาย แล้วกำหนดลำดับภาพสำหรับ Slider'
+    };
+    note.hidden = !notes[sheetName];
+    note.textContent = notes[sheetName] || '';
     document.querySelectorAll('#navMenu a').forEach(a => a.classList.toggle('active', a.dataset.sheet === sheetName));
     loadData();
   }
 
   function loadData() {
-    const url = `${CONFIG.API_URL}?sheet=${state.sheet}&action=list&page=${state.page}&limit=${state.limit}&q=${encodeURIComponent(state.q)}`;
-    const request = state.sheet === 'Settings'
-      ? fetch(CONFIG.API_URL,{method:'POST',body:JSON.stringify({action:'adminList',sheet:state.sheet,token:state.token,page:state.page,limit:state.limit,q:state.q})})
-      : fetch(url);
+    // รายการหลังบ้านต้องเห็นฉบับร่างด้วย จึงใช้ endpoint ที่ยืนยันตัวตนเสมอ.
+    const request = fetch(CONFIG.API_URL,{method:'POST',body:JSON.stringify({action:'adminList',sheet:state.sheet,token:state.token,page:state.page,limit:state.limit,q:state.q})});
     request.then(r => r.json()).then(res => {
       if (res.status !== 'ok') return showToast(res.message || 'โหลดข้อมูลไม่สำเร็จ');
       state.rows = res.data; state.total = res.total;
@@ -405,8 +443,9 @@ const Admin = (function () {
       tbody.innerHTML = state.rows.map(row => {
         const cells = cols.map(c => `<td>${escapeHTML(String(row[c.key] ?? ''))}</td>`).join('');
         return `<tr>${cells}<td><div class="row-actions">
-          <button class="edit" onclick='Admin.openForm(${JSON.stringify(row.ID)})'><i class="fa-solid fa-pen"></i></button>
-          <button class="del" onclick='Admin.deleteRow(${JSON.stringify(row.ID)})'><i class="fa-solid fa-trash"></i></button>
+          ${state.sheet === 'Blog' ? `<button class="edit" title="เพิ่มภาพหลักฐาน" aria-label="เพิ่มภาพหลักฐานสำหรับ ${escapeHTML(String(row.Title||''))}" onclick='Admin.openEvidenceForBlog(${JSON.stringify(row.ID)})'><i class="fa-solid fa-images"></i><span class="sr-only">หลักฐาน</span></button>` : ''}
+          <button class="edit" title="แก้ไข" aria-label="แก้ไขรายการ" onclick='Admin.openForm(${JSON.stringify(row.ID)})'><i class="fa-solid fa-pen"></i><span class="sr-only">แก้ไข</span></button>
+          <button class="del" title="ลบ" aria-label="ลบรายการ" onclick='Admin.deleteRow(${JSON.stringify(row.ID)})'><i class="fa-solid fa-trash"></i><span class="sr-only">ลบ</span></button>
         </div></td></tr>`;
       }).join('');
     }
@@ -434,17 +473,23 @@ const Admin = (function () {
   async function openForm(id) {
     state.editingId = id || null;
     const schema = SCHEMAS[state.sheet];
-    const row = id ? state.rows.find(r => r.ID === id) : {};
-    if (schema.fields.some(f => f.type === 'lookupExpertise' || f.type === 'lookupWork')) await loadLookups();
-    document.getElementById('modalTitle').textContent = id ? 'แก้ไขข้อมูล' : 'เพิ่มข้อมูล';
-    document.getElementById('modalFields').innerHTML = schema.fields.map(f => renderField(f, row[f.key])).join('');
+    const row = id ? state.rows.find(r => r.ID === id) : (state.pendingBlogID && state.sheet === 'EvidenceImages' ? {BlogID:state.pendingBlogID} : {});
+    state.pendingBlogID = null;
+    if (schema.fields.some(f => ['lookupExpertise','lookupWork','lookupBlog'].includes(f.type))) await loadLookups();
+    document.getElementById('modalTitle').textContent = (id ? 'แก้ไข: ' : 'เพิ่ม: ') + schema.label;
+    document.getElementById('modalFields').innerHTML = '<p style="font-size:12px;color:#526257;margin-bottom:14px">ช่องที่มี * จำเป็นต้องกรอก · บันทึกเป็นฉบับร่างก่อนตรวจและเผยแพร่ได้</p>' + schema.fields.map(f => renderField(f, row[f.key] ?? (!id && f.key==='Status' ? 'draft' : undefined))).join('');
+    document.querySelectorAll('#modalFields .field').forEach((field,index)=>{
+      const input=field.querySelector('input:not([type=hidden]),textarea,select'), label=field.querySelector('label');
+      if(input && label){input.id='admin-field-'+index;label.htmlFor=input.id;if(input.required)label.textContent+=' *';}
+    });
     document.getElementById('modalOverlay').classList.add('show');
   }
 
   function renderField(f, value) {
     value = value ?? '';
-    if (f.type === 'longtext') return `<div class="field"><label>${f.label}</label><textarea data-key="${f.key}">${escapeHTML(String(value))}</textarea></div>`;
-    if (f.type === 'select') return `<div class="field"><label>${f.label}</label><select data-key="${f.key}">${f.options.map(o=>`<option value="${o}" ${o===value?'selected':''}>${o}</option>`).join('')}</select></div>`;
+    const required = isRequiredField(f.key) ? ' required aria-required="true"' : '';
+    if (f.type === 'longtext') return `<div class="field"><label>${f.label}</label><textarea data-key="${f.key}"${required}>${escapeHTML(String(value))}</textarea></div>`;
+    if (f.type === 'select') return `<div class="field"><label>${f.label}</label><select data-key="${f.key}"${required}>${f.options.map(o=>`<option value="${o}" ${o===value?'selected':''}>${o}</option>`).join('')}</select></div>`;
     if (f.type === 'lookupExpertise') {
       const options = (lookupCache.expertise || []).map(item => `<option value="${escapeHTML(String(item.ID))}" ${String(item.ID)===String(value)?'selected':''}>${escapeHTML(`${item.Level==='3'?'— ':''}${item.Name}`)}</option>`).join('');
       return `<div class="field"><label>${f.label}</label><select data-key="${f.key}"><option value="">ไม่ระบุ</option>${options}</select></div>`;
@@ -453,23 +498,27 @@ const Admin = (function () {
       const options = (lookupCache.works || []).map(item => `<option data-type="${item.WorkType}" value="${escapeHTML(String(item.ID))}" ${String(item.ID)===String(value)?'selected':''}>[${item.WorkType}] ${escapeHTML(item.Title)}</option>`).join('');
       return `<div class="field"><label>${f.label}</label><select data-key="${f.key}" onchange="Admin.syncWorkType(this)"><option value="">ไม่ระบุ</option>${options}</select></div>`;
     }
+    if (f.type === 'lookupBlog') {
+      const options = (lookupCache.works || []).filter(item=>item.WorkType==='Blog').map(item => `<option value="${escapeHTML(String(item.ID))}" ${String(item.ID)===String(value)?'selected':''}>${escapeHTML(item.Title)}</option>`).join('');
+      return `<div class="field"><label>${f.label}</label><select data-key="${f.key}" required><option value="">เลือกเรื่องเล่า</option>${options}</select></div>`;
+    }
     if (f.type === 'image') return `<div class="field"><label>${f.label}</label>
       <input type="file" accept="image/*" data-key="${f.key}" data-image="1" onchange="Admin.handleImageChange(event)">
       <input type="hidden" data-key="${f.key}" value="${escapeHTML(String(value))}">
       <img class="img-preview" src="${value?('https://drive.google.com/uc?export=view&id='+value):''}" style="${value?'display:block':''}">
       </div>`;
     const type = f.type === 'number' ? 'number' : (f.type === 'date' ? 'date' : (f.type === 'url' ? 'url' : 'text'));
-    return `<div class="field"><label>${f.label}</label><input type="${type}" data-key="${f.key}" value="${escapeHTML(String(value))}"></div>`;
+    return `<div class="field"><label>${f.label}</label><input type="${type}" data-key="${f.key}" value="${escapeHTML(String(value))}"${required}></div>`;
   }
 
   async function loadLookups() {
     if (!lookupCache.expertise) {
-      const res = await fetch(`${CONFIG.API_URL}?sheet=Expertise&action=list&limit=500`).then(r=>r.json()).catch(()=>({data:[]}));
+      const res = await fetch(CONFIG.API_URL,{method:'POST',body:JSON.stringify({action:'adminList',sheet:'Expertise',token:state.token,limit:500})}).then(r=>r.json()).catch(()=>({data:[]}));
       lookupCache.expertise = res.data || [];
     }
     if (!lookupCache.works) {
       const types = ['Dashboards','Research','Publications','Projects','Training','Blog','References'];
-      const results = await Promise.all(types.map(type => fetch(`${CONFIG.API_URL}?sheet=${type}&action=list&limit=500`).then(r=>r.json()).catch(()=>({data:[]}))));
+      const results = await Promise.all(types.map(type => fetch(CONFIG.API_URL,{method:'POST',body:JSON.stringify({action:'adminList',sheet:type,token:state.token,limit:500})}).then(r=>r.json()).catch(()=>({data:[]}))));
       lookupCache.works = results.flatMap((res,index) => (res.data||[]).map(item => ({ ID:item.ID, Title:item.Title||item.Label||item.ID, WorkType:types[index] })));
     }
   }
@@ -509,6 +558,8 @@ const Admin = (function () {
   function closeForm() { document.getElementById('modalOverlay').classList.remove('show'); }
 
   function saveForm() {
+    const invalid = document.querySelector('#modalFields :invalid');
+    if (invalid) { invalid.reportValidity(); return; }
     const data = {};
     document.querySelectorAll('#modalFields [data-key]').forEach(el => {
       if (el.dataset.image) return; // skip file input itself
@@ -533,6 +584,17 @@ const Admin = (function () {
         if (res.status !== 'ok') return showToast(res.message || 'ลบไม่สำเร็จ');
         invalidateLookups(state.sheet); showToast('ลบสำเร็จ'); loadData();
       });
+  }
+
+  async function openEvidenceForBlog(blogId) {
+    state.pendingBlogID = blogId;
+    selectSheet('EvidenceImages');
+    await new Promise(resolve => setTimeout(resolve, 0));
+    openForm();
+  }
+
+  function isRequiredField(key) {
+    return ['Title','Name','Organization','StartDate','BlogID','ExpertiseID','WorkType','WorkID'].includes(key);
   }
 
   function invalidateLookups(sheetName) {
@@ -662,7 +724,6 @@ const Admin = (function () {
       Projects:{Title:meta.title,Description:meta.description,Category:'Agricultural Extension',YearStart:date?date.slice(0,4):'',YearEnd:date?date.slice(0,4):'',CoverImageFileID:'',Status:'published'},
       Training:{Title:meta.title,Type:'Training',Role:'ข้อมูลนำเข้าจาก URL',Date:date,Organizer:meta.siteName,CertificateFileID:'',SourceURL:meta.url},
       Blog:{Title:meta.title,Slug:slugify(meta.title),Excerpt:meta.description,Content:meta.description||'',ContentType:meta.contentType==='โพสต์ Facebook'?'ข่าวและกิจกรรม':'องค์ความรู้',SourceType:meta.contentType==='โพสต์ Facebook'?'Facebook':(/ข่าว/i.test(meta.siteName||'')?'ข่าว':'เว็บไซต์'),SourceURL:meta.url,Author:meta.siteName,CoverImageFileID:'',CoverImageURL:meta.image,Category:'นำเข้าจาก URL',Tags:tags,PublishDate:date,ReadTime:2,Featured:'false',Status:'published'},
-      Gallery:{ImageFileID:'',ImageURL:meta.image,Caption:meta.title,Album:meta.siteName,EventDate:date,SortOrder:99},
       References:{WorkType:'',WorkID:'',Title:meta.title,EventDate:date,Category:meta.contentType==='โพสต์ Facebook'?'กิจกรรมและผลงานจาก Facebook':meta.contentType,Role:'หลักฐานการดำเนินงาน',Summary:meta.description,SourceName:meta.siteName,SourceURL:meta.url,Citation:meta.citation,ImageURL:meta.image,Status:'published',SortOrder:99}
     };
     return maps[target] || {};
@@ -712,7 +773,7 @@ const Admin = (function () {
     return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
 
-  return { init, selectSheet, gotoPage, openForm, closeForm, saveForm, deleteRow, exportCSV, downloadTemplate, importCSV, openUrlImport, closeUrlImport, previewUrl, refreshUrlMapping, importUrl, handleImageChange, syncWorkType, logout };
+  return { init, login, selectSheet, gotoPage, openForm, closeForm, saveForm, deleteRow, openEvidenceForBlog, exportCSV, downloadTemplate, importCSV, openUrlImport, closeUrlImport, previewUrl, refreshUrlMapping, importUrl, handleImageChange, syncWorkType, logout };
 })();
 
 window.onload = Admin.init;

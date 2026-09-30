@@ -44,8 +44,8 @@
 | TypingPhrases | text (คั่นด้วย `\|`) — ใช้ทำ Typing Animation |
 | ReflectionText | long text |
 
-## 3. DashboardStatistics
-5 การ์ดสถิติหน้าแรก — 1 แถวต่อ 1 การ์ด (เพิ่ม/ลดได้)
+## 3. DashboardStatistics (ข้อมูลเดิม)
+สถิติหน้าแรกของเวอร์ชันปัจจุบันคำนวณจากรายการที่เผยแพร่โดยอัตโนมัติ จึงไม่ต้องกรอกค่าเองใน Admin; เก็บ Sheet นี้ไว้สำหรับการย้ายข้อมูลย้อนหลังเท่านั้น
 
 | คอลัมน์ | ประเภท | ตัวอย่าง |
 |---|---|---|
@@ -164,6 +164,7 @@ Interactive Mindmap node ย่อย (node กลางเป็นค่าค
 | Year | number |
 | DOI_URL | url |
 | Tags | text |
+| Status | text (`published`/`draft`) |
 
 ## 11. Projects
 | คอลัมน์ | ประเภท |
@@ -174,6 +175,11 @@ Interactive Mindmap node ย่อย (node กลางเป็นค่าค
 | YearStart | number |
 | YearEnd | number |
 | CoverImageFileID | text |
+| IsInnovation | boolean (`true` เมื่อเป็นโครงการนวัตกรรม) |
+| Problem / Hypothesis / Prototype / TestMethod | long text |
+| Results / NextStep | long text |
+| Role / Area | text |
+| EvidenceURL | url |
 | Status | text |
 
 ## 12. Training
@@ -185,6 +191,18 @@ Interactive Mindmap node ย่อย (node กลางเป็นค่าค
 | Date | date |
 | Organizer | text |
 | CertificateFileID | text |
+| SourceURL | url |
+| Status | text (`published`/`draft`) |
+
+## 12.1 Career
+
+| คอลัมน์ | ประเภท |
+|---|---|
+| Title | text (required) |
+| Organization | text (required) |
+| StartDate / EndDate | date |
+| EvidenceURL | url |
+| Status | text (`published`/`draft`) |
 
 ## 13. Blog
 | คอลัมน์ | ประเภท |
@@ -199,8 +217,22 @@ Interactive Mindmap node ย่อย (node กลางเป็นค่าค
 | PublishDate | date |
 | Status | text (`published`/`draft`) |
 
-## 14. Gallery
-คลังภาพ (รองรับ 10,000+ รูป — เก็บแค่ FileID)
+## 14. EvidenceImages
+ภาพหลักฐานหลายภาพที่เชื่อมกับเรื่องเล่าแบบสัมพันธ์ผ่าน `BlogID`
+
+| คอลัมน์ | ประเภท |
+|---|---|
+| BlogID | text (FK → Blog.ID) |
+| Header | text |
+| Body | long text |
+| ImageFileID | text (Drive ID) |
+| ImageURL | url |
+| Caption | text |
+| SortOrder | number |
+| Status | text (`published`/`draft`) |
+
+## 14.1 Gallery (ข้อมูลเดิม)
+คลังภาพเดิมถูกซ่อนจากเว็บไซต์สาธารณะและคงไว้เป็นแหล่งข้อมูลสำหรับการย้ายย้อนหลังเท่านั้น
 
 | คอลัมน์ | ประเภท |
 |---|---|
@@ -249,11 +281,10 @@ Metadata ระบบจะเปิดแบบฟอร์มให้กร�
 
 | คอลัมน์ | ประเภท | ตัวอย่าง |
 |---|---|---|
-| Key | text | AdminEmails |
-| Value | text | kitti@doae.go.th,admin2@doae.go.th |
+| Key | text | SiteTitle |
+| Value | text | E-Portfolio |
 
-ตัวอย่าง Key ที่ต้องมี: `AdminEmails`, `ApiToken` (สำหรับยืนยันสิทธิ์เขียนข้อมูล,
-แนะนำเก็บจริงใน Script Properties ไม่ใช่ใน Sheet), `SiteTitle`, `DefaultTheme`,
+ค่า `API_TOKEN`, `ADMIN_USERNAME` และ `ADMIN_PASSWORD_HASH` ต้องเก็บใน Script Properties ไม่ใช่ใน Sheet ส่วน Settings ใช้กับ `SiteTitle`, `DefaultTheme`,
 `DriveFolder_Profile`, `DriveFolder_Dashboards`, `DriveFolder_Gallery`,
 `DriveFolder_University`, `DriveFolder_Activities`
 
