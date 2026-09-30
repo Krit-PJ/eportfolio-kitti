@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ระบบหลังบ้าน | E-Portfolio Admin</title>
+<title>ระบบหลังบ้าน E-Portfolio | สำนักงานเกษตรจังหวัดกำแพงเพชร</title>
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
@@ -12,39 +12,49 @@
 </style>
 <style>
 :root{
-  --primary:#1B5E20; --secondary:#0F4C81; --accent:#D4A017; --bg:#F8FCF8;
-  --card:#fff; --text:#1a2e1a; --muted:#5a6a5a; --border:#dfe7df; --radius:12px;
+  --primary:#155b34; --primary-dark:#0b3520; --secondary:#155f8f; --accent:#d5a321; --bg:#f4f7f5;
+  --card:#fff; --text:#17251d; --muted:#607067; --border:#dce6df; --radius:14px;
+  --shadow:0 12px 32px rgba(15,53,31,.08); --focus:0 0 0 3px rgba(21,95,143,.18);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Prompt',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 a{color:inherit}
+button,input,select,textarea{font:inherit}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none;box-shadow:var(--focus);border-color:var(--secondary)}
 
 /* LOGIN SCREEN */
-#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(145deg,#1B5E20,#0F4C81)}
-.login-box{background:#fff;border-radius:var(--radius);padding:48px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3);max-width:380px}
-.login-box h1{font-size:18px;color:var(--primary);margin-bottom:6px}
-.login-box p{font-size:13px;color:var(--muted);margin-bottom:24px}
-.login-form{display:grid;gap:12px;text-align:left}.login-form label{font-size:12px;color:var(--muted)}
-.login-form input{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font:inherit}
+#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;background:radial-gradient(circle at 18% 18%,rgba(255,255,255,.13),transparent 34%),linear-gradient(145deg,var(--primary-dark),#124f65)}
+.login-box{background:rgba(255,255,255,.98);border:1px solid rgba(255,255,255,.55);border-radius:20px;padding:40px 38px;text-align:center;box-shadow:0 28px 80px rgba(3,29,18,.32);width:min(100%,430px)}
+.brand-mark{width:68px;height:68px;margin:0 auto 18px;border-radius:18px;background:#edf7f0;display:grid;place-items:center;box-shadow:inset 0 0 0 1px #dcebe1}
+.brand-mark img{width:48px;height:48px;object-fit:contain}
+.login-box h1{font-size:22px;line-height:1.35;color:var(--primary-dark);margin-bottom:9px;font-weight:600}
+.login-box>p{font-size:12.5px;line-height:1.65;color:var(--muted);margin:0 auto 27px;max-width:320px}
+.login-form{display:grid;gap:15px;text-align:left}.login-form label{display:grid;gap:7px;font-size:12.5px;color:#415248;font-weight:500}
+.login-form input{width:100%;padding:11px 13px;border:1.5px solid var(--border);border-radius:9px;background:#fbfdfb;color:var(--text)}
 .login-form .btn{justify-content:center;margin-top:4px}
 .login-error{color:#c62828;font-size:13px;margin-top:14px;display:none}
 
 /* LAYOUT */
 #appScreen{display:none}
 .shell{display:flex;min-height:100vh}
-.sidebar{width:240px;background:#0f2e14;color:#c8e6c9;flex-shrink:0;padding:20px 0}
-.sidebar .brand{padding:0 20px 20px;border-bottom:1px solid rgba(255,255,255,0.1);margin-bottom:12px}
-.sidebar .brand strong{display:block;color:#fff;font-size:14px}
-.sidebar .brand span{font-size:11px;color:#81c784}
-.sidebar nav a{display:flex;align-items:center;gap:10px;padding:11px 20px;font-size:13.5px;cursor:pointer;color:#c8e6c9;border-left:3px solid transparent}
+.sidebar{width:276px;background:linear-gradient(180deg,var(--primary-dark),#10482c);color:#d7eadc;flex-shrink:0;padding:18px 0;box-shadow:8px 0 28px rgba(11,53,32,.08);z-index:920}
+.sidebar .brand{display:grid;grid-template-columns:42px 1fr;gap:12px;align-items:center;padding:0 18px 18px;border-bottom:1px solid rgba(255,255,255,.11);margin-bottom:10px}
+.sidebar .brand img{width:42px;height:42px;object-fit:contain;background:#fff;border-radius:11px;padding:4px}
+.sidebar .brand strong{display:block;color:#fff;font-size:14px;line-height:1.35;font-weight:600}
+.sidebar .brand span{display:block;font-size:10.5px;line-height:1.45;color:#a9d7b5;margin-top:3px}
+.sidebar nav a{display:flex;align-items:center;gap:11px;padding:11px 18px;font-size:13px;cursor:pointer;color:#d7eadc;border-left:3px solid transparent;transition:.18s ease}
 .sidebar nav a:hover{background:rgba(255,255,255,0.06)}
 .sidebar nav a.active{background:rgba(255,255,255,0.1);border-left-color:var(--accent);color:#fff}
 .sidebar nav a i{width:18px;text-align:center}
-.main{flex:1;padding:24px 28px;overflow-x:auto}
-.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-.topbar h2{font-size:20px;color:var(--primary)}
+.main{flex:1;min-width:0;padding:26px 30px 40px;overflow-x:auto}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:22px;padding-bottom:17px;border-bottom:1px solid var(--border)}
+.topbar-title{display:flex;align-items:center;gap:12px;min-width:0}
+.menu-toggle{display:none;width:40px;height:40px;justify-content:center;padding:0;background:#fff;color:var(--primary);border:1px solid var(--border)}
+.topbar h2{font-size:21px;color:var(--primary-dark);font-weight:600;line-height:1.35}
 .topbar .user{font-size:12.5px;color:var(--muted);display:flex;align-items:center;gap:10px}
-.btn{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 16px;font-size:13px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px}
+.btn{background:var(--primary);color:#fff;border:none;border-radius:9px;padding:9px 15px;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:transform .15s ease,box-shadow .15s ease,background .15s ease}
+.btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(21,91,52,.16)}
+.btn:disabled{opacity:.62;cursor:not-allowed;transform:none;box-shadow:none}
 .btn.secondary{background:var(--secondary)}
 .btn.danger{background:#c62828}
 .btn.ghost{background:transparent;color:var(--primary);border:1.5px solid var(--primary)}
@@ -52,10 +62,10 @@ a{color:inherit}
 .page-note{font-size:12.5px;color:var(--muted);margin:-6px 0 14px}
 .toolbar input[type=text]{padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:inherit;font-size:13px;min-width:220px}
 
-.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:0 2px 10px rgba(0,0,0,0.04)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
 table{width:100%;border-collapse:collapse;font-size:13px}
 th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--border);white-space:nowrap;max-width:280px;overflow:hidden;text-overflow:ellipsis}
-th{color:var(--muted);font-weight:600;font-size:12px}
+th{position:sticky;top:0;background:#fff;color:var(--muted);font-weight:600;font-size:12px;z-index:1}
 tr:hover td{background:#f4faf4}
 .row-actions{display:flex;gap:6px;flex-wrap:wrap}
 .row-actions .sr-only{position:static;width:auto;height:auto;padding:0;margin-left:5px;overflow:visible;clip:auto;white-space:nowrap}
@@ -84,8 +94,15 @@ tr:hover td{background:#f4faf4}
 .import-preview p{font-size:12.5px;color:var(--muted);line-height:1.65}.import-mapping{margin-top:12px;display:grid;gap:6px}
 .import-mapping div{display:grid;grid-template-columns:120px 1fr;gap:8px;font-size:12px;border-top:1px solid var(--border);padding-top:6px}.import-mapping strong{color:var(--secondary)}
 .check-row{display:flex;gap:8px;align-items:flex-start;margin-top:12px;font-size:12px;color:var(--muted)}.check-row input{margin-top:3px}
-.toast{position:fixed;bottom:24px;right:24px;background:var(--primary);color:#fff;padding:12px 20px;border-radius:8px;font-size:13px;box-shadow:0 4px 16px rgba(0,0,0,0.2);display:none;z-index:2000}
-@media(max-width:880px){.sidebar{position:fixed;left:-240px;top:0;height:100%;z-index:900;transition:left .25s}.sidebar.open{left:0}.main{padding:16px}.import-source{grid-template-columns:1fr}}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--primary);color:#fff;padding:12px 20px;border-radius:9px;font-size:13px;box-shadow:0 4px 16px rgba(0,0,0,0.2);display:none;z-index:2000}
+.sidebar-scrim{display:none;position:fixed;inset:0;background:rgba(5,25,15,.48);z-index:910}
+@media(max-width:880px){
+  .sidebar{position:fixed;left:-276px;top:0;height:100%;overflow-y:auto;transition:left .25s ease}.sidebar.open{left:0}
+  .sidebar-scrim.show{display:block}.main{padding:18px 16px 32px}.menu-toggle{display:inline-flex}
+  .topbar{align-items:flex-start}.topbar .user{flex-direction:column;align-items:flex-end}.toolbar{gap:8px}
+  .toolbar input[type=text]{width:100%;min-width:0}.import-source{grid-template-columns:1fr}
+}
+@media(max-width:520px){.login-box{padding:32px 22px}.topbar h2{font-size:18px}.topbar .user span{display:none}.btn{padding:9px 12px}.main{padding-inline:12px}}
 </style>
 </head>
 <body>
@@ -93,12 +110,13 @@ tr:hover td{background:#f4faf4}
 <!-- ===================== LOGIN SCREEN ===================== -->
 <div id="loginScreen">
   <div class="login-box">
-    <h1><i class="fa-solid fa-leaf" style="color:#1B5E20"></i> ระบบหลังบ้าน E-Portfolio</h1>
+    <div class="brand-mark"><img src="LOGO-DOAE.png" alt="ตรากรมส่งเสริมการเกษตร"></div>
+    <h1>ระบบหลังบ้าน E-Portfolio</h1>
     <p>สำนักงานเกษตรจังหวัดกำแพงเพชร — ระบบตรวจสอบบัญชีผ่านเซิร์ฟเวอร์</p>
     <form class="login-form" onsubmit="Admin.login(event)">
       <label>ชื่อผู้ใช้<input id="adminUsername" name="username" value="" placeholder="กรอกชื่อผู้ใช้" autocomplete="username" required></label>
       <label>รหัสผ่าน<input id="adminPassword" name="password" type="password" autocomplete="current-password" required></label>
-      <button class="btn" type="submit"><i class="fa-solid fa-right-to-bracket"></i> เข้าสู่ระบบ</button>
+      <button class="btn" id="loginButton" type="submit"><i class="fa-solid fa-right-to-bracket"></i> เข้าสู่ระบบ</button>
     </form>
     <div class="login-error" id="loginError"></div>
   </div>
@@ -109,14 +127,21 @@ tr:hover td{background:#f4faf4}
   <div class="shell">
     <aside class="sidebar" id="sidebar">
       <div class="brand">
-        <strong>E-Portfolio CMS</strong>
-        <span>สนง.เกษตรจังหวัดกำแพงเพชร</span>
+        <img src="LOGO-DOAE.png" alt="ตรากรมส่งเสริมการเกษตร">
+        <div>
+          <strong>ระบบหลังบ้าน E-Portfolio</strong>
+          <span>สำนักงานเกษตรจังหวัดกำแพงเพชร<br>ระบบตรวจสอบบัญชีผ่านเซิร์ฟเวอร์</span>
+        </div>
       </div>
       <nav id="navMenu"></nav>
     </aside>
+    <div class="sidebar-scrim" id="sidebarScrim" onclick="Admin.closeSidebar()" aria-hidden="true"></div>
     <main class="main">
       <div class="topbar">
-        <h2 id="pageTitle">Profile</h2>
+        <div class="topbar-title">
+          <button class="btn menu-toggle" type="button" onclick="Admin.toggleSidebar()" aria-label="เปิดเมนู"><i class="fa-solid fa-bars"></i></button>
+          <h2 id="pageTitle">ข้อมูลส่วนตัว</h2>
+        </div>
         <div class="user">
           <span id="userEmail"></span>
           <button class="btn ghost" onclick="Admin.logout()">ออกจากระบบ</button>
@@ -358,6 +383,10 @@ const Admin = (function () {
     event.preventDefault();
     const username = document.getElementById('adminUsername').value.trim();
     const password = document.getElementById('adminPassword').value;
+    const button = document.getElementById('loginButton');
+    document.getElementById('loginError').style.display = 'none';
+    button.disabled = true;
+    button.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> กำลังตรวจสอบ';
     fetch(CONFIG.API_URL, {method:'POST', body:JSON.stringify({action:'verifyAdminCredentials', username, password})})
       .then(r => r.json())
       .then(res => {
@@ -370,7 +399,11 @@ const Admin = (function () {
           showLoginError(res.message || 'เข้าสู่ระบบไม่สำเร็จ');
         }
       })
-      .catch(() => showLoginError('เชื่อมต่อ API ไม่ได้ ตรวจสอบ CONFIG.API_URL'));
+      .catch(() => showLoginError('เชื่อมต่อ API ไม่ได้ ตรวจสอบ CONFIG.API_URL'))
+      .finally(() => {
+        button.disabled = false;
+        button.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> เข้าสู่ระบบ';
+      });
   }
 
   function showLoginError(msg) {
@@ -390,6 +423,19 @@ const Admin = (function () {
     location.reload();
   }
 
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const scrim = document.getElementById('sidebarScrim');
+    const open = !sidebar.classList.contains('open');
+    sidebar.classList.toggle('open', open);
+    scrim.classList.toggle('show', open);
+  }
+
+  function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarScrim').classList.remove('show');
+  }
+
   function buildMenu() {
     const nav = document.getElementById('navMenu');
     // Contact อยู่ใน Profile แล้ว; เก็บชีตเดิมไว้เพื่อไม่ให้ข้อมูลเก่าสูญหาย. Mindmap/Gallery และสถิติแบบกรอกมือไม่แสดงในเมนู.
@@ -402,6 +448,7 @@ const Admin = (function () {
 
   function selectSheet(sheetName) {
     state.sheet = sheetName; state.page = 1; state.q = '';
+    closeSidebar();
     document.getElementById('searchBox').value = '';
     document.getElementById('pageTitle').textContent = SCHEMAS[sheetName].label;
     const note = document.getElementById('pageNote');
@@ -773,7 +820,7 @@ const Admin = (function () {
     return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
 
-  return { init, login, selectSheet, gotoPage, openForm, closeForm, saveForm, deleteRow, openEvidenceForBlog, exportCSV, downloadTemplate, importCSV, openUrlImport, closeUrlImport, previewUrl, refreshUrlMapping, importUrl, handleImageChange, syncWorkType, logout };
+  return { init, login, selectSheet, gotoPage, openForm, closeForm, saveForm, deleteRow, openEvidenceForBlog, exportCSV, downloadTemplate, importCSV, openUrlImport, closeUrlImport, previewUrl, refreshUrlMapping, importUrl, handleImageChange, syncWorkType, logout, toggleSidebar, closeSidebar };
 })();
 
 window.onload = Admin.init;

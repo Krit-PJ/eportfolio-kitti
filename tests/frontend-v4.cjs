@@ -4,6 +4,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 
 const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+const adminHtml = fs.readFileSync(path.join(__dirname, '..', 'admin.html'), 'utf8');
 
 const scripts = [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)].map(match => match[1]);
 assert.ok(scripts.length, 'index.html must include application JavaScript');
@@ -39,5 +40,14 @@ assert.match(html, /matchesText&&matchesType/, 'combined expertise filters must 
 assert.match(html, /window\._metricDatasets\[def\.key\] = result/);
 assert.match(html, /openMetricDataset, closeMetricDataset/);
 assert.match(html, /openWorkDetail, closeWorkDetail, openFieldVideo, closeFieldVideo/);
+
+const adminScripts = [...adminHtml.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)].map(match => match[1]);
+assert.ok(adminScripts.length, 'admin.html must include application JavaScript');
+adminScripts.forEach((source, index) => new vm.Script(source, { filename:`admin-script-${index}.js` }));
+assert.doesNotMatch(adminHtml, /E-Portfolio CMS|สนง\.เกษตร/, 'admin branding must not fall back to a second or abbreviated identity');
+assert.equal((adminHtml.match(/ระบบหลังบ้าน E-Portfolio/g) || []).length, 3, 'document title, login and app shell must use one admin identity');
+assert.match(adminHtml, /สำนักงานเกษตรจังหวัดกำแพงเพชร<br>ระบบตรวจสอบบัญชีผ่านเซิร์ฟเวอร์/, 'app shell must retain the full organization and server-authentication descriptor');
+assert.match(adminHtml, /function toggleSidebar\s*\(/, 'mobile admin navigation must be operable');
+assert.match(adminHtml, /toggleSidebar, closeSidebar/, 'mobile navigation controls must be exported');
 
 console.log('frontend-v4: PASS');
